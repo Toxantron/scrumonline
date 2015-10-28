@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+.container-fluid.main {
+    padding: 80px 10px 0px;
+}
+@media (min-width: 992px) {
+  .container-fluid.main {
+    padding: 80px 50px 0px;
+  }
+}
+@media (min-width: 1200px) {
+  .container-fluid.main {
+    padding: 80px 150px 0px;
+  }
+}
+
+div.card-container {
+  margin-bottom: 20px;
+}
+
+div.card {
+  border: 2px solid black;
+  border-radius: 15px;
+  height: 200px;
+  width: 130px;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+}
+
+div.card .inner {
+  margin: -10px 5px 0;
+  border-radius: 30px;
+  background: #0066FF;
+  text-align: center;
+}
+
+div.card .inner h1 {
+  font-weight: bold;
+  padding: 70px 0 70px;
+  color: #FFFFFF;
+}

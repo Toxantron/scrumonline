@@ -10,6 +10,9 @@ class Member
   
     /** @Column(type="string") **/
     protected $name;
+    
+    /** @Column(type="string") **/
+    protected $role;
   
     /** @ManyToOne(targetEntity="Session", inversedBy="members") **/
     protected $session;

@@ -11,7 +11,7 @@ class Session
     /** @Column(type="string") **/
     protected $name;
   
-    /** @Column(type="bool) **/
+    /** @Column(type="boolean") **/
     protected $isPrivate;
   
     /** @Column(type="datetime") **/ 

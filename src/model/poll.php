@@ -20,27 +20,27 @@ class Poll
     /** @OneToMany(targetEntity="Vote", mappedBy="poll") **/
     protected $votes;
   
-    public getId()
+    public function getId()
     {
         return $this->id;
     }
   
     // Getter and setter for topic field
-    public getTopic()
+    public function getTopic()
     {
         return $this->topic;
     }
-    public setTopic($topic)
+    public function setTopic($topic)
     {
         $this->topic = $topic;
     }
   
   	 // Getter and setter for result field
-    public getResult()
+    public function getResult()
     {
         return $this->result;
     }
-    public setResult($result)
+    public function setResult($result)
     {
         $this->result = $result;
     }

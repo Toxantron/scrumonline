@@ -17,37 +17,37 @@ class Vote
     /** @ManyToOne(targetEntity="Member", inversedBy="votes") **/
     protected $member;
   
-    public getId()
+    public function getId()
     {
         return $this->id;
     }
   
     // Getter and setter for value field
-    public getValue()
+    public function getValue()
     {
         return $this->value;
     }
-    public setValue($value)
+    public function setValue($value)
     {
         $this->value = $value;
     }
   
     // Getter and setter for poll association
-    public getPoll()
+    public function getPoll()
     {
         return $this->poll;
     }
-    public setPoll($poll)
+    public function setPoll($poll)
     {
         $this->poll = $poll;
     }
   
     // Getter and setter for value field
-    public getMember()
+    public function getMember()
     {
         return $this->member;
     }
-    public setMember($member)
+    public function setMember($member)
     {
         $this->member = $member;
     }

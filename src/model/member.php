@@ -42,7 +42,7 @@ class Member
         $this->session = $session;
     }
   
-    // Getter and setter for session field
+    // Getter for votes association
     public function getVotes()
     {
     	  return $this->votes;

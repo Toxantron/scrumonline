@@ -7,8 +7,44 @@ class Member
 {
     /** @Id @Column(type="integer") @GeneratedValue **/
     protected $id;
+  
     /** @Column(type="string") **/
     protected $name;
-     /** @Column(type="float") **/
-    protected $vote;
+  
+    /** @ManyToOne(targetEntity="Session", inversedBy="members") **/
+    protected $session;
+  
+    /** @OneToMany(targetEntity="Vote", mappedBy="member") **/
+    protected $votes;
+  
+    public function getId()
+    {
+    	  return $this->id;
+    }
+  
+    // Getter and setter for name field
+    public function getName()
+    {
+    	  return $this->name;
+    }
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+  
+    // Getter and setter for session field
+    public function getSession()
+    {
+    	  return $this->session;
+    }
+    public function setSession($session)
+    {
+        $this->session = $session;
+    }
+  
+    // Getter and setter for session field
+    public function getVotes()
+    {
+    	  return $this->votes;
+    }
 }

@@ -1,6 +1,4 @@
 <?php
-include "model/session.php";
-
 require_once "bootstrap.php";
 
 $session = new Session();

@@ -3,7 +3,7 @@
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
-require_once "../vendor/autoload.php";
+require_once __DIR__ . "/../vendor/autoload.php";
 
 // Create a simple "default" Doctrine ORM configuration for Annotations
 $isDevMode = true;
@@ -23,3 +23,9 @@ $conn = array(
 
 // obtaining the entity manager
 $entityManager = EntityManager::create($conn, $config);
+
+// Load models
+require_once __DIR__ . "/model/member.php";
+require_once __DIR__ . "/model/poll.php";
+require_once __DIR__ . "/model/session.php";
+require_once __DIR__ . "/model/vote.php";

@@ -1,3 +1,13 @@
+<?php
+$navItems = [
+  [ 
+    "link" => "\"sessions/list.php\"", 
+    "name" => "Sessions"
+  ],
+  
+];
+?>
+
 <!-- Top navigation bar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
@@ -12,8 +22,9 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home</a></li>
-        <li><a href="sessions.php">Sessions</a></li>
+<?php foreach($navItems as $navItem): ?>
+        <li><a<?php echo ($navItem["name"] === $active ? "class=\"active\"" : "") ?>  href=<?php echo $navItem["link"] ?>><?php echo $navItem["name"] ?></a></li>
+<?php endforeach; ?>
       </ul>
     </div><!--/.nav-collapse -->
   </div>

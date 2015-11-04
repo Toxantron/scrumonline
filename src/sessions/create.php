@@ -1,12 +1,16 @@
 <?php
-require_once "bootstrap.php";
+require_once "../bootstrap.php";
+
+$name = $_POST["name"];
+$private = $_POST["isPrivate"] == "on";
 
 $session = new Session();
-$name = $_GET["name"];
 $session->setName($name);
+$session->setIsPrivate($private);
+$session->setLastAction(new DateTime());
 
 $entityManager->persist($session);
 $entityManager->flush();
+
+header("Location: /sessions/session.php?id=" . $session->getId());
 ?>
-  
-<p>Database id: <?php echo $session->getId() ?><p>

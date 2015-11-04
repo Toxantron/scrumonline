@@ -1,7 +1,7 @@
 <?php
 $navItems = [
   [ 
-    "link" => "\"sessions/list.php\"", 
+    "link" => "\"/sessions/list.php\"", 
     "name" => "Sessions"
   ],
   
@@ -23,7 +23,7 @@ $navItems = [
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
 <?php foreach($navItems as $navItem): ?>
-        <li><a<?php echo ($navItem["name"] === $active ? "class=\"active\"" : "") ?>  href=<?php echo $navItem["link"] ?>><?php echo $navItem["name"] ?></a></li>
+        <li<?php echo ($navItem["name"] === $active ? " class=\"active\"" : "") ?>><a href=<?php echo $navItem["link"] ?>><?php echo $navItem["name"] ?></a></li>
 <?php endforeach; ?>
       </ul>
     </div><!--/.nav-collapse -->

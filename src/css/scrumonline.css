@@ -17,6 +17,9 @@
   }
 }
 
+/*
+ * Cards style
+ */
 div.card-container {
   margin-bottom: 20px;
 }
@@ -42,4 +45,21 @@ div.card .inner h1 {
   font-weight: bold;
   padding: 70px 0 70px;
   color: #FFFFFF;
+}
+
+/*
+ * Session style
+ */
+a.list-group-item span {
+  width: 33%;
+  display: inline-block;
+}
+a.list-group-item span.left {
+  text-align: left;
+}
+a.list-group-item span.center {
+  text-align: center;
+}
+a.list-group-item span.right {
+  text-align: right;
 }

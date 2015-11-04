@@ -19,5 +19,8 @@ RUN sudo rm -r /var/www/html && \
     
 # Run composer
 RUN cd /var/www && \
-    sudo php bin/composer install && \
+    sudo php bin/composer install >/home/user/composer_output.txt && \
     sudo chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP vendor
+    
+# Mount src to copy changes later
+VOLUME ["/home/user"]

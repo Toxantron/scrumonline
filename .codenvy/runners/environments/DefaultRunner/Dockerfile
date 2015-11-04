@@ -10,5 +10,14 @@
 #
 
 FROM codenvy/php56_apache2
-ENV CODENVY_APP_BIND_DIR /var/www/html
-VOLUME ["/var/www/html"]
+
+# Load source tree to web root
+ADD $src$ /var/www/
+RUN sudo rm -r /var/www/html && \
+    sudo mv /var/www/src /var/www/html && \
+    sudo chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP /var/www/html
+    
+# Run composer
+RUN cd /var/www && \
+    sudo php bin/composer install && \
+    sudo chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP vendor

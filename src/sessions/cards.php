@@ -1,6 +1,6 @@
 <?php 
-	include("header.html");
-	include("navigation.php");
+	include("../header.html");
+	include("../navigation.php");
 
 	$cards = [1,2,3,5,8,13,20,40,100];
 ?>
@@ -17,8 +17,7 @@
     </div>
   </div>
 
-<?php 
-	endforeach;
-
-   include("footer.php"); 
-?>
+<?php endforeach; ?>
+</div>
+</div>
+<?php include("footer.php"); ?>

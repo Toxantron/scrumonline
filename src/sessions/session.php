@@ -10,4 +10,12 @@ include "../navigation.php";
 
 <div class="container-fluid main">
   <h1>Session: <?php echo $id; ?> - <?php echo $session->getName(); ?></h1>
+  
+  <ul>
+<?php foreach($session->getMembers() as $member): ?>
+    <li><?php echo $member->getName(); ?></li>
+<?php endforeach; ?>
+  </ul>
 </div>
+  
+<?php include("../footer.html"); ?>

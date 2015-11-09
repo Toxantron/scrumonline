@@ -23,4 +23,6 @@ RUN cd /var/www && \
     sudo chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP vendor
     
 # Mount src to copy changes later
-VOLUME ["/home/user"]
+RUN cd /home/user && mkdir src
+ENV CODENVY_APP_BIND_DIR /home/user/src
+VOLUME ["/home/user/src"]

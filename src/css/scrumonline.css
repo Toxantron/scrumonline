@@ -51,7 +51,7 @@ div.card .inner h1 {
  * Session style
  */
 a.list-group-item span {
-  width: 33%;
+  width: 30%;
   display: inline-block;
 }
 a.list-group-item span.left {

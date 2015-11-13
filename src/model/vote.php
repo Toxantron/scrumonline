@@ -40,6 +40,7 @@ class Vote
     public function setPoll($poll)
     {
         $this->poll = $poll;
+        $poll->getVotes()->add($this);
     }
   
     // Getter and setter for value field
@@ -50,5 +51,6 @@ class Vote
     public function setMember($member)
     {
         $this->member = $member;
+        $member->getVotes()->add($this);
     }
 }

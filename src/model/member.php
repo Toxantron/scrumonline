@@ -40,6 +40,7 @@ class Member
     public function setSession($session)
     {
         $this->session = $session;
+        $session->getMembers()->add($this);
     }
   
     // Getter for votes association

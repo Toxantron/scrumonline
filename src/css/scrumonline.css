@@ -24,16 +24,18 @@ div.card-container {
   margin-bottom: 20px;
 }
 
+div.card-container h2 {
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+
 div.card {
   border: 2px solid black;
   border-radius: 15px;
-  height: 200px;
-  width: 130px;
   margin-left: auto;
   margin-right: auto;
-  cursor: pointer;
 }
-
 div.card .inner {
   margin: -10px 5px 0;
   border-radius: 30px;
@@ -45,6 +47,42 @@ div.card .inner h1 {
   font-weight: bold;
   padding: 70px 0 70px;
   color: #FFFFFF;
+}
+
+div.card, div.card-flip {
+  height: 200px;
+  width: 130px;
+}
+
+
+/* Card flip */
+div.card-overview {
+  perspective: 1000;
+}
+div.card.front, div.card.back {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+div.card.front {
+  z-index: 2;
+}
+div.card.back {
+  transform: rotateY(180deg);
+}
+div.card-flip{
+  transition: 1s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+div.card-flip.flipped {
+  transform: rotateY(180deg);
+}
+
+/* Selectable card */
+div.card.selectable {
+  cursor: pointer;
 }
 
 /*

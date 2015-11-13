@@ -1,16 +1,10 @@
 <?php
-require_once "../bootstrap.php";
+require_once "controller.php";
 
 $name = $_POST["name"];
 $private = $_POST["isPrivate"] == "on";
 
-$session = new Session();
-$session->setName($name);
-$session->setIsPrivate($private);
-$session->setLastAction(new DateTime());
-
-$entityManager->persist($session);
-$entityManager->flush();
+$session = $controller->createSession($name, $private);
 
 header("Location: /sessions/session.php?id=" . $session->getId());
 ?>

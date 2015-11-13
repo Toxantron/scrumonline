@@ -11,7 +11,7 @@
 <?php foreach($cards as $card): ?>
   <div class="col-lg-2 col-md-3 col-xs-4">
     <div class="card-container">
-      <div class="card">
+      <div class="card selectable">
       	<div class="inner"><h1><?= $card ?></h1></div>
       </div>
     </div>

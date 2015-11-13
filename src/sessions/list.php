@@ -1,8 +1,7 @@
 <?php
-require_once "../bootstrap.php";
+require_once "controller.php";
 
-$sessionRepo = $entityManager->getRepository("Session");
-$sessions = $sessionRepo->findAll();
+$sessions = $controller->getAllSessions();
 
 $active = "Sessions";
 
@@ -18,9 +17,9 @@ include "../navigation.php";
       <a class="list-group-item" href=<?php echo ("\"session.php?id=" . $session->getId() . "\"") ?>>
         <span class="left"><strong><?php echo $session->getName()?></strong></span>
         <span class="center"><strong><?php echo $session->getMembers()->count() ?></strong></span>
-<?php if($session->getIsPrivate() == true): ?>
+    <?php if($session->getIsPrivate() == true): ?>
         <span class="right"><span class="glyphicon glyphicon-lock"></span></span>
-<?php endif; ?>
+    <?php endif; ?>
       </a>
 <?php endforeach ?>
     </div>

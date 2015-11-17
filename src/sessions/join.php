@@ -1,20 +1,19 @@
 <?php
-require_once "../bootstrap.php";
+require_once "controller.php";
 
 $id = $_POST["id"];
-$name = $_POST["member-name"];
-
-$session = $entityManager->find("Session", $id);
-
-$member = new Member();
-$member->setName($name);
-$member->setSession($session);
-
-$entityManager->persist($member);
-$entityManager->flush();
 
 session_start();
-$_SESSION["member"] = $member->getId();
+// Check for existing session
+if(!isset($_SESSION["id"]) || $_SESSION["id"] != $id)
+{
+   $name = $_POST["member-name"];
 
-header("Location: /sessions/cards.php?id=" . $session->getId());
+   $resultArray = $controller->addMember($id, $name);
+   
+   $_SESSION["id"] = $resultArray["session"]->getId();
+   $_SESSION["member"] = $resultArray["$member"]->getId();
+}
+
+header("Location: /sessions/cards.php?");
 ?>

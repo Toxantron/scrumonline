@@ -5,7 +5,6 @@
 	$cards = [1,2,3,5,8,13,20,40,100];
 ?>
 
-<!-- Add your site or application content here -->
 <div class="container-fluid main">
 <div id="selection" class="row">
 <?php foreach($cards as $card): ?>
@@ -20,4 +19,8 @@
 <?php endforeach; ?>
 </div>
 </div>
-<?php include("footer.php"); ?>
+
+<?php 
+inlcude("scripts.php");
+include("footer.html"); 
+?>

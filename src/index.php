@@ -69,4 +69,7 @@
     </div>
   </div>
 
-<?php include("footer.html"); ?>
+<?php 
+inlcude("scripts.php");
+include("footer.html"); 
+?>

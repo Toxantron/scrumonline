@@ -41,6 +41,24 @@ class SessionController
     
       return $session;
   }
+  
+  // Add a member with this name to the session
+  public function addMember($id, $name)
+  {
+      $session = $entityManager->find("Session", $id);
+
+      $member = new Member();
+      $member->setName($name);
+      $member->setSession($session);
+
+      $entityManager->persist($member);
+      $entityManager->flush();
+    
+      return [
+        "session" => $session,
+        "member" => $member
+      ];
+  }
 }
 
 $controller = new SessionController($entityManager);

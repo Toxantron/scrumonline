@@ -9,37 +9,50 @@ include "../navigation.php";
 ?>
 
 <div class="container-fluid main">
-  <div class="col-md-8 col-md-offset-2 col-xs-12">
-    <h1><?php echo $id . " - " . $session->getName(); ?></h1>
-  
-    <div class="row">
-      <div class="card-overview">
-        <?php foreach($session->getMembers() as $member): ?>
-        <div class="col-lg-2 col-md-3 col-xs-4">
-        
-          <div id="<?php echo $member->getId(); ?>" class="card-container">
-            <div class="card-flip">
-              <div class="card front">
-      	       <div class="inner"><h1>?</h1></div>
-              </div>
-              <div class="card back">
-      	       <div class="inner"><h1><?php echo $member->getId(); ?></h1></div>
-              </div>
-            </div>
-            <h2><?php echo $member->getName(); ?></h2>
-          </div>
-            
-        </div>
-        <?php endforeach; ?>
-      </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 col-xs-12">
+      <h1><?php echo $id . " - " . $session->getName(); ?></h1>
     </div>
   </div>
-</div>
+      
+  <div data-ng-app="master-view" class="row">
+    <div class="col-md-8 col-md-offset-2 col-xs-12">
+      
+      <div class="card-overview" data-ng-init="votes = [
+      <?php
+        // Init model from db
+        foreach($session->getMembers() as $member)
+          echo ('{id: ' . $member->getId() . ', name: \'' . $member->getName() . '\', value: 0, placed: false},');
+      ?>]">
+
+        <div data-ng-repeat="vote in votes track by vote.id" class="col-lg-2 col-md-3 col-xs-4">        
+          <div class="card-container">
+            <div class="card-flip">
+              <div class="card front">
+      	       <div data-ng-if="vote.placed" class="inner"><h1>?</h1></div>
+              </div>
+              <div class="card back">
+      	       <div class="inner"><h1 data-ng-bind="vote.value"></h1></div>
+              </div>
+            </div>
+            <h2 data-ng-bind="vote.name"></h2>
+          </div>            
+        </div>
+
+      </div>
         
+    </div>
+  </div>
+        
+</div>
+  
+<?php inlcude("scripts.php"); ?>
 <script type="text/javascript">
+  var app = angular.module('master-view', []);
+  app.controller('')
+  
   setInterval(function(){
     $(".card-flip").toggleClass("flipped");
-}, 5000)
+}, 500)
 </script>
-  
-<?php include("../footer.html"); ?>
+<?php include("footer.html"); ?>

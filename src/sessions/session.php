@@ -22,12 +22,12 @@ include "../navigation.php";
       <?php
         // Init model from db
         foreach($session->getMembers() as $member)
-          echo ('{id: ' . $member->getId() . ', name: \'' . $member->getName() . '\', value: 0, placed: false},');
+          echo ('{id: ' . $member->getId() . ', name: \'' . $member->getName() . '\', value: 0, placed: false, flipped: false},');
       ?>]">
 
         <div data-ng-repeat="vote in votes track by vote.id" class="col-lg-2 col-md-3 col-xs-4">        
           <div class="card-container">
-            <div class="card-flip">
+            <div class="card-flip" data-ngClass="{flipped: flipped}">
               <div class="card front">
       	       <div data-ng-if="vote.placed" class="inner"><h1>?</h1></div>
               </div>
@@ -49,10 +49,12 @@ include "../navigation.php";
 <?php inlcude("scripts.php"); ?>
 <script type="text/javascript">
   var app = angular.module('master-view', []);
-  app.controller('')
-  
-  setInterval(function(){
-    $(".card-flip").toggleClass("flipped");
-}, 500)
+  app.controller('pollCtrl', function($scope, $http){
+    setInterval(function(){
+      $http.get("/polls/current.php").success(function(){
+        $scope.votes[0].flipped = true;
+      });
+  	 }, 1000)
+  });
 </script>
 <?php include("footer.html"); ?>

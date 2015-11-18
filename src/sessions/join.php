@@ -15,5 +15,5 @@ if(!isset($_SESSION["id"]) || $_SESSION["id"] != $id)
    $_SESSION["member"] = $resultArray["member"]->getId();
 }
 
-header("Location: /sessions/cards.php?");
+header("Location: /sessions/cards.php");
 ?>

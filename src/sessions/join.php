@@ -12,7 +12,7 @@ if(!isset($_SESSION["id"]) || $_SESSION["id"] != $id)
    $resultArray = $controller->addMember($id, $name);
    
    $_SESSION["id"] = $resultArray["session"]->getId();
-   $_SESSION["member"] = $resultArray["$member"]->getId();
+   $_SESSION["member"] = $resultArray["member"]->getId();
 }
 
 header("Location: /sessions/cards.php?");

@@ -51,7 +51,7 @@ include "../navigation.php";
   var app = angular.module('master-view', []);
   app.controller('pollCtrl', function($scope, $http){
     setInterval(function(){
-      $http.get("/polls/current.php").success(function(){
+      $http.get("/polls/current.php").success(function(response){
         $scope.votes[0].flipped = true;
       });
   	 }, 1000)

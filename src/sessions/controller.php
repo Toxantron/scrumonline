@@ -4,22 +4,8 @@ require_once __DIR__ . "/../bootstrap.php";
 /*
  * Session controller class to handle all session related operations
  */ 
-class SessionController
+class SessionController extends ControllerBase
 {
-  private $entityManager;
-  
-  function __construct($entityManager)
-  {
-      $this->entityManager = $entityManager;
-  }
-  
-  // Get session by id
-  public function getSession($id)
-  {
-      $session = $this->entityManager->find("Session", $id);
-      return $session;
-  }
-  
   // Get all sessions from db
   public function getAllSessions()
   {
@@ -36,8 +22,7 @@ class SessionController
       $session->setIsPrivate($private);
       $session->setLastAction(new DateTime());
 
-      $this->entityManager->persist($session);
-      $this->entityManager->flush();
+      $this->save($session);
     
       return $session;
   }
@@ -51,8 +36,7 @@ class SessionController
       $member->setName($name);
       $member->setSession($session);
 
-      $entityManager->persist($member);
-      $entityManager->flush();
+      $this->save($member);
     
       return [
         "session" => $session,

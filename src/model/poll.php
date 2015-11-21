@@ -53,7 +53,7 @@ class Poll
     public function setSession($session)
     {
         $this->session = $session;
-        $session->getPolls()->add();
+        $session->getPolls()->add($this);
     }
   
     // Getter and setter for votes association

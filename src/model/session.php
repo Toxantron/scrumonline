@@ -14,6 +14,7 @@ class Session
     /** @Column(type="boolean") **/
     protected $isPrivate;
   
+  
     /** @Column(type="datetime") **/ 
     protected $lastAction;
     
@@ -22,6 +23,9 @@ class Session
   
     /** @OnToMany(targetEntity="Poll", mappedBy="session") **/
     protected $polls;
+  
+    /** @ManyToOne(targetEntity="Poll", fetch="EAGER") **/
+    protected $currentPoll;
   
     public function getId()
     {
@@ -68,5 +72,15 @@ class Session
     public function getPolls()
     {
     	  return $this->polls;
+    }
+  
+    // Getter and setter for currentPoll field
+    public function getCurrentPoll()
+    {
+    	  return $this->currentPoll;
+    }
+    public function setCurrentPoll($currentPoll)
+    {
+        $this->currentPoll = $currentPoll;
     }
 }

@@ -29,3 +29,38 @@ require_once __DIR__ . "/model/member.php";
 require_once __DIR__ . "/model/poll.php";
 require_once __DIR__ . "/model/session.php";
 require_once __DIR__ . "/model/vote.php";
+
+// Create controller base class
+class ControllerBase
+{
+  protected $entityManager;
+  
+  function __construct($entityManager)
+  {
+      $this->entityManager = $entityManager;
+  }
+  
+  // Get session by id
+  public function getSession($id)
+  {
+      $session = $this->entityManager->find("Session", $id);
+      return $session;
+  }
+  
+  // Save only a single entity
+  protected function save($entity)
+  {
+      $entityManager->persist($entity);
+      $entityManager->flush();
+  }
+  
+  // Save an array of entities
+  protected function saveAll(array $entities)
+  {
+      foreach($entities as $entity)
+      {
+          $entityManager->persist($entity);
+      }
+      $entityManager->flush();
+  }
+}

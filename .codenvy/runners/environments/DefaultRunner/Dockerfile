@@ -24,5 +24,5 @@ RUN cd /var/www && \
     
 # Mount src to copy changes later
 RUN cd /home/user && mkdir src
-ENV CODENVY_APP_BIND_DIR /home/user/src
+ENV CODENVY_APP_BIND_DIR /home/user/scrum_online
 VOLUME ["/home/user/src"]

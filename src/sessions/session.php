@@ -8,26 +8,38 @@ include "../header.html";
 include "../navigation.php";
 ?>
 
-<div class="container-fluid main">
+<div data-ng-app="master-view" class="container-fluid main">
+  <!-- Headline -->
   <div class="row">
     <div class="col-md-8 col-md-offset-2 col-xs-12">
       <h1><?php echo $id . " - " . $session->getName(); ?></h1>
     </div>
   </div>
       
-  <div data-ng-app="master-view" class="row">
+  <!-- Poll control -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 col-xs-12">
+      <div data-ng-controller="pollController">
+        <form role="form" class="form-inline">
+          <div class="form-group">
+            <label for="topic">Topic:</label>
+            <input type="text" class="form-control" data-ng-model="topic" placeholder="#4711 Create foo">
+            <button class="btn btn-default" data-ng-click="startPoll()">Start</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Live poll view -->
+  <div class="row">
     <div class="col-md-8 col-md-offset-2 col-xs-12">
       
-      <div class="card-overview" data-ng-init="votes = [
-      <?php
-        // Init model from db
-        foreach($session->getMembers() as $member)
-          echo ('{id: ' . $member->getId() . ', name: \'' . $member->getName() . '\', value: 0, placed: false, flipped: false},');
-      ?>]">
+      <div class="card-overview" data-ng-controller="pollController">
 
         <div data-ng-repeat="vote in votes track by vote.id" class="col-lg-2 col-md-3 col-xs-4">        
           <div class="card-container">
-            <div class="card-flip" data-ngClass="{flipped: flipped}">
+            <div class="card-flip" data-ng-class="{flipped: vote.flipped}">
               <div class="card front">
       	       <div data-ng-if="vote.placed" class="inner"><h1>?</h1></div>
               </div>
@@ -46,15 +58,20 @@ include "../navigation.php";
         
 </div>
   
-<?php inlcude("scripts.php"); ?>
+<?php include "../scripts.html"; ?>
 <script type="text/javascript">
   var app = angular.module('master-view', []);
-  app.controller('pollCtrl', function($scope, $http){
-    setInterval(function(){
-      $http.get("/polls/current.php").success(function(response){
-        $scope.votes[0].flipped = true;
-      });
-  	 }, 1000)
-  });
+
+  // Controller for current poll
+  app.controller('pollController', ['$scope', '$http', function($scope, $http) {
+    // Int model from db
+    $scope.id = <?php echo $session->getId(); ?>; 
+     
+    $scope.startPoll = function() { startPoll($scope, $http); };
+    
+    $scope.votes = [];
+    
+    pollVotes($scope, $http, 10);
+  }]);
 </script>
-<?php include("footer.html"); ?>
+<?php include "../footer.html"; ?>

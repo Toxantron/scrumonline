@@ -1,6 +1,6 @@
 <?php 
-	include("header.html");
-	include("navigation.php");
+	include "header.html";
+	include "navigation.php";
 ?>
   <!-- Add your site or application content here -->
   <div class="container-fluid main" >
@@ -70,6 +70,6 @@
   </div>
 
 <?php 
-inlcude("scripts.php");
-include("footer.html"); 
+include "scripts.html";
+include "footer.html"; 
 ?>

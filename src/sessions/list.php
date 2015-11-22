@@ -27,6 +27,6 @@ include "../navigation.php";
 </div>
 
 <?php 
-inlcude("scripts.php");
-include("footer.html"); 
+include "../scripts.html";
+include "../footer.html"; 
 ?>

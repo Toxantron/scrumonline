@@ -21,7 +21,7 @@ class Session
     /** @OneToMany(targetEntity="Member", mappedBy="session") **/
     protected $members;
   
-    /** @OnToMany(targetEntity="Poll", mappedBy="session") **/
+    /** @OneToMany(targetEntity="Poll", mappedBy="session") **/
     protected $polls;
   
     /** @ManyToOne(targetEntity="Poll", fetch="EAGER") **/

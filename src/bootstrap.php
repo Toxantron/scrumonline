@@ -50,8 +50,8 @@ class ControllerBase
   // Save only a single entity
   protected function save($entity)
   {
-      $entityManager->persist($entity);
-      $entityManager->flush();
+      $this->entityManager->persist($entity);
+      $this->entityManager->flush();
   }
   
   // Save an array of entities
@@ -59,8 +59,8 @@ class ControllerBase
   {
       foreach($entities as $entity)
       {
-          $entityManager->persist($entity);
+          $this->entityManager->persist($entity);
       }
-      $entityManager->flush();
+      $this->entityManager->flush();
   }
 }

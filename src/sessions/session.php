@@ -3,12 +3,14 @@ require_once "controller.php";
 
 $id = $_GET["id"];
 $session = $controller->getSession($id);
+$currentPoll = $session->getCurrentPoll();
+$topic = is_null($currentPoll) ? "null" : "'".$currentPoll->getTopic()."'";
 
 include "../header.html";
 include "../navigation.php";
 ?>
 
-<div data-ng-app="master-view" class="container-fluid main">
+<div class="container-fluid main"  data-ng-app="scrum-online"><div data-ng-controller="pollController">
   <!-- Headline -->
   <div class="row">
     <div class="col-md-8 col-md-offset-2 col-xs-12">
@@ -19,15 +21,13 @@ include "../navigation.php";
   <!-- Poll control -->
   <div class="row">
     <div class="col-md-8 col-md-offset-2 col-xs-12">
-      <div data-ng-controller="pollController">
-        <form role="form" class="form-inline">
-          <div class="form-group">
-            <label for="topic">Topic:</label>
-            <input type="text" class="form-control" data-ng-model="topic" placeholder="#4711 Create foo">
-            <button class="btn btn-default" data-ng-click="startPoll()">Start</button>
-          </div>
-        </form>
-      </div>
+      <form role="form" class="form-inline">
+        <div class="form-group">
+          <label for="topic">Topic:</label>
+          <input type="text" class="form-control" data-ng-model="topic" placeholder="#4711 Create foo">
+          <button class="btn btn-default" data-ng-click="startPoll()">Start</button>
+        </div>
+      </form>
     </div>
   </div>
   
@@ -35,7 +35,7 @@ include "../navigation.php";
   <div class="row">
     <div class="col-md-8 col-md-offset-2 col-xs-12">
       
-      <div class="card-overview" data-ng-controller="pollController">
+      <div class="card-overview">
 
         <div data-ng-repeat="vote in votes track by vote.id" class="col-lg-2 col-md-3 col-xs-4">        
           <div class="card-container">
@@ -56,22 +56,18 @@ include "../navigation.php";
     </div>
   </div>
         
-</div>
+</div></div>
   
 <?php include "../scripts.html"; ?>
 <script type="text/javascript">
-  var app = angular.module('master-view', []);
-
   // Controller for current poll
-  app.controller('pollController', ['$scope', '$http', function($scope, $http) {
+  scrum.controller('pollController', ['$scope', '$http', function($scope, $http) {
     // Int model from db
-    $scope.id = <?php echo $session->getId(); ?>; 
-     
-    $scope.startPoll = function() { startPoll($scope, $http); };
-    
-    $scope.votes = [];
-    
-    pollVotes($scope, $http, 10);
+    $scope.id = <?= $session->getId() ?>;
+    $scope.topic = <?= $topic ?>;
+    $scope.startPoll = function() { startPoll($scope, $http); };    
+    $scope.votes = [];    
+    pollVotes($scope, $http);
   }]);
 </script>
 <?php include "../footer.html"; ?>

@@ -31,12 +31,26 @@ class SessionController extends ControllerBase
   public function addMember($id, $name)
   {
       $session = $this->getSession($id);
+    
+      // Check for existing member
+      foreach($session->getMembers() as $candidate)
+      {
+        if($candidate->getName() == $name)
+        {
+          $member = $candidate;
+          break;
+        }  
+      }
 
-      $member = new Member();
-      $member->setName($name);
-      $member->setSession($session);
-
-      $this->save($member);
+      // Create new member
+      if(!isset($member))
+      {
+        $member = new Member();
+        $member->setName($name);
+        $member->setSession($session);
+        
+        $this->save($member);
+      }
     
       return [
         "session" => $session,

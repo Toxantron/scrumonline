@@ -23,6 +23,6 @@ RUN cd /var/www && \
     sudo chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP vendor
     
 # Mount src to copy changes later
-RUN cd /home/user && mkdir src
+RUN cd /home/user && mkdir scrum_online
 ENV CODENVY_APP_BIND_DIR /home/user/scrum_online
 VOLUME ["/home/user/src"]

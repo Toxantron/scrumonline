@@ -47,6 +47,13 @@ class ControllerBase
       return $session;
   }
   
+  // Get member by id
+  public function getMember($id)
+  {
+      $member = $this->entityManager->find("Member", $id);
+      return $member;
+  }
+  
   // Save only a single entity
   protected function save($entity)
   {

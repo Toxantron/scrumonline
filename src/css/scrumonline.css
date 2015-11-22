@@ -84,6 +84,9 @@ div.card-flip.flipped {
 div.card.selectable {
   cursor: pointer;
 }
+div.card.selectable.active {
+  background: #ff3333;
+}
 
 /*
  * Session style

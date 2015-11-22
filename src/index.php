@@ -3,7 +3,7 @@
 	include "navigation.php";
 ?>
   <!-- Add your site or application content here -->
-  <div class="container-fluid main" >
+  <div class="container-fluid main" data-ng-app="scrum-online">
     
     <!-- Introduction -->
     <div class="row">
@@ -11,9 +11,9 @@
         <article>
           <p>
             <h2>Scrum Online</h2>
-            Welcome to my little planning poker web app. Use of this app is free of charge for everyone. I do accept donations but they
-            were not the main purpose of this page. As a scrum master just start a named session and invite your team to join you. It is
-            recommended to display the scrum master view on the big screen (TV or projector) and let everyone else join via smartphone.
+            Welcome to my little planning poker web app. Use of this app is free of charge for everyone. As a scrum master just start 
+            a named session and invite your team to join you. It is recommended to display the scrum master view on the big screen 
+            (TV or projector) and let everyone else join via smartphone.
           </p>
         </article>
       </div>

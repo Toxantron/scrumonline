@@ -2,18 +2,9 @@
 require_once "controller.php";
 
 $id = $_POST["id"];
+$name = $_POST["member-name"];
 
-session_start();
-// Check for existing session
-if(!isset($_SESSION["id"]) || $_SESSION["id"] != $id)
-{
-   $name = $_POST["member-name"];
+$resultArray = $controller->addMember($id, $name);
 
-   $resultArray = $controller->addMember($id, $name);
-   
-   $_SESSION["id"] = $resultArray["session"]->getId();
-   $_SESSION["member"] = $resultArray["member"]->getId();
-}
-
-header("Location: /sessions/cards.php");
+header("Location: /sessions/cards.php?sid=".$resultArray["session"]->getId()."&mid=".$resultArray["member"]->getId());
 ?>

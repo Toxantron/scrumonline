@@ -6,11 +6,11 @@ $session = $controller->getSession($id);
 $currentPoll = $session->getCurrentPoll();
 $topic = is_null($currentPoll) ? "null" : "'".$currentPoll->getTopic()."'";
 
-include "../header.html";
-include "../navigation.php";
+$active = "Sessions";
+include "../header.php";
 ?>
 
-<div class="container-fluid main"  data-ng-app="scrum-online"><div data-ng-controller="pollController">
+<div data-ng-controller="pollController" data-ng-init="id=<?= $session->getId() ?>; topic='<?= $topic ?>'">
   <!-- Headline -->
   <div class="row">
     <div class="col-md-8 col-md-offset-2 col-xs-12">
@@ -56,18 +56,5 @@ include "../navigation.php";
     </div>
   </div>
         
-</div></div>
-  
-<?php include "../scripts.html"; ?>
-<script type="text/javascript">
-  // Controller for current poll
-  scrum.controller('pollController', ['$scope', '$http', function($scope, $http) {
-    // Int model from db
-    $scope.id = <?= $session->getId() ?>;
-    $scope.topic = <?= $topic ?>;
-    $scope.startPoll = function() { startPoll($scope, $http); };    
-    $scope.votes = [];    
-    pollVotes($scope, $http);
-  }]);
-</script>
+</div>
 <?php include "../footer.html"; ?>

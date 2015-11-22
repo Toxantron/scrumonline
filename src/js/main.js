@@ -1,5 +1,3 @@
-var scrum = angular.module('scrum-online', []);
-
 function pollVotes($scope, $http) {
   $http.get("/polls/current.php?id=" + $scope.id).success(function(response){
       $scope.votes = response;
@@ -44,3 +42,28 @@ function fetchTopic($scope, $http) {
     }, 1000);
   });
 }
+
+var scrum = function() {
+  var app = angular.module('scrum-online', []);
+  
+  // Controller for current poll
+  app.controller('pollController', ['$scope', '$http', function($scope, $http) {
+    // Int model from config
+    $scope.startPoll = function() { startPoll($scope, $http); };    
+    $scope.votes = [];    
+    pollVotes($scope, $http);
+  }]);
+  
+  // Controller for current poll
+  app.controller('cardController', ['$scope', '$http', function($scope, $http) {
+    // Initt model
+    $scope.votable = false;
+    
+    $scope.selectCard = function(cardValue){ selectCard($scope, $http, cardValue); };    
+    $scope.placeVote = function() { placeVote($scope, $http); };
+    
+    fetchTopic($scope, $http);
+  }]); 
+  
+  return app;
+}();

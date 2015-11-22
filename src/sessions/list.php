@@ -4,9 +4,7 @@ require_once "controller.php";
 $sessions = $controller->getAllSessions();
 
 $active = "Sessions";
-
-include "../header.html";
-include "../navigation.php";
+include "../header.php";
 ?>
   
 <div class="container-fluid main">
@@ -26,7 +24,4 @@ include "../navigation.php";
   </div>
 </div>
 
-<?php 
-include "../scripts.html";
-include "../footer.html"; 
-?>
+<?php include "../footer.html"; ?>

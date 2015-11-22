@@ -3,7 +3,7 @@ function pollVotes($scope, $http) {
       $scope.votes = response;
       setTimeout(function(){
         pollVotes($scope, $http);
-      }, 500);
+      }, 250);
   });
 }
 
@@ -39,7 +39,7 @@ function fetchTopic($scope, $http) {
     
     setTimeout(function(){
       fetchTopic($scope, $http);
-    }, 1000);
+    }, 500);
   });
 }
 

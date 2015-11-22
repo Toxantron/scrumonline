@@ -60,4 +60,5 @@ $navItems = [
 </nav>
 
 <!-- Add your site or application content here -->
-<div id="view" class="container-fluid main" data-ng-app="scrum-online">
+<div data-ng-app="scrum-online">
+  <div class="container-fluid main">

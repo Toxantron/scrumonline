@@ -17,7 +17,7 @@ $conn = array(
     'dbname' => 'scrum_online',
     'user' => 'toxantron',
     'password' => 'scrumonline',
-    'host' => 'fuchsserver.de',
+    'host' => 'localhost',
     'driver' => 'pdo_mysql',
 );
 

@@ -45,13 +45,24 @@ div.card .inner {
 
 div.card .inner h1 {
   font-weight: bold;
-  padding: 70px 0 70px;
+  padding: 45px 0 45px;
   color: #FFFFFF;
+}
+@media (min-width: 992px) {
+  div.card .inner h1 {
+    padding: 70px 0 70px;
+  }
 }
 
 div.card, div.card-flip {
-  height: 200px;
-  width: 130px;
+    height: 150px;
+    width: 100px;
+}
+@media (min-width: 992px) {
+  div.card, div.card-flip {
+    height: 200px;
+    width: 130px;
+  }
 }
 
 
@@ -84,8 +95,11 @@ div.card-flip.flipped {
 div.card.selectable {
   cursor: pointer;
 }
-div.card.selectable.active {
+div.card.active {
   background: #ff3333;
+}
+button.vote {
+  width: 100%;
 }
 
 /*

@@ -10,7 +10,8 @@ $active = "Sessions";
 include "../header.php";
 ?>
 
-<div data-ng-controller="pollController" data-ng-init="id=<?= $session->getId() ?>; topic='<?= $topic ?>'">
+<div data-ng-controller="pollController">
+  <div data-ng-init="id=<?= $session->getId() ?>; topic=<?= $topic ?>"></div>
   <!-- Headline -->
   <div class="row">
     <div class="col-md-8 col-md-offset-2 col-xs-12">

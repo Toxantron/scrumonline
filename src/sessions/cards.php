@@ -3,7 +3,7 @@ include "controller.php";
 
 $session = $controller->getSession($_GET["sid"]);
 $currentPoll = $session->getCurrentPoll();
-$topic = is_null($currentPoll) ? "No topic" : $currentPoll->getTopic();
+$topic = is_null($currentPoll) ? "'No topic'" : "'".$currentPoll->getTopic()."'";
 $memberId = $_GET["mid"];
 
 $cards = [1,2,3,5,8,13,20,40,100];
@@ -12,10 +12,11 @@ $active = "Sessions";
 include "../header.php";
 ?>
 
-<div data-ng-controller="cardController" data-ng-init="id=<?= $session->getId(); member=<?= $memberId ?>; topic=<?= $topic ?>; cards=[<?php
+<div data-ng-controller="cardController">
+<div data-ng-init="id=<?= $session->getId() ?>; member=<?= $memberId ?>; topic=<?= $topic ?>; cards=[<?php
 foreach($cards as $card)
-  echo '{value: '.$card.', active: false;},';
-?>]">
+  echo '{value: '.$card.', active: false},';
+?>]"></div>
   <div class="row">
     <div class="col-md-8 col-md-offset-2 col-xs-12">
       <h2 data-ng-bind="topic"></h1>

@@ -50,19 +50,20 @@ var scrum = function() {
   app.controller('pollController', ['$scope', '$http', function($scope, $http) {
     // Int model from config
     $scope.startPoll = function() { startPoll($scope, $http); };    
-    $scope.votes = [];    
-    pollVotes($scope, $http);
+    $scope.votes = [];
+    
+    $scope.$watch('id', function() { pollVotes($scope, $http); });
   }]);
   
-  // Controller for current poll
+  // Controller for card view
   app.controller('cardController', ['$scope', '$http', function($scope, $http) {
-    // Initt model
+    // Init model
     $scope.votable = false;
     
     $scope.selectCard = function(cardValue){ selectCard($scope, $http, cardValue); };    
     $scope.placeVote = function() { placeVote($scope, $http); };
     
-    fetchTopic($scope, $http);
+    $scope.$watch('id', function() { fetchTopic($scope, $http); });
   }]); 
   
   return app;

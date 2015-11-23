@@ -76,9 +76,6 @@ div.card.front, div.card.back {
   top: 0;
   left: 0;
 }
-div.card.front {
-  z-index: 2;
-}
 div.card.back {
   transform: rotateY(180deg);
 }

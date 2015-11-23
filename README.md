@@ -17,7 +17,7 @@ For every story the Scrum Master will than start a poll and each member of the s
 The easiest way is to deploy the application to your webserver and execute the following commands from the root directory.
 <pre>
 $ php bin/composer install
-$ vendor/bin/doctrine orm:schema-tool:update --force
+$ vendor/bin/doctrine orm:schema-tool:create
 </pre>
 The web root should point to the src directory.
 

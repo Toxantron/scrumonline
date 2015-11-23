@@ -11,7 +11,28 @@ class SessionController extends ControllerBase
   {
       $sessionRepo = $this->entityManager->getRepository("Session");
       $sessions = $sessionRepo->findAll();
-      return $sessions;
+    
+      // Delete old sessions, filter active ones
+      $index = 0;
+      $activeSessions = array();
+      foreach($sessions as $session)
+      {
+         if($session->getLastAction()->diff(new DateTime())->h > 2)
+           $this->deleteSession($session);
+         else
+           $activeSessions[$index++] = $session;
+      }
+    
+      return $activeSessions;
+  }
+  
+  private function deleteSession($session)
+  {
+      $session->setCurrentPoll(null);
+      $this->save($session);
+    
+      $this->entityManager->remove($session);
+      $this->entityManager->flush();
   }
   
   // Create session with name and private flag

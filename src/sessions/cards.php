@@ -33,7 +33,7 @@ foreach($cards as $card)
   </div>
   <div data-ng-if="votable" class="row">
     <div class="col-md-2 col-md-offset-5 col-xs-4 col-xs-offset-4">
-      <button class="btn btn-lg btn-default" data-ng-click="placeVote()">Vote!</button>
+      <button class="btn btn-lg btn-default vote" data-ng-click="placeVote()">Vote!</button>
     </div>
   </div>
 </div>

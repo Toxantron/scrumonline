@@ -14,7 +14,7 @@ class Member
     /** @ManyToOne(targetEntity="Session", inversedBy="members") **/
     protected $session;
   
-    /** @OneToMany(targetEntity="Vote", mappedBy="member") **/
+    /** @OneToMany(targetEntity="Vote", mappedBy="member", orphanRemoval=true) **/
     protected $votes;
   
     public function getId()

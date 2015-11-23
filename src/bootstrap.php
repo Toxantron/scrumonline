@@ -2,22 +2,20 @@
 // bootstrap.php
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Proxy\AbstractProxyFactory;
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
 // Create a simple "default" Doctrine ORM configuration for Annotations
-$isDevMode = true;
-$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/model"), $isDevMode);
-// or if you prefer yaml or XML
-//$config = Setup::createXMLMetadataConfiguration(array(__DIR__."/config/xml"), $isDevMode);
-//$config = Setup::createYAMLMetadataConfiguration(array(__DIR__."/config/yaml"), $isDevMode);
+$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/model"));
+$config->setAutoGenerateProxyClasses(AbstractProxyFactory::AUTOGENERATE_NEVER);
 
 // database configuration parameters
 $conn = array(
     'dbname' => 'scrum_online',
     'user' => 'toxantron',
     'password' => 'scrumonline',
-    'host' => 'localhost',
+    'host' => 'fuchsserver.de',
     'driver' => 'pdo_mysql',
 );
 

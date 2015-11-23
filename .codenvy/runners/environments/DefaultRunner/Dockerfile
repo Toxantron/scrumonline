@@ -17,9 +17,10 @@ RUN sudo rm -r /var/www/html && \
     sudo mv /var/www/src /var/www/html && \
     sudo chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP /var/www/html
     
-# Run composer
+# Run composer and doctrine
 RUN cd /var/www && \
     sudo php bin/composer install -q && \
+    sudo php vendor/bin/doctrine orm:generate-proxies && \
     sudo chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP vendor
     
 # Mount src to copy changes later

@@ -17,7 +17,7 @@ class Poll
     /** @ManyToOne(targetEntity="Session", inversedBy="polls") **/
     protected $session;
   
-    /** @OneToMany(targetEntity="Vote", mappedBy="poll") **/
+    /** @OneToMany(targetEntity="Vote", mappedBy="poll", fetch="EAGER") **/
     protected $votes;
   
     public function getId()

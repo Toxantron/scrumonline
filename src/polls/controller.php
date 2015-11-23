@@ -16,6 +16,8 @@ class PollController extends ControllerBase
     $poll->setTopic($topic);
     $poll->setSession($session);
     
+    // Update session
+    $session->setLastAction(new DateTime());
     $session->setCurrentPoll($poll);
     
     // Set or result result

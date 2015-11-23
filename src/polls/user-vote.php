@@ -41,17 +41,17 @@ class UserVote
   }
   
   // Id of the member
-  public $id;
+  public integer $id;
   
   // Name of the user
-  public $name;
+  public string $name;
   
   // Flag if value was set allready
-  public $placed;
+  public bool $placed;
   
   // Value of the vote
-  public $value;
+  public float $value;
   
   // For ui only
-  public $flipped;
+  public bool $flipped;
 }

@@ -18,13 +18,13 @@ class Session
     /** @Column(type="datetime") **/ 
     protected $lastAction;
     
-    /** @OneToMany(targetEntity="Member", mappedBy="session") **/
+    /** @OneToMany(targetEntity="Member", mappedBy="session", fetch="EAGER", orphanRemoval=true) **/
     protected $members;
   
-    /** @OneToMany(targetEntity="Poll", mappedBy="session") **/
+    /** @OneToMany(targetEntity="Poll", mappedBy="session", orphanRemoval=true) **/
     protected $polls;
   
-    /** @ManyToOne(targetEntity="Poll", fetch="EAGER") **/
+    /** @ManyToOne(targetEntity="Poll", fetch="EAGER", cascade={"remove"}) **/
     protected $currentPoll;
   
     public function getId()

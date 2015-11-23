@@ -40,7 +40,7 @@ include "../header.php";
 
         <div data-ng-repeat="vote in votes track by vote.id" class="col-lg-2 col-md-3 col-xs-4">        
           <div class="card-container">
-            <div class="card-flip" data-ng-class="{flipped: vote.flipped}">
+            <div class="card-flip" data-ng-class="{flipped: flipped}">
               <div class="card front">
       	       <div data-ng-if="vote.placed" class="inner"><h1>?</h1></div>
               </div>

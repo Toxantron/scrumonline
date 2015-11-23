@@ -1,6 +1,7 @@
 function pollVotes($scope, $http) {
   $http.get("/polls/current.php?id=" + $scope.id).success(function(response){
-      $scope.votes = response;
+      $scope.votes = response.votes;
+      $scope.flipped = response.flipped;
       setTimeout(function(){
         pollVotes($scope, $http);
       }, 200);
@@ -14,8 +15,8 @@ function startPoll($scope, $http) {
     {
       var vote = $scope.votes[index];
       vote.placed = false;
-      vote.flipped = false;
     }
+    $scope.flipped = false;
   });
 }
 

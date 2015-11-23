@@ -4,7 +4,6 @@ class UserVote
   private function __construct()
   {
     $this->placed = false;
-    $this->flipped = false;
     $this->value = 0;
   }
   
@@ -19,9 +18,6 @@ class UserVote
     if(is_null($currentPoll))
       return $vote;
   
-    // Flip cards if poll was completed
-    $vote->flipped = $currentPoll->getResult() > 0;
-    
     // Find matching member in poll
     foreach($currentPoll->getVotes() as $candidate)
     {
@@ -51,7 +47,4 @@ class UserVote
   
   // Value of the vote
   public $value;
-  
-  // For ui only
-  public $flipped;
 }

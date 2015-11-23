@@ -15,4 +15,8 @@ foreach($session->getMembers() as $member)
   $votes[$index++] = UserVote::create($member, $currentPoll);
 }
 
-echo json_encode($votes);
+$response = new stdClass();
+$response->votes = $votes;
+$response->flipped = $currentPoll->getResult() > 0;
+
+echo json_encode($response);

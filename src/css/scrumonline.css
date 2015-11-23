@@ -17,6 +17,10 @@
   }
 }
 
+div.row.topic {
+  margin-bottom: 20px;
+}
+
 /*
  * Cards style
  */

@@ -20,7 +20,7 @@ include "../header.php";
   </div>
       
   <!-- Poll control -->
-  <div class="row">
+  <div class="row topic">
     <div class="col-md-8 col-md-offset-2 col-xs-12">
       <form role="form" class="form-inline">
         <div class="form-group">

@@ -56,6 +56,14 @@ include "../header.php";
         
     </div>
   </div>
+            
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 col-xs-12">
+      <h2>Invite members</h1>
+      <p>Invite members to join your session. Session id: <strong><?= $id ?></strong></p>
+      <p>Or send them this link: <a href="http://www.fuchsserver.de/sessions/join.php?id=<?= $id ?>">www.fuchsserver.de/sessions/join.php?id=<?= $id ?></a>
+    </div>
+  </div>
         
 </div>
 <?php include "../footer.html"; ?>

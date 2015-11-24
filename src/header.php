@@ -18,18 +18,11 @@ $navItems = [
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <!-- Place favicon.ico in the root directory -->
-
-  <!-- Boiler plate style sheets -->
-  <link rel="stylesheet" href="/css/normalize.css">
-  <link rel="stylesheet" href="/css/main.css">
+    
   <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
 
-  <!-- Bootstrap style sheets -->
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-
-  <!--Custom styles -->
+  <!-- Style sheets -->
+  <link rel="stylesheet" href="/css/combined.css">
   <link rel="stylesheet" href="/css/scrumonline.css">
 </head>
 <body>
@@ -51,9 +44,9 @@ $navItems = [
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-<?php foreach($navItems as $navItem): ?>
+      <?php foreach($navItems as $navItem): ?>
         <li<?php echo (isset($active) && $navItem["name"] === $active ? " class=\"active\"" : "") ?>><a href=<?php echo $navItem["link"] ?>><?php echo $navItem["name"] ?></a></li>
-<?php endforeach; ?>
+      <?php endforeach; ?>
       </ul>
     </div><!--/.nav-collapse -->
   </div>

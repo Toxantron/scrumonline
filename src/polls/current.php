@@ -17,6 +17,6 @@ foreach($session->getMembers() as $member)
 
 $response = new stdClass();
 $response->votes = $votes;
-$response->flipped = $currentPoll->getResult() > 0;
+$response->flipped = is_null($currentPoll) ? false : $currentPoll->getResult() > 0;
 
 echo json_encode($response);

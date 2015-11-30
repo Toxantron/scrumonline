@@ -1,5 +1,5 @@
 # ScrumOnline
-PHP web app for planning poker. It includes a master view for the ScrumMaster and a simple responsive card view for the team. A deployed demo is available at http://www.fuchsserver.de 
+PHP web app for planning poker. It includes a master view for the ScrumMaster and a simple responsive card view for the team. A deployed demo is available at http://www.scrumpoker.online 
 
 ## Idea
 

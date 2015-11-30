@@ -19,6 +19,10 @@ div.row.topic {
   margin-bottom: 20px;
 }
 
+div.selectable {
+  cursor: pointer;
+}
+
 /*
  * Cards style
  */
@@ -75,8 +79,13 @@ div.card-overview {
 div.card.front, div.card.back {
   backface-visibility: hidden;
   position: absolute;
-  top: 0;
+  top: 15px;
   left: 0;
+}
+div.deletable-card{
+  position: relative;  
+  height: 212px;
+  width: 142px;
 }
 div.card.back {
   transform: rotateY(180deg);
@@ -91,14 +100,25 @@ div.card-flip.flipped {
 }
 
 /* Selectable card */
-div.card.selectable {
-  cursor: pointer;
-}
 div.card.active {
   background: #ff3333;
 }
 button.vote {
   width: 100%;
+}
+div.delete-member {
+  position: absolute;
+  height: 32px;
+  top: 0;
+  left: 85px;
+  font-size: 28px;
+  border-radius: 16px;
+  background-color: #FF0000;
+}
+@media (min-width: 992px) {
+  div.delete-member {
+    left: 115px;
+  }
 }
 
 /*

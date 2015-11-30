@@ -78,6 +78,14 @@ class SessionController extends ControllerBase
         "member" => $member
       ];
   }
+  
+  // Remove member from session
+  public function removeMember($id)
+  {
+    $member = $this->getMember($id);
+    $this->entityManager->remove($member);
+    $this->entityManager->flush();
+  }
 }
 
 $controller = new SessionController($entityManager);

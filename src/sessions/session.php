@@ -40,12 +40,17 @@ include "../header.php";
 
         <div data-ng-repeat="vote in votes track by vote.id" class="col-lg-2 col-md-3 col-xs-4">        
           <div class="card-container">
-            <div class="card-flip" data-ng-class="{flipped: flipped}">
-              <div class="card front">
-      	       <div data-ng-if="vote.placed" class="inner"><h1>?</h1></div>
+            <div class="deletable-card">
+              <div class="card-flip" data-ng-class="{flipped: flipped}">
+                <div class="card front">
+      	         <div data-ng-if="vote.placed" class="inner"><h1>?</h1></div>
+                </div>
+                <div class="card back">
+      	         <div class="inner"><h1 data-ng-bind="vote.value"></h1></div>
+                </div>
               </div>
-              <div class="card back">
-      	       <div class="inner"><h1 data-ng-bind="vote.value"></h1></div>
+              <div class="delete-member selectable" data-ng-click="remove(vote.id)">
+                <span class="glyphicon glyphicon-remove"></span>
               </div>
             </div>
             <h2 data-ng-bind="vote.name"></h2>
@@ -61,7 +66,7 @@ include "../header.php";
     <div class="col-md-8 col-md-offset-2 col-xs-12">
       <h2>Invite members</h1>
       <p>Invite members to join your session. Session id: <strong><?= $id ?></strong></p>
-      <p>Or send them this link: <a href="http://www.fuchsserver.de/sessions/join.php?id=<?= $id ?>">www.fuchsserver.de/sessions/join.php?id=<?= $id ?></a>
+      <p>Or send them this link: <a href="http://www.scrumpoker.online/sessions/join.php?id=<?= $id ?>">www.scrumpoker.online/sessions/join.php?id=<?= $id ?></a>
     </div>
   </div>
         

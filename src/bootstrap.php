@@ -5,19 +5,12 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Proxy\AbstractProxyFactory;
 
 require_once __DIR__ . "/../vendor/autoload.php";
+require_once __DIR__ . "/config.php";
 
 // Create a simple "default" Doctrine ORM configuration for Annotations
 $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/model"));
 $config->setAutoGenerateProxyClasses(AbstractProxyFactory::AUTOGENERATE_NEVER);
-
-// database configuration parameters
-$conn = array(
-    'dbname' => 'scrum_online',
-    'user' => 'toxantron',
-    'password' => 'scrumonline',
-    'host' => 'fuchsserver.de',
-    'driver' => 'pdo_mysql',
-);
+$config->setProxyDir(__DIR__ . '/proxies');
 
 // obtaining the entity manager
 $entityManager = EntityManager::create($conn, $config);

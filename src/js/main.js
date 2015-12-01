@@ -11,6 +11,7 @@ var scrum = function() {
       {
         var vote = $scope.votes[index];
         vote.placed = false;
+        vote.active = false;
       }
       $scope.flipped = false;
     });
@@ -19,6 +20,7 @@ var scrum = function() {
     $http.get("/polls/current.php?id=" + $scope.id).success(function(response){
       $scope.votes = response.votes;
       $scope.flipped = response.flipped;
+      $scope.consensus = response.consensus;
       setTimeout(function(){
         pollVotes($scope, $http);
       }, 200);

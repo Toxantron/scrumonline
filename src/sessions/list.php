@@ -8,7 +8,12 @@ include "../header.php";
 ?>
   
 <div class="row">
-  <div class="col-xs-12 col-md-8 col-md-offset-2"
+  <div class="col-xs-12 col-md-8 col-md-offset-2">
+    <div>
+      <span class="left"><strong>Name</strong></span>
+      <span class="center"><strong>Members</strong></span>
+      <span class="right"><strong>Private</strong></span>
+    </div>
     <div class="list-group">
     <?php foreach($sessions as $session): ?>
       <a class="list-group-item" href=<?php echo ("\"session.php?id=" . $session->getId() . "\"") ?>>

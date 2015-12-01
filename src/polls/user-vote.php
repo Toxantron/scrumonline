@@ -5,6 +5,7 @@ class UserVote
   {
     $this->placed = false;
     $this->value = 0;
+    $this->active = false;
   }
   
   // Create instance from member entity
@@ -47,4 +48,23 @@ class UserVote
   
   // Value of the vote
   public $value;
+  
+  // Member must explain his vote
+  public $active;
+}
+
+// Class for frequency of a certain card value
+class CardFrequency
+{
+  function CardFrequency($value)
+  {
+    $this->value = $value;
+    $this->count = 0;
+  }
+  
+  // Value of the card
+  public $value;
+  
+  // Number of votes in poll
+  public $count;
 }

@@ -26,6 +26,7 @@ include "../header.php";
         <div class="form-group">
           <label for="topic">Topic:</label>
           <input type="text" class="form-control" data-ng-model="topic" placeholder="#4711 Create foo">
+          <span data-ng-if="consensus" class="glyphicon glyphicon-ok"></span>
           <button class="btn btn-default" data-ng-click="startPoll()">Start</button>
         </div>
       </form>
@@ -42,10 +43,10 @@ include "../header.php";
           <div class="card-container">
             <div class="deletable-card">
               <div class="card-flip" data-ng-class="{flipped: flipped}">
-                <div class="card front">
+                <div class="card front" data-ng-class="{active: vote.active}">
       	         <div data-ng-if="vote.placed" class="inner"><h1>?</h1></div>
                 </div>
-                <div class="card back">
+                <div class="card back" data-ng-class="{active: vote.active}">
       	         <div class="inner"><h1 data-ng-bind="vote.value"></h1></div>
                 </div>
               </div>

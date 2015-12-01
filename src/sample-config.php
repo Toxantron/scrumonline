@@ -7,3 +7,5 @@ $conn = array(
     'host' => 'localhost',
     'driver' => 'pdo_mysql',
 );
+  
+$host = "www.scrumpoker.online";

@@ -20,11 +20,12 @@ The requires a couple of packages you need to install on you system. Those are:
 - MySQL-PDO
 
 ## Deployment
-The easiest way is to deploy the application to your webserver and execute the following commands from the root directory.
+The easiest way is to deploy the application to your webserver and execute the following commands from the root directory. Make sure to adjust the config.php to your requirments
 <pre>
 $ php bin/composer install
 $ vendor/bin/doctrine orm:schema-tool:create
 $ vendor/bin/doctrine orm:generate-proxies
+$ cp src/sample-config.php src/config.php
 </pre>
 The web root should point to the src directory.
 

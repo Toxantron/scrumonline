@@ -74,6 +74,99 @@ class PollController extends ControllerBase
       $currentPoll->setResult($sum / $count);
     } 
   }
+  
+  // Select highest or lowest estimates -  depends on direction of loop
+  private function selectLimits($votes, $frequency, $mostCommon)
+  {
+    // No card at all
+    if($frequency->count == 0)
+      return 0;
+    // This is the most common, no lowest found
+    if($frequency == $mostCommon)
+      return -1;
+    
+    foreach($votes as $vote)
+    {
+      if($vote->value == $frequency->value)
+        $vote->active = true;
+    }
+    return 1;
+  }
+  
+  // Evaluate the estimates once each vote was placed
+  private function evaluateEstimates($votes)
+  {
+    // Calculate frequency of each value
+    $sum = 0;
+    $cards = [1 => new CardFrequency(1), 2 => new CardFrequency(2), 3 => new CardFrequency(3), 5 => new CardFrequency(5), 
+              8 => new CardFrequency(8), 13 => new CardFrequency(13), 20 => new CardFrequency(20), 40 => new CardFrequency(40),
+              100 => new CardFrequency(100)];
+    foreach($votes as $vote)
+    {
+      $cards[$vote->value]->count++;
+      $sum += $vote->value;
+    }
+  
+    // Determine most common vote
+    foreach($cards as $card)
+    {
+      if(!isset($mostCommon) || $mostCommon->count < $card->count)
+        $mostCommon = $card;
+    }
+  
+    $min = 0; $max = 0;
+    // Iterate over frequencies and find lowest
+    foreach($cards as $card)
+    {
+      $min = $this->selectLimits($votes, $card, $mostCommon);
+      if($min != 0) 
+        break;
+    }
+    // Iterate over frequencies and find highest
+    foreach(array_reverse($cards) as $card)
+    {
+      $max = $this->selectLimits($votes, $card, $mostCommon);
+      if($max != 0)
+        break;
+    }
+    
+    return $min == -1 && $max == -1;
+  }
+  
+  // Wrap up current poll in reponse object
+  public function currentPoll($sessionId)
+  {
+    // Load the user-vote.php required for this
+    include "user-vote.php";
+    
+    $session = $this->getSession($sessionId);
+    
+    // Create response array
+    $votes = array();
+    $currentPoll = $session->getCurrentPoll();
+    foreach($session->getMembers() as $index=>$member)
+    {
+      $votes[$index] = UserVote::create($member, $currentPoll);
+    }
+
+    // Is poll complete?
+    $flipped = is_null($currentPoll) ? false : $currentPoll->getResult() > 0;
+
+    // Evaluate min and max if poll is complete
+    if($flipped)
+      $consensus = $this->evaluateEstimates($votes);
+    else
+      $consensus = false;
+
+
+    // Create reponse object
+    $response = new stdClass();
+    $response->votes = $votes;
+    $response->flipped = $flipped;
+    $response->consensus = $consensus;
+    
+    return $response;
+  }  
 }
 
 $controller = new PollController($entityManager);

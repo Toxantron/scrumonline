@@ -1,4 +1,5 @@
-var scrum = function() {
+var scrum = 
+{
   var app = angular.module('scrum-online', []);
   
   //------------------------------
@@ -79,4 +80,4 @@ var scrum = function() {
   }]); 
   
   return app;
-}();
+};

@@ -6,88 +6,102 @@ scrum.app = angular.module('scrum-online', []);
 //------------------------------
 //Functions for poll controller
 //------------------------------
-scrum.pollController = 
-{
+scrum.pollController = function () {
+  var pc = { name: 'pollController' };
   // Start a new poll
-  startPoll = function ($scope, $http) {
-    $http.post('/polls/start.php', { sessionId: $scope.id, topic: $scope.topic}).success(function() {
+  pc.startPoll = function () {
+    this.$http.post('/polls/start.php', { 
+        sessionId: this.$scope.id, 
+        topic: this.$scope.topic
+    }).success(function() {
       // Reset our GUI
-      for(var index=0; index < $scope.votes.length; index++)
+      for(var index=0; index < this.$scope.votes.length; index++)
       {
-        var vote = $scope.votes[index];
+        var vote = this.$scope.votes[index];
         vote.placed = false;
         vote.active = false;
       }
-      $scope.flipped = false;
+      this.$scope.flipped = false;
     });
-  },
+  };
   // Poll current votes of time members
-  pollVotes = function ($scope, $http) {
-    $http.get("/polls/current.php?id=" + $scope.id).success(function(response){
-      $scope.votes = response.votes;
-      $scope.flipped = response.flipped;
-      $scope.consensus = response.consensus;
-      setTimeout(function(){
-        pollVotes($scope, $http);
-      }, 200);
+  pc.pollVotes = function () {
+    this.$http.get("/polls/current.php?id=" + this.$scope.id).success(function(response){
+      this.$scope.votes = response.votes;
+      this.$scope.flipped = response.flipped;
+      this.$scope.consensus = response.consensus;
+      setTimeout(this.pollVotes, 200);
     });
-  },
+  };
   // Remove a member from the session
-  deleteMember = function ($http, id) {
-    $http.post("/sessions/delete-member.php", { memberId: id });  
-  },
+  pc.deleteMember = function (id) {
+    this.$http.post("/sessions/delete-member.php", { memberId: id });  
+  };
   // init the controller
-  init = function($scope, $http) {
+  pc.init = function($scope, $http) {
+    // Set scope and http on controller
+    this.$scope = $scope;
+    this.$http = $http;
+    
     // Int model from config
-    $scope.startPoll = function() { startPoll($scope, $http); };
-    $scope.remove = function(id) { deleteMember($http, id); }
+    $scope.startPoll = this.startPoll;
+    $scope.remove = this.deleteMember;
     $scope.votes = [];
     
-    $scope.$watch('id', function() { pollVotes($scope, $http); });
-  },
-  // Angular controller
-  controller = scrum.app.controller('pollController', ['$scope', '$http', scrum.pollController.init])
-}
+    $scope.$watch('id', this.pollVotes);
+  };
+  
+  return pc;
+};
   
 // -------------------------------
 // Functions for card controller
 // -------------------------------
-scrum.cardController = 
-{
+scrum.cardController = function() {
+  var cc = { name: 'cardController' };
   // Select a card from all available cards
-  selectCard = function ($scope, $http, cardValue) {
-    for(var index=0; index<$scope.cards.length; index++) {
-      var card = $scope.cards[index];
+  cc.selectCard = function (cardValue) {
+    for(var index=0; index < this.$scope.cards.length; index++) {
+      var card = this.$scope.cards[index];
       if(cardValue === card.value)
-        $scope.currentCard = card;
+        this.currentCard = card;
     }
-  },
+  };
   // Place your vote by transmitting current card to the server
-  placeVote = function ($scope, $http) {
-    $http.post('/polls/place-vote.php', { sessionId: $scope.id, memberId: $scope.member, vote: $scope.currentCard.value })
-         .success(function() { fetchTopic($scope, $http) });
-  },
+  cc.placeVote = function () {
+    this.$http.post('/polls/place-vote.php', { 
+           sessionId: this.$scope.id, 
+           memberId: this.$scope.member, 
+           vote: this.currentCard.value
+         }).success(function() { this.fetchTopic() });
+  };
   // Fetch the current topic from the server
-  fetchTopic = function ($scope, $http) {
-    $http.get("/polls/topic.php?sid=" + $scope.id).success(function(response){
-      $scope.topic = response.topic;
-      $scope.votable = response.votable;
+  cc.fetchTopic = function () {
+    this.$http.get("/polls/topic.php?sid=" + this.$scope.id).success(function(response){
+      this.$scope.topic = response.topic;
+      this.$scope.votable = response.votable;
     
-      setTimeout(function(){
-        fetchTopic($scope, $http);
-      }, 400);
+      setTimeout(this.fetchTopic, 400);
     });
-  },
+  };
   // Initialize the controller
-  init = function($scope, $http) {
+  cc.init = function($scope, $http) {
+    // Set scope and http on controller
+    this.$scope = $scope;
+    this.$http = $http;
+    
     // Init model
     $scope.votable = false;
-    
-    $scope.selectCard = function(cardValue){ selectCard($scope, $http, cardValue); };    
-    $scope.placeVote = function() { placeVote($scope, $http); };
-    
-    $scope.$watch('id', function() { fetchTopic($scope, $http); });
-  },
-  // Controller for card view
-  controller = app.controller('cardController', ['$scope', '$http', init]); 
+    $scope.selectCard = this.selectCard;    
+    $scope.placeVote = this.placeVote;
+    $scope.$watch('id', this.fetchTopic);
+  };
+  
+  return cc;
 };
+
+// Group all controllers in array and register them in app
+scrum.controllers = [ scrum.pollController(), scrum.cardController() ];
+scrum.controllers.forEach(function(controller, index, array) {
+  app.controller(value.name, ['$scope', '$http', controller.init]);
+});

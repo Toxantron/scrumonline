@@ -124,16 +124,16 @@ div.delete-member {
 /*
  * Session style
  */
-a.list-group-item span {
+span.session-list {
   width: 30%;
   display: inline-block;
 }
-a.list-group-item span.left {
+span.session-list.left {
   text-align: left;
 }
-a.list-group-item span.center {
+span.session-list.center {
   text-align: center;
 }
-a.list-group-item span.right {
+span.session-list.right {
   text-align: right;
 }

@@ -14,9 +14,9 @@ include "../header.php";
     <span class="session-list right"><strong>Private</strong></span>
     <div class="list-group">
     <?php foreach($sessions as $session): ?>
-      <a class="list-group-item" href=<?php echo ("\"session.php?id=" . $session->getId() . "\"") ?>>
-        <span class="session-list left"><strong><?php echo $session->getName()?></strong></span>
-        <span class="session-list center"><strong><?php echo $session->getMembers()->count() ?></strong></span>
+      <a class="list-group-item" <?php echo $session->getIsPrivate() ? "" : ("href=\"session.php?id=" . $session->getId() . "\""); ?>>
+        <span class="session-list left"><strong><?= $session->getName() ?></strong></span>
+        <span class="session-list center"><strong><?= $session->getMembers()->count() ?></strong></span>
         <?php if($session->getIsPrivate() == true): ?>
           <span class="session-list right"><span class="glyphicon glyphicon-lock"></span></span>
         <?php endif; ?>

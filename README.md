@@ -3,7 +3,7 @@ PHP web app for planning poker. It includes a master view for the ScrumMaster an
 
 ## Idea
 
-Everyone who ever managed a software project using scrum will have either heard of or played planning poker. It is a simple tool to determine a stories/features complexity. For the detailed process refer to https://en.wikipedia.org/wiki/Planning_poker. So far there are a couple of apps where you can select a card and display it on the screen - but none of them offer a network collaboration mode. I want to create a simple web app where the Scrum Master can start a named session and all team members can join the session.
+Everyone who ever managed a software project using scrum will have either heard of or played planning poker. It is a simple tool to determine a stories/features complexity. For the detailed process refer to https://en.wikipedia.org/wiki/Planning_poker. So far there are a couple of apps where you can select a card and display it on the screen - but none of them offer a network collaboration mode. Some of the existing web apps are nowhere near responsive or come with too overloaded UIs. I want to create a simple web app where the Scrum Master can start a named session and all team members can join the session.
 
 ## Setup
 

@@ -2,7 +2,7 @@
    Author's custom styles
    ========================================================================== */
 .container-fluid.main {
-    padding: 80px 10px 0px;
+    padding: 55px 10px 0px;
 }
 @media (min-width: 992px) {
   .container-fluid.main {
@@ -32,8 +32,13 @@ div.card-container {
 
 div.card-container h2 {
   font-weight: bold;
-  width: 100%;
+  width: 100px;
   text-align: center;
+}
+@media(min-width: 992px){
+  div.card-container h2 {
+    width: 130px;
+  }
 }
 
 div.card {

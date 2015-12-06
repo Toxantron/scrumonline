@@ -14,28 +14,35 @@ include "../header.php";
   <div data-ng-init="id=<?= $session->getId() ?>; topic=<?= $topic ?>"></div>
   <!-- Headline -->
   <div class="row">
-    <div class="col-md-8 col-md-offset-2 col-xs-12">
+    <div class="col-md-10 col-md-offset-1 col-xs-12">
       <h1><?php echo $id . " - " . $session->getName(); ?></h1>
     </div>
   </div>
       
   <!-- Poll control -->
   <div class="row topic">
-    <div class="col-md-8 col-md-offset-2 col-xs-12">
+    <div class="col-md-10 col-md-offset-1 col-xs-12">
       <form role="form" class="form-inline">
         <div class="form-group">
           <label for="topic">Topic:</label>
           <input type="text" class="form-control" data-ng-model="topic" placeholder="#4711 Create foo">
-          <span data-ng-if="consensus" class="glyphicon glyphicon-ok"></span>
           <button class="btn btn-default" data-ng-click="startPoll()">Start</button>
         </div>
       </form>
     </div>
   </div>
+
+  <div data-ng-if="consensus" class="row">
+    <div class="col-md-10 col-md-offset-1 col-xs-12">
+      <div class="alert alert-success" role="alert">
+        <strong>Estimation done!</strong> The team agreed on <strong data-ng-bind="votes[0].value"></strong>!
+      </div>
+    </div>
+  </div>
   
   <!-- Live poll view -->
   <div class="row">
-    <div class="col-md-8 col-md-offset-2 col-xs-12">
+    <div class="col-md-10 col-md-offset-1 col-xs-12">
       
       <div class="card-overview">
 
@@ -64,7 +71,7 @@ include "../header.php";
   </div>
             
   <div class="row">
-    <div class="col-md-8 col-md-offset-2 col-xs-12">
+    <div class="col-md-10 col-md-offset-1 col-xs-12">
       <h2>Invite members</h1>
       <p>Invite members to join your session. Session id: <strong><?= $id ?></strong></p>
       <p>Or send them this link: <a href="http://<?= $host ?>/sessions/join.php?id=<?= $id ?>"><?= $host ?>/sessions/join.php?id=<?= $id ?></a>

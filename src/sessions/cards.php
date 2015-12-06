@@ -25,15 +25,10 @@ foreach($cards as $card)
   <div class="row">
     <div class="col-lg-2 col-md-3 col-xs-4" data-ng-repeat="card in cards">
       <div class="card-container">
-        <div class="card selectable" data-ng-class="{active: card == currentCard}" data-ng-click="selectCard(card.value)">
+        <div class="card selectable" data-ng-class="{active: card == currentCard}" data-ng-click="selectCard(card)">
           <div class="inner"><h1 data-ng-bind="card.value">1</h1></div>
         </div>
       </div>
-    </div>
-  </div>
-  <div data-ng-if="votable" class="row">
-    <div class="col-md-2 col-md-offset-5 col-xs-4 col-xs-offset-4">
-      <button class="btn btn-lg btn-default vote" data-ng-click="placeVote()">Vote!</button>
     </div>
   </div>
 </div>

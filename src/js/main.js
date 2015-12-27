@@ -26,6 +26,9 @@ scrum.pc = function () {
   };
   // Poll current votes of time members
   pc.pollVotes = function () {
+  	if (scrum.current !== pc)
+  	  return;
+  	
     scrum.$http.get("/polls/current.php?id=" + scrum.$scope.id).success(function(response){
       scrum.$scope.votes = response.votes;
       scrum.$scope.flipped = response.flipped;
@@ -39,6 +42,9 @@ scrum.pc = function () {
   };
   // init the controller
   pc.init = function($scope, $http) {
+  	// Set current controller
+  	scrum.current = pc;
+  	
     // Set scope and http on controller
     scrum.$scope = $scope;
     scrum.$http = $http;
@@ -70,6 +76,9 @@ scrum.cc = function() {
   };
   // Fetch the current topic from the server
   cc.fetchTopic = function () {
+  	if (scrum.current !== cc)
+  	  return; 
+  	
     scrum.$http.get("/polls/topic.php?sid=" + scrum.$scope.id).success(function(response){
       scrum.$scope.topic = response.topic;
       scrum.$scope.votable = response.votable;
@@ -79,6 +88,9 @@ scrum.cc = function() {
   };
   // Initialize the controller
   cc.init = function($scope, $http) {
+  	// Set current controller
+  	scrum.current = cc;
+  	
     // Set scope and http on controller
     scrum.$scope = $scope;
     scrum.$http = $http;

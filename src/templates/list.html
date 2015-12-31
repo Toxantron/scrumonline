@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-xs-12 col-md-8 col-md-offset-2">
+    <span class="session-list left"><strong>Name</strong></span>
+    <span class="session-list center"><strong>Members</strong></span>
+    <span class="session-list right"><strong>Private</strong></span>
+    <div class="list-group">
+      <a class="list-group-item" data-ng-repeat="session in sessions">
+        <span class="session-list left"><strong data-ng-bind="session.name"></strong></span>
+        <span class="session-list center"><strong data-ng-bind="session.memberCount"></strong></span>
+        <span class="session-list right" data-ng-if="session.private"><span class="glyphicon glyphicon-lock"></span></span>
+      </a>
+    </div>
+  </div>
+</div>

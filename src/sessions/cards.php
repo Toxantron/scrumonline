@@ -12,7 +12,7 @@ $active = "Sessions";
 include "../header.php";
 ?>
 
-<div data-ng-controller="cardController">
+<div data-ng-controller="CardController">
 <div data-ng-init="id=<?= $session->getId() ?>; member=<?= $memberId ?>; topic=<?= $topic ?>; cards=[<?php
 foreach($cards as $card)
   echo '{value: '.$card.', active: false},';

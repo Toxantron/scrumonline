@@ -1,17 +1,4 @@
-<?php
-require_once "controller.php";
-
-$id = $_GET["id"];
-$session = $controller->getSession($id);
-$currentPoll = $session->getCurrentPoll();
-$topic = is_null($currentPoll) ? "null" : "'".$currentPoll->getTopic()."'";
-
-$active = "Sessions";
-include "../header.php";
-?>
-
 <div data-ng-controller="MasterController">
-  <div data-ng-init="id=<?= $session->getId() ?>; topic=<?= $topic ?>"></div>
   <!-- Headline -->
   <div class="row">
     <div class="col-md-10 col-md-offset-1 col-xs-12">
@@ -79,4 +66,3 @@ include "../header.php";
   </div>
         
 </div>
-<?php include "../footer.html"; ?>

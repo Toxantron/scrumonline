@@ -2,9 +2,6 @@
 require_once "controller.php";
 
 $sessions = $controller->getAllSessions();
-
-$active = "Sessions";
-include "../header.php";
 ?>
   
 <div class="row">
@@ -25,5 +22,3 @@ include "../header.php";
     </div>
   </div>
 </div>
-
-<?php include "../footer.html"; ?>

@@ -1,62 +1,67 @@
-<?php include "header.php"; ?>
-<!-- Introduction -->
-<div class="row">
-  <div class="col-md-8 col-md-offset-2 col-xs-12">
-    <article>
-      <p>
-        <h2>Scrum Online</h2>
-        Welcome to my little planning poker web app. Use of this app is free of charge for everyone. As a scrum master just start 
-        a named session and invite your team to join you. It is recommended to display the scrum master view on the big screen 
-        (TV or projector) and let everyone else join via smartphone. To join a session just enter the id displayed in the 
-        heading of the scrum master view. For more information please visit my <a href="https://github.com/Toxantron/scrumonline">github repo</a>.
-      </p>
-    </article>
+<?php
+$navItems = [
+  [ 
+    "link" => "\"#/session-list\"", 
+    "name" => "Sessions"
+  ],  
+];
+?>
+<!doctype html>
+<html class="no-js" lang="en-EN">
+<head>
+  <meta charset="utf-8">
+  <base href="/">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Online planning poker</title>
+  <meta name="description" content="Scrumpoker online is a simple online app for scrum teams to determine the complexity of stories.">  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    
+  <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
+  <!-- Style sheets -->
+  <link rel="stylesheet" href="/css/combined.css">
+  <link rel="stylesheet" href="/css/scrumonline.css">
+</head>
+<body>
+<!--[if lt IE 8]>
+   <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- Top navigation bar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    	<a class="navbar-brand" href="#/">Planning poker</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+      <?php foreach($navItems as $navItem): ?>
+        <li<?php echo (isset($active) && $navItem["name"] === $active ? " class=\"active\"" : "") ?>><a href=<?php echo $navItem["link"] ?>><?php echo $navItem["name"] ?></a></li>
+      <?php endforeach; ?>
+      </ul>
+    </div><!--/.nav-collapse -->
   </div>
-</div>
-            
-<div class="row">
-  <div class="col-md-8 col-md-offset-2 col-xs-12">
-    <h2>Create or join a session</h2>
-  </div>
-      
-  <!-- Create session panel -->
-  <div class="col-md-4 col-md-offset-2 col-sm-5 col-sm-offset-1 col-xs-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">Create session</div>
-      <div class="panel-body">  
-        <form role="form" action="/sessions/create.php" method="post">
-          <div class="form-group">
-            <label for="name">Session name:</label>
-            <input type="text" class="form-control" name="name" placeholder="My session">
-          </div>
-          <div class="form-group">
-            <label><input type="checkbox" name="isPrivate"> is private</label> 
-          </div>
-          <input type="submit" class="btn btn-default" value="Create">
-        </form>
-      </div>
-    </div>        
-  </div>
-            
-  <!-- Join session panel -->
-  <div class="col-md-4 col-sm-5 col-xs-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">Join session</div>
-      <div class="panel-body">  
-        <form role="form" action="/sessions/join.php" method="post">
-          <div class="form-group">
-            <label for="id">Session id:</label>
-            <input type="text" class="form-control"  name="id" placeholder="4711">
-          </div>
-          <div class="form-group">
-            <label for="member-name">Your name:</label>
-            <input type="text" class="form-control"  name="member-name" placeholder="John">
-          </div>
-          <input type="submit" class="btn btn-default" value="Join">
-       </form>
-      </div>
-    </div>        
+</nav>
+
+<!-- Add your site or application content here -->
+<div data-ng-app="scrum-online">
+  <div class="container-fluid main" data-ng-view>
+    <?php include "templates/home.html"; ?>
   </div>
 </div>
 
-<?php include "footer.html"; ?>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/plugins.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

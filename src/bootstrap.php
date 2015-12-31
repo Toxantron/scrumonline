@@ -28,37 +28,44 @@ class ControllerBase
   
   function __construct($entityManager)
   {
-      $this->entityManager = $entityManager;
+    $this->entityManager = $entityManager;
   }
   
   // Get session by id
-  public function getSession($id)
+  protected function getSession($id)
   {
-      $session = $this->entityManager->find("Session", $id);
-      return $session;
+    $session = $this->entityManager->find("Session", $id);
+    return $session;
   }
   
   // Get member by id
-  public function getMember($id)
+  protected function getMember($id)
   {
-      $member = $this->entityManager->find("Member", $id);
-      return $member;
+    $member = $this->entityManager->find("Member", $id);
+    return $member;
+  }
+  
+  // Find out witch method was requested
+  protected function requestedMethod()
+  {
+    $method = $_GET['m'];
+    return $method;
   }
   
   // Save only a single entity
   protected function save($entity)
   {
-      $this->entityManager->persist($entity);
-      $this->entityManager->flush();
+    $this->entityManager->persist($entity);
+    $this->entityManager->flush();
   }
   
   // Save an array of entities
   protected function saveAll(array $entities)
   {
-      foreach($entities as $entity)
-      {
-          $this->entityManager->persist($entity);
-      }
-      $this->entityManager->flush();
+    foreach($entities as $entity)
+    {
+      $this->entityManager->persist($entity);
+    }
+    $this->entityManager->flush();
   }
 }

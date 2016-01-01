@@ -26,12 +26,16 @@
         <form role="form">
           <div class="form-group">
             <label for="name">Session name:</label>
-            <input type="text" class="form-control" data-ng-model="name" placeholder="My session">
+            <input type="text" class="form-control" data-ng-model="sessionName" placeholder="My session">
           </div>
           <div class="form-group">
             <label><input type="checkbox" data-ng-model="isPrivate"> is private</label> 
           </div>
-          <input type="submit" class="btn btn-default" value="Create" data-ng-click="createSession()">
+          <div class="form-group" data-ng-if="isPrivate">
+            <label for="name">Password:</label>
+            <input type="password" class="form-control" data-ng-model="password">
+          </div>
+          <input class="btn btn-default" value="Create" data-ng-click="createSession()">
         </form>
       </div>
     </div>        

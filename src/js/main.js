@@ -2,13 +2,15 @@
 /*globals angular */
 
 var scrum = scrum || {
+	// Set scope values on global var
 	init: function($scope, $http, $location) {
 		scrum.$scope = $scope;
 		scrum.$http = $http;
 		scrum.$location = $location;
 	},
 	
-	join: function() {
+	// Shared join function
+    join: function() {
       scrum.$http.post('/api.php?c=session&m=join', {
         id: scrum.$scope.id,
         name : scrum.$scope.name
@@ -60,8 +62,9 @@ scrum.hc = function () {
   
   hc.createSession = function () {
   	scrum.$http.post('/api.php?c=session&m=create', {
-  	  name: scrum.$scope.name,
-  	  isPrivate: scrum.$scope.isPrivate
+  	  name: scrum.$scope.sessioName,
+  	  isPrivate: scrum.$scope.isPrivate,
+  	  password: scrum.$scope.password
   	}).success(function (response) {
   		scrum.$location.url('/session/' + response + '/' + scrum.$scope.name);
   	});
@@ -96,12 +99,21 @@ scrum.lc = function () {
   	});
   };
   
-  lc.open = function (session) {
-  	if(session.isPrivate) {
-  	  session.expanded = true;
+  lc.open = function (session, transmit) {
+  	// Public session
+  	if(!session.isPrivate) {
+  	  scrum.$location.url('/session/' + session.id + '/' + session.name);	
   	}
+  	// Private session
   	else {
-  	  scrum.$location.url('/session/' + session.id + '/' + session.name);
+      // Check password
+  	  if(transmit) {
+  	  	
+  	  }	
+  	  // Toggle the expander
+  	  else {
+  	    session.expanded = !session.expanded;
+  	  }
   	}
   };
   

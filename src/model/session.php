@@ -14,6 +14,8 @@ class Session
     /** @Column(type="boolean") **/
     protected $isPrivate;
   
+    /** @Column(type="string", nullable=true) **/
+    protected $password;
   
     /** @Column(type="datetime") **/ 
     protected $lastAction;
@@ -50,6 +52,16 @@ class Session
     public function setIsPrivate($isPrivate)
     {
         $this->isPrivate = $isPrivate;
+    }
+  
+    // Getter and setter for password field
+    public function getPassword()
+    {
+    	  return $this->password;
+    }
+    public function setPassword($password)
+    {
+        $this->password = $password;
     }
 
     // Getter and setter for lastAction field

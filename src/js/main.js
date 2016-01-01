@@ -11,10 +11,7 @@ var scrum = scrum || {
 	
 	// Shared join function
     join: function() {
-      scrum.$http.post('/api.php?c=session&m=join', {
-        id: scrum.$scope.id,
-        name : scrum.$scope.name
-      }).success(function (reponse) {
+      scrum.$http.post('/api.php?c=session&m=join', scrum.$scope.join).success(function (reponse) {
         scrum.$location.url('/member/' + reponse.sessionId + '/' + reponse.memberId);
       });
     }
@@ -61,12 +58,8 @@ scrum.hc = function () {
   var hc = { name: 'HomeController' };
   
   hc.createSession = function () {
-  	scrum.$http.post('/api.php?c=session&m=create', {
-  	  name: scrum.$scope.sessioName,
-  	  isPrivate: scrum.$scope.isPrivate,
-  	  password: scrum.$scope.password
-  	}).success(function (response) {
-  		scrum.$location.url('/session/' + response + '/' + scrum.$scope.name);
+  	scrum.$http.post('/api.php?c=session&m=create', scrum.$scope.create).success(function (response) {
+  		scrum.$location.url('/session/' + response + '/' + scrum.$scope.create.name);
   	});
   };
   
@@ -79,7 +72,8 @@ scrum.hc = function () {
   	scrum.init($scope, $http, $location);
   	
   	// Prepare scope
-  	$scope.isPrivate = false;
+  	$scope.create = { isPrivate: false };
+  	$scope.join = { };
   	$scope.createSession = hc.createSession;
     $scope.joinSession = scrum.join;
   };
@@ -108,7 +102,10 @@ scrum.lc = function () {
   	else {
       // Check password
   	  if(transmit) {
-  	  	
+  	  	scrum.$http.post('api.php?c=session&m=check', session).success(function (response){
+  	  	  if(response === 'true')
+  	  	    scrum.$location.url('/session/' + session.id + '/' + session.name);
+  	  	});
   	  }	
   	  // Toggle the expander
   	  else {
@@ -149,8 +146,8 @@ scrum.jc = function () {
   	scrum.init($scope, $http, $location);
   	
   	// Load id from route
-  	$scope.id = $routeParams.id;
-  	$scope.join = scrum.join;
+  	$scope.join = { id: $routeParams.id };
+  	$scope.joinSession = scrum.join;
   };
   
   return jc;

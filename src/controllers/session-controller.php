@@ -43,11 +43,13 @@ class SessionController extends ControllerBase
   }
   
   // Create session with name and private flag
-  private function createSession($name, $private)
+  private function createSession($name, $private, $password)
   {
     $session = new Session();
     $session->setName($name);
     $session->setIsPrivate($private);
+    if ($private)
+      $session->setPassword($password);
     $session->setLastAction(new DateTime());
 
     $this->save($session);
@@ -94,6 +96,12 @@ class SessionController extends ControllerBase
     $this->entityManager->flush();
   }
   
+  private function checkPassword($id, $password)
+  {
+    $session = $this->getSession($id);
+    return $session->getPassword() === $password;
+  }
+  
   public function execute()
   {
     switch($this->requestedMethod())
@@ -102,21 +110,22 @@ class SessionController extends ControllerBase
         return $this->getAllSessions();
         
       case "create":
-        $data = $this->jsonInput();
-        
-        $session = $this->createSession($data["name"], $data["isPrivate"]);
+        $data = $this->jsonInput();        
+        $session = $this->createSession($data["name"], $data["isPrivate"], $data["password"]);
         return $session->getId();
         
       case "join":
-        $data = $this->jsonInput();
-        
+        $data = $this->jsonInput();        
         return $this->addMember($data["id"], $data["name"]);
         
       case "remove":
         $data = $this->jsonInput();
-
         $this->removeMember($data["memberId"]);
         return null;
+        
+      case "check":
+        $data = $this->jsonInput();
+        return $this->checkPassword($data["id"], $data["password"]);
     }
   }
 }

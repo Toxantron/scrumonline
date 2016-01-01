@@ -25,15 +25,15 @@
       <div class="panel-body">  
         <form role="form">
           <div class="form-group">
-            <label for="name">Session name:</label>
-            <input type="text" class="form-control" data-ng-model="sessionName" placeholder="My session">
+            <label for="sessionName">Session name:</label>
+            <input type="text" class="form-control" data-ng-model="create.name" placeholder="My session">
           </div>
           <div class="form-group">
-            <label><input type="checkbox" data-ng-model="isPrivate"> is private</label> 
+            <label><input type="checkbox" data-ng-model="create.isPrivate"> is private</label> 
           </div>
-          <div class="form-group" data-ng-if="isPrivate">
-            <label for="name">Password:</label>
-            <input type="password" class="form-control" data-ng-model="password">
+          <div class="form-group" data-ng-if="create.isPrivate">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" data-ng-model="create.password">
           </div>
           <input class="btn btn-default" value="Create" data-ng-click="createSession()">
         </form>
@@ -49,11 +49,11 @@
         <form role="form">
           <div class="form-group">
             <label for="id">Session id:</label>
-            <input type="text" class="form-control"  data-ng-model="id" placeholder="4711">
+            <input type="text" class="form-control"  data-ng-model="join.id" placeholder="4711">
           </div>
           <div class="form-group">
             <label for="member-name">Your name:</label>
-            <input type="text" class="form-control"  data-ng-model="name" placeholder="John">
+            <input type="text" class="form-control"  data-ng-model="join.name" placeholder="John">
           </div>
           <input class="btn btn-default" value="Join" data-ng-click="joinSession()">
        </form>

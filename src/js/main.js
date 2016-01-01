@@ -58,7 +58,7 @@ scrum.app.config(['$routeProvider',
 scrum.hc = function () {
   var hc = { name: 'HomeController' };
   
-  var createSession = function () {
+  hc.createSession = function () {
   	scrum.$http.post('/controllers/session-controller.php?m=create', {
   	  name: scrum.$scope.name,
   	  isPrivate: scrum.$scope.isPrivate
@@ -77,7 +77,7 @@ scrum.hc = function () {
   	
   	// Prepare scope
   	$scope.isPrivate = false;
-  	$scope.createSession = createSession;
+  	$scope.createSession = hc.createSession;
     $scope.joinSession = scrum.join;
   };
   

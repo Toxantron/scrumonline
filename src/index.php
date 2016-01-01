@@ -52,7 +52,6 @@ $navItems = [
 
   <!-- Add your site or application content here -->
   <div class="container-fluid main" data-ng-view>
-    <?php include "templates/home.html"; ?>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

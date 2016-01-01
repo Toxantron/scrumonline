@@ -48,13 +48,14 @@ div.card {
   margin-right: auto;
 }
 div.card .inner {
-  margin: -5px 5px 0;
+  margin: 8px 5px 0;
   border-radius: 30px;
   background: #0066FF;
   text-align: center;
 }
 
 span.card-label {
+  display: block;
   font-size: 2em;
   font-weight: bold;
   padding: 45px 0 45px;

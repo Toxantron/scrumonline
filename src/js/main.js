@@ -208,6 +208,9 @@ scrum.pc = function () {
     
     // Start polling
     scrum.pc.pollVotes();
+    $http.get("/api.php?c=poll&m=topic&sid=" + $scope.id).success(function(response){
+      scrum.$scope.topic = response.topic;
+    });
   };
   
   return pc;
@@ -225,6 +228,10 @@ scrum.cc = function() {
   	}
   	scrum.currentCard = card;
     card.active = true;
+    
+    if(!scrum.$scope.votable)
+      return;
+    
     scrum.$http.post('/api.php?c=poll&m=place', { 
            sessionId: scrum.$scope.id, 
            memberId: scrum.$scope.member, 

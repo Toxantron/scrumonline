@@ -211,11 +211,18 @@ scrum.cc = function() {
   var cc = { name: 'CardController' };
   // Select a card from all available cards
   cc.selectCard = function (card) {
-    scrum.$scope.currentCard = card;
+  	if(scrum.currentCard != null) {
+      scrum.currentCard.active = scrum.currentCard.confirmed = false;
+  	}
+  	scrum.currentCard = card;
+    card.active = true;
     scrum.$http.post('/controllers/poll-controller.php?m=place', { 
            sessionId: scrum.$scope.id, 
            memberId: scrum.$scope.member, 
            vote: card.value
+         }).success(function (response) {
+         	card.active = false;
+         	card.confirmed = response;
          });
   };
   // Fetch the current topic from the server

@@ -110,6 +110,9 @@ div.card-flip.flipped {
 div.card.active {
   background: #ff3333;
 }
+div.card.confirmed {
+  background: #00FF00;
+}
 button.vote {
   width: 100%;
 }

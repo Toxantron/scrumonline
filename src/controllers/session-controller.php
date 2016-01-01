@@ -27,7 +27,7 @@ class SessionController extends ControllerBase
         $transformed->id = $session->getId();
         $transformed->name = $session->getName();
         $transformed->memberCount = $session->getMembers()->count();
-        $transformed->private = $session->getIsPrivate();
+        $transformed->isPrivate = $session->getIsPrivate();
         $activeSessions[$index++] = $transformed;
       }
     }
@@ -82,10 +82,10 @@ class SessionController extends ControllerBase
       $this->save($member);
     }
     
-    return [
-      "session" => $session,
-      "member" => $member
-    ];
+    $result = new stdClass();
+    $result->sessionId = $id;
+    $result->memberId = $member->getId();
+    return $result;
   }
   
   // Remove member from session
@@ -104,18 +104,26 @@ class SessionController extends ControllerBase
         return $this->getAllSessions();
         
       case "create":
-        $post = file_get_contents('php://input');
-        $data = json_decode($post, true);
+        $data = $this->jsonInput();
         
         $session = $this->createSession($data["name"], $data["isPrivate"]);
         return $session->getId();
+        
+      case "join":
+        $data = $this->jsonInput();
+        
+        return $this->addMember($data["id"], $data["name"]);
+        
+      case "remove":
+        $data = $this->jsonInput();
+
+        $this->removeMember($data["memberId"]);
+        return null;
     }
   }
 }
 
 $controller = new SessionController($entityManager);
 
-$result = $controller->execute();
-
-echo json_encode($result);
+include "execute.php";
 ?>

@@ -1,7 +1,22 @@
 /*eslint-env browser */
 /*globals angular */
 
-var scrum = scrum || { };
+var scrum = scrum || {
+	init: function($scope, $http, $location) {
+		scrum.$scope = $scope;
+		scrum.$http = $http;
+		scrum.$location = $location;
+	},
+	
+	join: function() {
+      scrum.$http.post('/controllers/session-controller.php?m=join', {
+        id: scrum.$scope.id,
+        name : scrum.$scope.name
+      }).success(function (reponse) {
+        scrum.$location.url('/member/' + reponse.sessionId + '/' + reponse.memberId);
+      });
+    }
+};
 
 // Define angular app
 scrum.app = angular.module('scrum-online', ['ngRoute']);
@@ -21,9 +36,18 @@ scrum.app.config(['$routeProvider',
         templateUrl: '/templates/list.html',
         controller: 'ListController'
       })
-      .when('/session/:id',{
+      .when('/session/:id/:name',{
       	templateUrl : '/templates/master.php',
       	controller: 'MasterController'
+      })
+      .when('/join', { redirectTo: '/join/0' })
+      .when('/join/:id', {
+      	templateUrl : '/templates/join.html',
+      	controller: 'JoinController'
+      })
+      .when('/member/:sessionId/:memberId', {
+      	templateUrl : '/templates/member.php',
+      	controller: 'CardController'
       })
     ;
 }]);
@@ -39,8 +63,7 @@ scrum.hc = function () {
   	  name: scrum.$scope.name,
   	  isPrivate: scrum.$scope.isPrivate
   	}).success(function (response) {
-  		scrum.sessionId = response;
-  		scrum.$location.url('/session/' + response);
+  		scrum.$location.url('/session/' + response + '/' + scrum.$scope.name);
   	});
   };
   
@@ -50,13 +73,12 @@ scrum.hc = function () {
   	scrum.current = hc;
   	
   	// Set scope and http on controller
-  	scrum.$scope = $scope;
-  	scrum.$http = $http;
-  	scrum.$location = $location;
+  	scrum.init($scope, $http, $location);
   	
   	// Prepare scope
   	$scope.isPrivate = false;
   	$scope.createSession = createSession;
+    $scope.joinSession = scrum.join;
   };
   
   return hc;
@@ -68,18 +90,58 @@ scrum.hc = function () {
 scrum.lc = function () {
   var lc = { name: 'ListController' };
   
-  // Init the controller
-  lc.init = function ($scope, $http) {
-  	// Set current controller
-  	scrum.current = lc;
-  	
-  	// Fetch session list
-  	$http.get('/controllers/session-controller.php?m=list').success(function(response) {
-  	  $scope.sessions = response;	
+  lc.update = function() {
+  	scrum.$http.get('/controllers/session-controller.php?m=list').success(function(response) {
+  	  scrum.$scope.sessions = response;	
   	});
   };
   
+  lc.open = function (session) {
+  	if(session.isPrivate) {
+  	  session.expanded = true;
+  	}
+  	else {
+  	  scrum.$location.url('/session/' + session.id + '/' + session.name);
+  	}
+  };
+  
+  // Init the controller
+  lc.init = function ($scope, $http, $location) {
+  	// Set current controller
+  	scrum.current = lc;
+  	
+  	// Set scope and http
+  	scrum.init($scope, $http, $location);
+  	$scope.update = lc.update;
+  	$scope.open = lc.open;
+  	
+  	// Fetch session list
+  	lc.update();
+  };
+  
   return lc;
+}();
+
+//------------------------------
+// Join controller
+//------------------------------
+scrum.jc = function () {
+  var jc = { name: 'JoinController' };
+  
+  // Mandatore init function
+  jc.init = function($scope, $http, $routeParams, $location) {
+  	// Set current controller
+  	scrum.current = jc;
+  	
+  	// Init scrum
+  	scrum.init($scope, $http, $location);
+  	
+  	// Load id from route
+  	$scope.id = $routeParams.id;
+  	$scope.join = scrum.join;
+  };
+  
+  return jc;
 }();
   
 //------------------------------
@@ -89,8 +151,8 @@ scrum.pc = function () {
   var pc = { name: 'MasterController' };
   // Start a new poll
   pc.startPoll = function () {
-    scrum.$http.post('/polls/start.php', { 
-        sessionId: scrum.sessionId, 
+    scrum.$http.post('/controllers/poll-controller.php?m=start', { 
+        sessionId: scrum.$scope.id, 
         topic: scrum.$scope.topic
     }).success(function() {
       // Reset our GUI
@@ -108,7 +170,7 @@ scrum.pc = function () {
   	if (scrum.current !== pc)
   	  return;
   	
-    scrum.$http.get("/polls/current.php?id=" + scrum.sessionId).success(function(response){
+    scrum.$http.get("/controllers/poll-controller.php?m=current&id=" + scrum.$scope.id).success(function(response){
       scrum.$scope.votes = response.votes;
       scrum.$scope.flipped = response.flipped;
       scrum.$scope.consensus = response.consensus;
@@ -117,23 +179,26 @@ scrum.pc = function () {
   };
   // Remove a member from the session
   pc.deleteMember = function (id) {
-    scrum.$http.post("/sessions/delete-member.php", { memberId: id });  
+    scrum.$http.post("/controllers/session-controller.php?m=remove", { memberId: id });  
   };
   // init the controller
-  pc.init = function($scope, $http) {
+  pc.init = function($scope, $http, $routeParams) {
   	// Set current controller
   	scrum.current = pc;
   	
     // Set scope and http on controller
-    scrum.$scope = $scope;
-    scrum.$http = $http;
+    scrum.init($scope, $http);
     
-    // Int model from config
+    // Int model
+    $scope.id = $routeParams.id;
+    $scope.name = $routeParams.name;
+    
     $scope.startPoll = scrum.pc.startPoll;
     $scope.remove = scrum.pc.deleteMember;
     $scope.votes = [];
     
-    $scope.$watch('id', scrum.pc.pollVotes);
+    // Start polling
+    scrum.pc.pollVotes();
   };
   
   return pc;
@@ -147,18 +212,18 @@ scrum.cc = function() {
   // Select a card from all available cards
   cc.selectCard = function (card) {
     scrum.$scope.currentCard = card;
-    scrum.$http.post('/polls/place-vote.php', { 
-           sessionId: scrum.sessionId, 
+    scrum.$http.post('/controllers/poll-controller.php?m=place', { 
+           sessionId: scrum.$scope.id, 
            memberId: scrum.$scope.member, 
            vote: card.value
-         }).success(scrum.cc.fetchTopic);
+         });
   };
   // Fetch the current topic from the server
   cc.fetchTopic = function () {
   	if (scrum.current !== cc)
   	  return; 
   	
-    scrum.$http.get("/polls/topic.php?sid=" + scrum.$scope.id).success(function(response){
+    scrum.$http.get("/controllers/poll-controller.php?m=topic&sid=" + scrum.$scope.id).success(function(response){
       scrum.$scope.topic = response.topic;
       scrum.$scope.votable = response.votable;
     
@@ -166,25 +231,29 @@ scrum.cc = function() {
     });
   };
   // Initialize the controller
-  cc.init = function($scope, $http) {
+  cc.init = function($scope, $http, $routeParams) {
   	// Set current controller
   	scrum.current = cc;
   	
     // Set scope and http on controller
-    scrum.$scope = $scope;
-    scrum.$http = $http;
+    scrum.init($scope, $http);
     
     // Init model
+    $scope.id = $routeParams.sessionId;
+    $scope.member = $routeParams.memberId;
+    
     $scope.votable = false;
-    $scope.selectCard = scrum.cc.selectCard;    
-    $scope.$watch('id', scrum.cc.fetchTopic);
+    $scope.selectCard = scrum.cc.selectCard;   
+    
+    // Start timer
+    scrum.cc.fetchTopic();
   };
   
   return cc;
 }();
 
 // Group all controllers in array and register them in app
-scrum.controllers = [ scrum.hc, scrum.lc, scrum.pc, scrum.cc ];
+scrum.controllers = [ scrum.hc, scrum.lc, scrum.jc, scrum.pc, scrum.cc ];
 scrum.controllers.forEach(function(controller) {
-  scrum.app.controller(controller.name, ['$scope', '$http', '$location', controller.init]);
+  scrum.app.controller(controller.name, controller.init);
 });

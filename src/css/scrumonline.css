@@ -54,13 +54,14 @@ div.card .inner {
   text-align: center;
 }
 
-div.card .inner h1 {
+span.card-label {
+  font-size: 2em;
   font-weight: bold;
   padding: 45px 0 45px;
   color: #FFFFFF;
 }
 @media (min-width: 992px) {
-  div.card .inner h1 {
+  span.card-label {
     padding: 70px 0 70px;
   }
 }

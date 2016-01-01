@@ -23,7 +23,7 @@ $navItems = [
   <link rel="stylesheet" href="/css/combined.css">
   <link rel="stylesheet" href="/css/scrumonline.css">
 </head>
-<body>
+<body data-ng-app="scrum-online">
 <!--[if lt IE 8]>
    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -50,12 +50,10 @@ $navItems = [
   </div>
 </nav>
 
-<!-- Add your site or application content here -->
-<div data-ng-app="scrum-online">
+  <!-- Add your site or application content here -->
   <div class="container-fluid main" data-ng-view>
     <?php include "templates/home.html"; ?>
   </div>
-</div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>

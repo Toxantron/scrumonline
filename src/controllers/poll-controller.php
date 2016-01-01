@@ -7,7 +7,7 @@ require_once __DIR__ . "/../bootstrap.php";
 class PollController extends ControllerBase
 {  
   // Start a new poll in the session
-  public function startPoll($sessionId, $topic)
+  private function startPoll($sessionId, $topic)
   {
     $session = $this->getSession($sessionId);
     
@@ -30,7 +30,7 @@ class PollController extends ControllerBase
   }
   
   // Place a vote for the current pull
-  public function placeVote($sessionId, $memberId, $voteValue)
+  private function placeVote($sessionId, $memberId, $voteValue)
   {
     // Fetch entities
     $session = $this->getSession($sessionId);
@@ -134,7 +134,7 @@ class PollController extends ControllerBase
   }
   
   // Wrap up current poll in reponse object
-  public function currentPoll($sessionId)
+  private function currentPoll($sessionId)
   {
     // Load the user-vote.php required for this
     include "user-vote.php";
@@ -166,8 +166,43 @@ class PollController extends ControllerBase
     $response->consensus = $consensus;
     
     return $response;
-  }  
+  }
+  
+  public function execute()
+  {
+    switch($this->requestedMethod())
+    {
+      case "current":
+        $sessionId = $_GET["id"];
+        return $this->currentPoll($sessionId);
+        
+      case "start":
+        $data = $this->jsonInput();
+        
+        $this->startPoll($data["sessionId"], $data["topic"]);
+        return null;
+        
+      case "place":
+        $data = $this->jsonInput();
+
+        $this->placeVote($data["sessionId"], $data["memberId"], $data["vote"]);
+        return null;
+        
+      case "topic":
+        $session = $this->getSession($_GET["sid"]);
+        $currentPoll = $session->getCurrentPoll();
+
+        // Result object. Only votable until all votes received
+        $result = new stdClass();
+        $result->topic = is_null($currentPoll) ? "No topic" : $currentPoll->getTopic();
+        $result->votable = is_null($currentPoll) ? false : $currentPoll->getResult() == 0;
+        
+        return $result;
+    }
+  }
 }
 
 $controller = new PollController($entityManager);
+
+include "execute.php";
 ?>

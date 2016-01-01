@@ -52,6 +52,14 @@ class ControllerBase
     return $method;
   }
   
+  protected function jsonInput()
+  {
+    $post = file_get_contents('php://input');
+    $data = json_decode($post, true);
+
+	 return $data;
+  }
+  
   // Save only a single entity
   protected function save($entity)
   {

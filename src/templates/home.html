@@ -42,16 +42,16 @@
     <div class="panel panel-default">
       <div class="panel-heading">Join session</div>
       <div class="panel-body">  
-        <form role="form" action="/sessions/join.php" method="post">
+        <form role="form">
           <div class="form-group">
             <label for="id">Session id:</label>
-            <input type="text" class="form-control"  name="id" placeholder="4711">
+            <input type="text" class="form-control"  data-ng-model="id" placeholder="4711">
           </div>
           <div class="form-group">
             <label for="member-name">Your name:</label>
-            <input type="text" class="form-control"  name="member-name" placeholder="John">
+            <input type="text" class="form-control"  data-ng-model="name" placeholder="John">
           </div>
-          <input type="submit" class="btn btn-default" value="Join">
+          <input class="btn btn-default" value="Join" data-ng-click="joinSession()">
        </form>
       </div>
     </div>        

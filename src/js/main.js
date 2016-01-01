@@ -9,7 +9,7 @@ var scrum = scrum || {
 	},
 	
 	join: function() {
-      scrum.$http.post('/controllers/session-controller.php?m=join', {
+      scrum.$http.post('/api.php?c=session&m=join', {
         id: scrum.$scope.id,
         name : scrum.$scope.name
       }).success(function (reponse) {
@@ -59,7 +59,7 @@ scrum.hc = function () {
   var hc = { name: 'HomeController' };
   
   hc.createSession = function () {
-  	scrum.$http.post('/controllers/session-controller.php?m=create', {
+  	scrum.$http.post('/api.php?c=session&m=create', {
   	  name: scrum.$scope.name,
   	  isPrivate: scrum.$scope.isPrivate
   	}).success(function (response) {
@@ -91,7 +91,7 @@ scrum.lc = function () {
   var lc = { name: 'ListController' };
   
   lc.update = function() {
-  	scrum.$http.get('/controllers/session-controller.php?m=list').success(function(response) {
+  	scrum.$http.get('/api.php?c=session&m=list').success(function(response) {
   	  scrum.$scope.sessions = response;	
   	});
   };
@@ -151,7 +151,7 @@ scrum.pc = function () {
   var pc = { name: 'MasterController' };
   // Start a new poll
   pc.startPoll = function () {
-    scrum.$http.post('/controllers/poll-controller.php?m=start', { 
+    scrum.$http.post('/api.php?c=poll&m=start', { 
         sessionId: scrum.$scope.id, 
         topic: scrum.$scope.topic
     }).success(function() {
@@ -170,7 +170,7 @@ scrum.pc = function () {
   	if (scrum.current !== pc)
   	  return;
   	
-    scrum.$http.get("/controllers/poll-controller.php?m=current&id=" + scrum.$scope.id).success(function(response){
+    scrum.$http.get("/api.php?c=poll&m=current&id=" + scrum.$scope.id).success(function(response){
       scrum.$scope.votes = response.votes;
       scrum.$scope.flipped = response.flipped;
       scrum.$scope.consensus = response.consensus;
@@ -179,7 +179,7 @@ scrum.pc = function () {
   };
   // Remove a member from the session
   pc.deleteMember = function (id) {
-    scrum.$http.post("/controllers/session-controller.php?m=remove", { memberId: id });  
+    scrum.$http.post("/api.php?c=session&m=remove", { memberId: id });  
   };
   // init the controller
   pc.init = function($scope, $http, $routeParams) {
@@ -216,7 +216,7 @@ scrum.cc = function() {
   	}
   	scrum.currentCard = card;
     card.active = true;
-    scrum.$http.post('/controllers/poll-controller.php?m=place', { 
+    scrum.$http.post('/api.php?c=poll&m=place', { 
            sessionId: scrum.$scope.id, 
            memberId: scrum.$scope.member, 
            vote: card.value
@@ -230,7 +230,7 @@ scrum.cc = function() {
   	if (scrum.current !== cc)
   	  return; 
   	
-    scrum.$http.get("/controllers/poll-controller.php?m=topic&sid=" + scrum.$scope.id).success(function(response){
+    scrum.$http.get("/api.php?c=poll&m=topic&sid=" + scrum.$scope.id).success(function(response){
       scrum.$scope.topic = response.topic;
       scrum.$scope.votable = response.votable;
     

@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . "/../bootstrap.php";
-
 /*
  * Session controller class to handle all session related operations
  */ 
@@ -124,6 +122,4 @@ class SessionController extends ControllerBase
 }
 
 $controller = new SessionController($entityManager);
-
-include "execute.php";
 ?>

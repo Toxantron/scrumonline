@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . "/../bootstrap.php";
-
 /*
  * Poll controller class to handle all session related operations
  */ 
@@ -137,7 +135,7 @@ class PollController extends ControllerBase
   private function currentPoll($sessionId)
   {
     // Load the user-vote.php required for this
-    include "user-vote.php";
+    include __DIR__ .  "/user-vote.php";
     
     $session = $this->getSession($sessionId);
     
@@ -203,6 +201,4 @@ class PollController extends ControllerBase
 }
 
 $controller = new PollController($entityManager);
-
-include "execute.php";
 ?>

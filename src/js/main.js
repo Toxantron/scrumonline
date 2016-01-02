@@ -11,8 +11,17 @@ var scrum = scrum || {
 	
 	// Shared join function
     join: function() {
-      scrum.$http.post('/api.php?c=session&m=join', scrum.$scope.join).success(function (reponse) {
-        scrum.$location.url('/member/' + reponse.sessionId + '/' + reponse.memberId);
+      scrum.$http.post('/api.php?c=session&m=join', scrum.$scope.join).success(function (response) {
+      	if(response.success)
+      	{
+      	  var result = response.result;
+      	  scrum.$location.url('/member/' + result.sessionId + '/' + result.memberId);
+      	}
+        else
+        {
+          scrum.$scope.join.error = true;
+          scrum.$scope.join.errorMsg = response.error;
+        }
       });
     }
 };
@@ -35,7 +44,7 @@ scrum.app.config(['$routeProvider',
         templateUrl: '/templates/list.html',
         controller: 'ListController'
       })
-      .when('/session/:id/:name',{
+      .when('/session/:id',{
       	templateUrl : '/templates/master.php',
       	controller: 'MasterController'
       })
@@ -59,7 +68,10 @@ scrum.hc = function () {
   
   hc.createSession = function () {
   	scrum.$http.post('/api.php?c=session&m=create', scrum.$scope.create).success(function (response) {
-  		scrum.$location.url('/session/' + response + '/' + scrum.$scope.create.name);
+  		if(response.success)
+  		{
+  	      scrum.$location.url('/session/' + response.result);
+  		}
   	});
   };
   
@@ -73,7 +85,7 @@ scrum.hc = function () {
   	
   	// Prepare scope
   	$scope.create = { isPrivate: false };
-  	$scope.join = { };
+  	$scope.join = { error: false };
   	$scope.createSession = hc.createSession;
     $scope.joinSession = scrum.join;
   };
@@ -89,22 +101,22 @@ scrum.lc = function () {
   
   lc.update = function() {
   	scrum.$http.get('/api.php?c=session&m=list').success(function(response) {
-  	  scrum.$scope.sessions = response;	
+  	  scrum.$scope.sessions = response.result;	
   	});
   };
   
   lc.open = function (session, transmit) {
   	// Public session
   	if(!session.isPrivate) {
-  	  scrum.$location.url('/session/' + session.id + '/' + session.name);	
+  	  scrum.$location.url('/session/' + session.id);	
   	}
   	// Private session
   	else {
       // Check password
   	  if(transmit) {
   	  	scrum.$http.post('api.php?c=session&m=check', session).success(function (response){
-  	  	  if(response === 'true')
-  	  	    scrum.$location.url('/session/' + session.id + '/' + session.name);
+  	  	  if(response.success && response.result === true)
+  	  	    scrum.$location.url('/session/' + session.id);
   	  	});
   	  }	
   	  // Toggle the expander
@@ -163,7 +175,11 @@ scrum.pc = function () {
     scrum.$http.post('/api.php?c=poll&m=start', { 
         sessionId: scrum.$scope.id, 
         topic: scrum.$scope.topic
-    }).success(function() {
+    }).success(function(response) {
+      // Exit if call failed
+      if(!response.success)
+        return;
+      
       // Reset our GUI
       for(var index=0; index < scrum.$scope.votes.length; index++)
       {
@@ -180,9 +196,17 @@ scrum.pc = function () {
   	  return;
   	
     scrum.$http.get("/api.php?c=poll&m=current&id=" + scrum.$scope.id).success(function(response){
-      scrum.$scope.votes = response.votes;
-      scrum.$scope.flipped = response.flipped;
-      scrum.$scope.consensus = response.consensus;
+      if(!response.success)
+      {
+      	// Error handling
+      	return;
+      }
+      
+      var result = response.result;
+      scrum.$scope.votes = result.votes;
+      scrum.$scope.flipped = result.flipped;
+      scrum.$scope.consensus = result.consensus;
+      
       setTimeout(scrum.pc.pollVotes, 200);
     });
   };
@@ -200,7 +224,6 @@ scrum.pc = function () {
     
     // Int model
     $scope.id = $routeParams.id;
-    $scope.name = $routeParams.name;
     
     $scope.startPoll = scrum.pc.startPoll;
     $scope.remove = scrum.pc.deleteMember;
@@ -209,7 +232,8 @@ scrum.pc = function () {
     // Start polling
     scrum.pc.pollVotes();
     $http.get("/api.php?c=poll&m=topic&sid=" + $scope.id).success(function(response){
-      scrum.$scope.topic = response.topic;
+      scrum.$scope.name = response.result.name;
+      scrum.$scope.topic = response.result.topic;
     });
   };
   
@@ -238,7 +262,7 @@ scrum.cc = function() {
            vote: card.value
          }).success(function (response) {
          	card.active = false;
-         	card.confirmed = response;
+         	card.confirmed = response.success;
          });
   };
   // Fetch the current topic from the server
@@ -247,8 +271,15 @@ scrum.cc = function() {
   	  return; 
   	
     scrum.$http.get("/api.php?c=poll&m=topic&sid=" + scrum.$scope.id).success(function(response){
-      scrum.$scope.topic = response.topic;
-      scrum.$scope.votable = response.votable;
+      if(!response.success)
+      {
+      	// Error handling
+      	return;
+      }
+    	
+      var result = response.result;
+      scrum.$scope.topic = result.topic;
+      scrum.$scope.votable = result.votable;
     
       setTimeout(scrum.cc.fetchTopic, 400);
     });

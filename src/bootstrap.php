@@ -35,6 +35,8 @@ class ControllerBase
   protected function getSession($id)
   {
     $session = $this->entityManager->find("Session", $id);
+    if($session == null)
+      throw new Exception("Unknown session id!");
     return $session;
   }
   

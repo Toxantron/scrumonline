@@ -13,7 +13,7 @@
   </div>
 </div>
             
-<div class="row" data-ng-controller="HomeController">
+<div class="row">
   <div class="col-md-10 col-md-offset-1 col-xs-12">
     <h2>Create or join a session</h2>
   </div>
@@ -43,9 +43,14 @@
             
   <!-- Join session panel -->
   <div class="col-sm-5 col-xs-12">
-    <div class="panel panel-default">
+    <div class="panel" data-ng-class="{'panel-warning': join.error, 'panel-default': !join.error}">
       <div class="panel-heading">Join session</div>
-      <div class="panel-body">  
+      <div class="panel-body">
+        <div data-ng-if="join.error">
+          <div class="alert alert-warning" role="alert">
+            <strong>Error:</strong> {{ join.errorMsg }}
+          </div>
+        </div>
         <form role="form">
           <div class="form-group">
             <label for="id">Session id:</label>

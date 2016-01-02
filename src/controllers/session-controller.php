@@ -60,6 +60,12 @@ class SessionController extends ControllerBase
   // Add a member with this name to the session
   private function addMember($id, $name)
   {
+    // Check arguments
+    if($id == null)
+      throw new Exception("Id must not be empty!");
+    if($name == null)
+      throw new Exception("Name must not be empty!");
+    
     $session = $this->getSession($id);
     
     // Check for existing member

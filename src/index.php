@@ -1,7 +1,7 @@
 <?php
 $navItems = [
   [ 
-    "link" => "\"#/session-list\"", 
+    "link" => "\"#/sessions\"", 
     "name" => "Sessions"
   ],  
 ];

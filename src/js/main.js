@@ -40,7 +40,7 @@ scrum.app.config(['$routeProvider',
       	templateUrl: '/templates/home.html',
       	controller: 'HomeController'
       })
-      .when('/session-list', {
+      .when('/sessions', {
         templateUrl: '/templates/list.html',
         controller: 'ListController'
       })

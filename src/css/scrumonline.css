@@ -42,15 +42,15 @@ div.card-container h2 {
 }
 
 div.card {
-  border: 2px solid black;
+  border: 2px solid #0F1593;
   border-radius: 15px;
   margin-left: auto;
   margin-right: auto;
 }
 div.card .inner {
-  margin: 8px 5px 0;
-  border-radius: 30px;
-  background: #0066FF;
+  margin: 3px 3px 0;
+  border-radius: 12px;
+  background: #0F1593;
   text-align: center;
 }
 
@@ -58,12 +58,12 @@ span.card-label {
   display: block;
   font-size: 2em;
   font-weight: bold;
-  padding: 45px 0 45px;
+  padding: 50px 0 50px;
   color: #FFFFFF;
 }
 @media (min-width: 992px) {
   span.card-label {
-    padding: 70px 0 70px;
+    padding: 75px 0 75px;
   }
 }
 
@@ -108,10 +108,10 @@ div.card-flip.flipped {
 
 /* Selectable card */
 div.card.active {
-  background: #ff3333;
+  box-shadow: 0px 0px 20px 10px #c80020;
 }
 div.card.confirmed {
-  background: #00FF00;
+  box-shadow: 0px 0px 20px 10px #7ec500;
 }
 button.vote {
   width: 100%;

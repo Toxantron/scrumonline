@@ -1,4 +1,4 @@
-/*eslint-env browser */
+/*eslint-env browser, jquery*/
 /*globals angular */
 
 var scrum = scrum || {
@@ -67,6 +67,18 @@ scrum.hc = function () {
   var hc = { name: 'HomeController' };
   
   hc.createSession = function () {
+  	var create = scrum.$scope.create;
+  	if(!create.name)
+  	{
+  	  create.nameError = true;
+  	  return;
+  	}
+  	if(create.isPrivate && !create.pwdError)
+  	{
+  	  create.pwdError = true;
+  	  return;
+  	}
+  	
   	scrum.$http.post('/api.php?c=session&m=create', scrum.$scope.create).success(function (response) {
   		if(response.success)
   		{

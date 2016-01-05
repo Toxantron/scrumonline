@@ -24,16 +24,22 @@
       <div class="panel-heading">Create session</div>
       <div class="panel-body">  
         <form role="form">
-          <div class="form-group">
+          <div class="form-group" data-ng-class="{'has-error': create.nameError}">
             <label for="sessionName">Session name:</label>
-            <input type="text" class="form-control" data-ng-model="create.name" placeholder="My session">
+            <div class="has-feedback">
+              <input type="text" class="form-control" data-ng-model="create.name" placeholder="My session">
+              <span data-ng-if="create.nameError" class="glyphicon glyphicon-remove form-control-feedback"></span>
+            </div>
           </div>
           <div class="form-group">
             <label><input type="checkbox" data-ng-model="create.isPrivate"> is private</label> 
           </div>
-          <div class="form-group" data-ng-if="create.isPrivate">
+          <div class="form-group" data-ng-if="create.isPrivate" data-ng-class="{'has-error': create.pwdError}">
             <label for="password">Password:</label>
-            <input type="password" class="form-control" data-ng-model="create.password">
+            <div class="has-feedback">
+              <input type="password" class="form-control" data-ng-model="create.password">
+              <span data-ng-if="create.pwdError" class="glyphicon glyphicon-remove form-control-feedback"></span>
+            </div>
           </div>
           <input class="btn btn-default" value="Create" data-ng-click="createSession()">
         </form>

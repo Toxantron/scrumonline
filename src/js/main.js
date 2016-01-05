@@ -140,6 +140,8 @@ scrum.lc = function () {
   	  	scrum.$http.post('api.php?c=session&m=check', session).success(function (response){
   	  	  if(response.success && response.result === true)
   	  	    scrum.$location.url('/session/' + session.id);
+  	  	  else
+  	  	    session.pwdError = true;
   	  	});
   	  }	
   	  // Toggle the expander

@@ -12,11 +12,12 @@
         </div>
         <div data-ng-if="session.expanded">
           <form role="form" class="form-inline">
-            <div class="form-group">
+            <div class="form-group has-feedback" data-ng-class="{'has-error': session.pwdError}">
               <label for="topic">Password:</label>
               <input type="password" class="form-control" data-ng-model="session.password">
-              <button class="btn btn-default" data-ng-click="open(session, true)">Open</button>
+              <span data-ng-if="session.pwdError" class="glyphicon glyphicon-remove form-control-feedback"></span>
             </div>
+            <button class="btn btn-default" data-ng-click="open(session, true)">Open</button>
           </form>
         </div>
       </div>

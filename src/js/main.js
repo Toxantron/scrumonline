@@ -245,11 +245,18 @@ scrum.pc = function () {
 // -------------------------------
 scrum.cc = function() {
   var cc = { name: 'CardController' };
+  // Reset UI
+  cc.reset = function () {
+  	var card = scrum.currentCard;
+  	if(!card)
+  	  return;
+  	  
+  	card.active = false;
+  	card.confirmed = false;
+  };  
   // Select a card from all available cards
   cc.selectCard = function (card) {
-  	if(scrum.currentCard != null) {
-      scrum.currentCard.active = scrum.currentCard.confirmed = false;
-  	}
+  	cc.reset();
   	scrum.currentCard = card;
     card.active = true;
     
@@ -257,14 +264,14 @@ scrum.cc = function() {
       return;
     
     scrum.$http.post('/api.php?c=poll&m=place', { 
-           sessionId: scrum.$scope.id, 
-           memberId: scrum.$scope.member, 
-           vote: card.value
-         }).success(function (response) {
-         	card.active = false;
-         	card.confirmed = response.success;
-         });
-  };
+      sessionId: scrum.$scope.id, 
+      memberId: scrum.$scope.member, 
+      vote: card.value
+    }).success(function (response) {
+      card.active = false;
+      card.confirmed = response.success;
+    });
+  }; 
   // Fetch the current topic from the server
   cc.fetchTopic = function () {
   	if (scrum.current !== cc)
@@ -273,14 +280,18 @@ scrum.cc = function() {
     scrum.$http.get("/api.php?c=poll&m=topic&sid=" + scrum.$scope.id).success(function(response){
       if(!response.success)
       {
-      	// Error handling
+      	cc.reset();
       	return;
       }
     	
       var result = response.result;
-      scrum.$scope.topic = result.topic;
-      scrum.$scope.votable = result.votable;
-    
+      if(scrum.$scope.topic !== result.topic)
+      {
+        cc.reset();
+        scrum.$scope.topic = result.topic;
+        scrum.$scope.votable = result.votable;
+      }
+      
       setTimeout(scrum.cc.fetchTopic, 400);
     });
   };

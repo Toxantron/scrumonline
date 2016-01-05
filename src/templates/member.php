@@ -1,7 +1,7 @@
 <?php 
-require_once "../config.php";
-?>
+include __DIR__ . "/../config.php";
 
+?>
 <div data-ng-init="cards=[<?php foreach($cards as $card)
   echo '{value: '.$card.', active: false},';
 ?>]">

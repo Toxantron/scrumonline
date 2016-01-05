@@ -37,24 +37,24 @@ scrum.app.config(['$routeProvider',
   	// Configure routing
     $routeProvider
       .when('/', {
-      	templateUrl: '/templates/home.html',
+      	templateUrl: 'home.html',
       	controller: 'HomeController'
       })
       .when('/sessions', {
-        templateUrl: '/templates/list.html',
+        templateUrl: 'list.html',
         controller: 'ListController'
       })
       .when('/session/:id',{
-      	templateUrl : '/templates/master.php',
+      	templateUrl : 'master.html',
       	controller: 'MasterController'
       })
       .when('/join', { redirectTo: '/join/0' })
       .when('/join/:id', {
-      	templateUrl : '/templates/join.html',
+      	templateUrl : 'join.html',
       	controller: 'JoinController'
       })
       .when('/member/:sessionId/:memberId', {
-      	templateUrl : '/templates/member.php',
+      	templateUrl : 'member.html',
       	controller: 'CardController'
       })
     ;

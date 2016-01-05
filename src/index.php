@@ -1,4 +1,6 @@
 <?php
+include "templates/templates.php";
+
 $navItems = [
   [ 
     "link" => "\"#/sessions\"", 
@@ -60,5 +62,13 @@ $navItems = [
   <script src="/js/bootstrap.min.js"></script>
   <script src="/js/plugins.js"></script>
   <script src="/js/main.js"></script>
+  
+  <!-- Templates of the page -->
+<?php
+  foreach(Template::getAll() as $template)
+  {
+    $template->toTag();
+  }
+?>
 </body>
 </html>

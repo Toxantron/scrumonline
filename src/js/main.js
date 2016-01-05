@@ -11,6 +11,18 @@ var scrum = scrum || {
 	
 	// Shared join function
     join: function() {
+      var join = scrum.$scope.join;
+      if(!join.id)
+      {
+      	join.idError = true;
+      	return;
+      }
+      if(!join.name)
+      {
+      	join.nameError = true;
+      	return;
+      }
+    	
       scrum.$http.post('/api.php?c=session&m=join', scrum.$scope.join).success(function (response) {
       	if(response.success)
       	{
@@ -19,8 +31,7 @@ var scrum = scrum || {
       	}
         else
         {
-          scrum.$scope.join.error = true;
-          scrum.$scope.join.errorMsg = response.error;
+          scrum.$scope.join.idError = true;
         }
       });
     }

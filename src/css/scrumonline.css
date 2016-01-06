@@ -147,3 +147,10 @@ span.session-list.center {
 span.session-list.right {
   text-align: right;
 }
+
+/*
+ * Topic input
+ */
+.form-control.topic {
+  width: 500px;
+}

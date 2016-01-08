@@ -27,7 +27,7 @@ include __DIR__ . "/../config.php";
   <div class="col-md-8 col-md-offset-2 col-xs-12">
     <h2>How to:</h2>
     <p>
-      Votes can only be placed during in active poll.That means as long as the master has not started a poll or all votes have been placed, you can not vote!
+      Votes can only be placed during an active poll.That means as long as the master has not started a poll or all votes have been placed, you can not vote!
       When you select a card it is highlighted in red, meaning that you vote is processed by the server. If it was placed successfully the card is highlighted
       green as feedback. Until everone has placed their vote you can still change it. When the last person votes the poll is closed.
     </p>

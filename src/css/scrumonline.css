@@ -1,17 +1,30 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-.container-fluid.main {
-    padding: 55px 10px 0px;
+/* Container */
+.container-fluid.main, .container-fluid.navigation {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 @media (min-width: 992px) {
-  .container-fluid.main {
-    padding: 80px 50px 0px;
+  .container-fluid.main, .container-fluid.navigation {
+    padding-left: 50px;
+    padding-right: 50px;
   }
 }
 @media (min-width: 1200px) {
+  .container-fluid.main, .container-fluid.navigation {
+    padding-left: 200px;
+    padding-right: 200px;
+  }
+}
+
+.container-fluid.main {
+  padding-top: 55px;
+}
+@media (min-width: 992px) {
   .container-fluid.main {
-    padding: 80px 150px 0px;
+    padding-top: 80px;
   }
 }
 

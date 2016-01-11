@@ -43,7 +43,7 @@ scrum.app = angular.module('scrum-online', ['ngRoute']);
 //------------------------------
 // Configure routing
 // -----------------------------
-scrum.app.config(['$routeProvider',
+scrum.app.config(
   function($routeProvider) {
   	// Configure routing
     $routeProvider
@@ -69,7 +69,7 @@ scrum.app.config(['$routeProvider',
       	controller: 'CardController'
       })
     ;
-}]);
+});
 
 //------------------------------
 // Home controller

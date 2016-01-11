@@ -21,6 +21,7 @@ $navItems = [
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
     
   <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
+  
   <!-- Style sheets -->
   <link rel="stylesheet" href="/css/combined.css">
   <link rel="stylesheet" href="/css/scrumonline.css">
@@ -32,7 +33,7 @@ $navItems = [
 
 <!-- Top navigation bar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
+  <div class="container-fluid navigation">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>

@@ -4,14 +4,14 @@ include __DIR__ . "/../config.php";
 ?>
 <!-- Headline -->
 <div class="row">
-  <div class="col-md-10 col-md-offset-1 col-xs-12">
+  <div class="col-xs-12">
     <h1>{{ id }} - {{ name }}</h1>
   </div>
 </div>
       
 <!-- Poll control -->
 <div class="row topic">
-  <div class="col-md-10 col-md-offset-1 col-xs-12">
+  <div class="col-xs-12">
     <form role="form" class="form-inline">
       <div class="form-group">
         <label for="topic">Topic:</label>
@@ -23,7 +23,7 @@ include __DIR__ . "/../config.php";
 </div>
 
 <div data-ng-if="consensus" class="row">
-  <div class="col-md-10 col-md-offset-1 col-xs-12">
+  <div class="col-xs-12">
     <div class="alert alert-success" role="alert">
       <strong>Estimation done!</strong> The team agreed on <strong data-ng-bind="votes[0].value"></strong>!
     </div>
@@ -32,11 +32,9 @@ include __DIR__ . "/../config.php";
   
 <!-- Live poll view -->
 <div class="row">
-  <div class="col-md-10 col-md-offset-1 col-xs-12">
-      
     <div class="card-overview">
 
-      <div data-ng-repeat="vote in votes track by vote.id" class="col-lg-2 col-md-3 col-xs-4">        
+      <div data-ng-repeat="vote in votes track by vote.id" class="col-lg-2 col-sm-3 col-xs-4">        
         <div class="card-container">
           <div class="deletable-card">
             <div class="card-flip" data-ng-class="{flipped: flipped}">
@@ -56,12 +54,10 @@ include __DIR__ . "/../config.php";
       </div>
 
     </div>
-        
-  </div>
 </div>
             
 <div class="row">
-  <div class="col-md-10 col-md-offset-1 col-xs-12">
+  <div class="col-xs-12">
     <h2>Invite members</h1>
     <p>Invite members to join your session. Session id: <strong data-ng-bind="id"></strong></p>
     <p>Or send them this link: <a href="http://<?= $host ?>/#/join/{{ id }}"><?= $host ?>/#/join/{{ id }}</a>

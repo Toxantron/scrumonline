@@ -146,6 +146,9 @@ div.delete-member {
     left: 115px;
   }
 }
+div.delete-member.span {
+  margin-left: 2px;
+}
 
 /*
  * Session style

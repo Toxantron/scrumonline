@@ -135,6 +135,7 @@ button.vote {
 div.delete-member {
   position: absolute;
   height: 32px;
+  width: 32px;
   top: 0;
   left: 85px;
   font-size: 28px;

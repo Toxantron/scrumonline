@@ -31,6 +31,9 @@
 div.row.topic {
   margin-bottom: 20px;
 }
+div.topic .form-control {
+   width: 500px;
+}
 
 div.selectable {
   cursor: pointer;
@@ -159,11 +162,4 @@ span.session-list.center {
 }
 span.session-list.right {
   text-align: right;
-}
-
-/*
- * Topic input
- */
-.form-control.topic {
-  width: 500px;
 }

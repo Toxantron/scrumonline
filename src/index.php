@@ -46,7 +46,7 @@ $navItems = [
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
       <?php foreach($navItems as $navItem): ?>
-        <li<?php echo (isset($active) && $navItem["name"] === $active ? " class=\"active\"" : "") ?>><a href=<?php echo $navItem["link"] ?>><?php echo $navItem["name"] ?></a></li>
+        <li data-toggle="collapse" data-target=".navbar-collapse.in"<?php echo (isset($active) && $navItem["name"] === $active ? " class=\"active\"" : "") ?>><a href=<?php echo $navItem["link"] ?>><?php echo $navItem["name"] ?></a></li>
       <?php endforeach; ?>
       </ul>
     </div><!--/.nav-collapse -->

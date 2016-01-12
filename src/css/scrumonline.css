@@ -18,7 +18,7 @@
     padding-right: 150px;
   }
 }
-@media (min-width: 1200px) {
+@media (min-width: 1500px) {
   .container-fluid.main, .container-fluid.navigation {
     padding-left: 220px;
     padding-right: 220px;

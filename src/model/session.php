@@ -1,7 +1,7 @@
 <?php
 // model/session.php
 /**
- * @Entity @Table(name="sessions")
+ * @Entity @Table(name="sessions", indexes = { @Index(name = "date_idx", columns = { "lastAction" }) })
  **/
 class Session
 {

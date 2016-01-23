@@ -7,39 +7,26 @@ class SessionController extends ControllerBase
   // Get all sessions from db
   private function getAllSessions()
   {
-    $sessionRepo = $this->entityManager->getRepository("Session");
-    $sessions = $sessionRepo->findAll();
+    // Create query finding all active sessions
+    $query = $this->entityManager->createQuery('SELECT session FROM Session session WHERE session.lastAction > ?1');
+    $query->setParameter(1, new DateTime('-2 hour'));
+    $sessions = $query->getResult();
     
     // Delete old sessions, filter active ones
     $index = 0;
     $activeSessions = array();
     foreach($sessions as $session)
     {
-      // Delete old sessions
-      if($session->getLastAction()->diff(new DateTime())->h > 2)
-        $this->deleteSession($session);
-      else
-      {
-        // Feth active ones
-        $transformed = new stdClass();
-        $transformed->id = $session->getId();
-        $transformed->name = $session->getName();
-        $transformed->memberCount = $session->getMembers()->count();
-        $transformed->isPrivate = $session->getIsPrivate();
-        $activeSessions[$index++] = $transformed;
-      }
+      // Feth active ones
+      $transformed = new stdClass();
+      $transformed->id = $session->getId();
+      $transformed->name = $session->getName();
+      $transformed->memberCount = $session->getMembers()->count();
+      $transformed->isPrivate = $session->getIsPrivate();
+      $activeSessions[$index++] = $transformed;
     }
     
     return $activeSessions;
-  }
-  
-  private function deleteSession($session)
-  {
-    $session->setCurrentPoll(null);
-    $this->save($session);
-    
-    $this->entityManager->remove($session);
-    $this->entityManager->flush();
   }
   
   // Create session with name and private flag

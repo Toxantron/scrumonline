@@ -68,6 +68,9 @@ scrum.app.config(
       	templateUrl : 'member.html',
       	controller: 'CardController'
       })
+      .otherwise({
+      	templateUrl: '404.html'
+      })
     ;
 });
 

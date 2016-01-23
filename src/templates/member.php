@@ -15,7 +15,7 @@ include __DIR__ . "/../config.php";
   <div class="col-lg-2 col-md-3 col-xs-4" data-ng-repeat="card in cards">
     <div class="card-container">
       <div class="card selectable" data-ng-class="{active: card.active, confirmed: card.confirmed}" data-ng-click="selectCard(card)">
-        <div class="inner"><span class="card-label" data-ng-bind="card.value">1</span></div>
+        <div class="inner"><span class="card-label" data-ng-bind="card.value"></span></div>
       </div>
     </div>
   </div>

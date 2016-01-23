@@ -31,7 +31,8 @@ class Template
       new Template("join.html", "templates/join.html"),
       new Template("list.html", "templates/list.html"),
       new Template("master.html", "templates/master.php"),
-      new Template("member.html", "templates/member.php")
+      new Template("member.html", "templates/member.php"),
+      new Template("404.html", "templates/404.html")
     ];
     return $templates;
   }

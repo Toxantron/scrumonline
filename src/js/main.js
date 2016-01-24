@@ -313,12 +313,14 @@ scrum.cc = function() {
       }
     	
       var result = response.result;
-      if(scrum.$scope.topic !== result.topic)
+      var scope = scrum.$scope;
+      if(scope.topic !== result.topic || (!scope.votable && result.votable))
       {
         cc.reset();
-        scrum.$scope.topic = result.topic;
-        scrum.$scope.votable = result.votable;
+        scope.topic = result.topic;
       }
+      
+      scope.votable = result.votable;
       
       setTimeout(scrum.cc.fetchTopic, 400);
     });

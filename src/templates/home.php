@@ -58,7 +58,7 @@
           </div>
           <div class="form-group" data-ng-class="{'has-error': join.nameError}">
             <label>Your name:</label>
-            <div class="has-feedback">
+            <div class="has-feedback" data-ng-init="join.name = '<?= $_COOKIE['scrum_member_name'] ?>'">
               <input type="text" class="form-control"  data-ng-model="join.name" placeholder="John">
               <span data-ng-if="join.nameError" class="glyphicon glyphicon-remove form-control-feedback"></span>
             </div>

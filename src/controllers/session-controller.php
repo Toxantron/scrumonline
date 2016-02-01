@@ -69,6 +69,10 @@ class SessionController extends ControllerBase
       $this->save($member);
     }
     
+    // Store name in cookie if not done yet
+    if(!$_COOKIE['scrum_member_name'])
+      setcookie('scrum_member_name', $name);
+    
     $result = new stdClass();
     $result->sessionId = $id;
     $result->memberId = $member->getId();

@@ -36,7 +36,7 @@ class SessionController extends ControllerBase
     $session->setName($name);
     $session->setIsPrivate($private);
     if ($private)
-      $session->setPassword($password);
+      $session->setPassword($this->createHash($password));
     $session->setLastAction(new DateTime());
 
     $this->save($session);
@@ -86,7 +86,12 @@ class SessionController extends ControllerBase
   private function checkPassword($id, $password)
   {
     $session = $this->getSession($id);
-    return $session->getPassword() === $password;
+    return $session->getPassword() === $this->createHash($password);
+  }
+  
+  private function createHash($password)
+  {
+    return hash('md5', $password);
   }
   
   public function execute()

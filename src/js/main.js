@@ -87,7 +87,7 @@ scrum.hc = function () {
   	  create.nameError = true;
   	  return;
   	}
-  	if(create.isPrivate && !create.pwdError)
+  	if(create.isPrivate && !create.password)
   	{
   	  create.pwdError = true;
   	  return;

@@ -11,7 +11,7 @@ The "deployment" is a general scrum meeting where the ScrumMaster has a laptop c
 
 ## Estimation workflow
 
-For every story the Scrum Master will than start a poll and each member of the session must select a card. As they select a card the main screen will show a card over the name, but without showing the number. Once everyone selected a card the main page (beamer) shall start a 5s countdown and then flip all the cards. According to planning poker it will than highlight the minimum and maximum estimation for colleagues to bring the arguments.
+For every story the Scrum Master will than start a poll and each member of the session must select a card. As they select a card the main screen will show a card over the name, but without showing the number. Once everyone selected a card the main page (beamer) flips all the cards. According to planning poker it will than highlight the minimum and maximum estimation for colleagues to bring the arguments.
 
 ## Requirements
 The requires a couple of packages you need to install on you system. Those are:
@@ -28,6 +28,11 @@ $ vendor/bin/doctrine orm:generate-proxies
 $ cp src/sample-config.php src/config.php
 </pre>
 The web root should point to the src directory.
+
+## Road Map
+* Include vote history of previous stories at the bottom of the master view
+* Simple cookie to store the user name for the "Join Session" form
+* Statistics tab in navigation bar
 
 ## Contribute
 If you want to contribute you can just clone the repository and follow the deployment instructions. Any changes must be commited to a fork and then merged by issuing a pull request.

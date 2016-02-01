@@ -33,6 +33,7 @@ The web root should point to the src directory.
 * Include vote history of previous stories at the bottom of the master view
 * Simple cookie to store the user name for the "Join Session" form
 * Statistics tab in navigation bar
+* Mobile apps with watch support. Imagine voting on Android Wear or Apple Watch. Wouldn't that be cool? :D
 
 ## Contribute
 If you want to contribute you can just clone the repository and follow the deployment instructions. Any changes must be commited to a fork and then merged by issuing a pull request.

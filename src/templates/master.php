@@ -14,7 +14,7 @@ include __DIR__ . "/../config.php";
   <div class="col-xs-12">
     <form role="form" class="form-inline">
       <div class="form-group">
-        <label for="topic">Topic:</label>
+        <label for="topic">Story:</label>
         <input type="text" class="form-control" data-ng-model="topic" placeholder="#4711 Create foo">
         <button class="btn btn-default" data-ng-click="startPoll()">Start</button>
       </div>

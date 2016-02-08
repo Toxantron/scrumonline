@@ -11,10 +11,10 @@ The "deployment" is a general scrum meeting where the ScrumMaster has a laptop c
 
 ## Estimation workflow
 
-For every story the Scrum Master will than start a poll and each member of the session must select a card. As they select a card the main screen will show a card over the name, but without showing the number. Once everyone selected a card the main page (beamer) flips all the cards. According to planning poker it will than highlight the minimum and maximum estimation for colleagues to bring the arguments.
+For every story the Scrum Master will than start a poll and each member of the session must select a card. As they select a card the main screen will show a card over their name, but without showing the number. Once everyone selected a card the main page (beamer) flips all the cards. According to planning poker it will than highlight the minimum and maximum estimation for colleagues to bring their arguments.
 
 ## Requirements
-The requires a couple of packages you need to install on you system. Those are:
+The app requires a couple of packages you need to install on your system. Those are:
 - Apache with PHP >= 5.6
 - MySQL
 - MySQL-PDO

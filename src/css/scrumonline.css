@@ -106,6 +106,7 @@ div.card-overview {
   perspective: 1000;
 }
 div.card.front, div.card.back {
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   position: absolute;
   top: 15px;

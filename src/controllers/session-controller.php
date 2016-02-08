@@ -70,7 +70,7 @@ class SessionController extends ControllerBase
     }
     
     // Store name in cookie if not done yet
-    if(!$_COOKIE['scrum_member_name'])
+    if(!isset($_COOKIE['scrum_member_name']))
       setcookie('scrum_member_name', $name);
     
     $result = new stdClass();

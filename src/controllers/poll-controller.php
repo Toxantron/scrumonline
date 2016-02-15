@@ -9,16 +9,28 @@ class PollController extends ControllerBase
   {
     $session = $this->getSession($sessionId);
     
-    // Start new poll
-    $poll = new Poll();
-    $poll->setTopic($topic);
-    $poll->setSession($session);
+    // Check of current poll has the same topic
+    $poll = $session->getCurrentPoll();
+    if($poll != null && $poll->getTopic() == $topic)
+    {
+      // Simply reset the poll
+      $em = $this->entityManager;
+      foreach($poll->getVotes() as $vote)
+        $em->remove($vote);
+    }
+    else
+    {    
+      // Start new poll
+      $poll = new Poll();
+      $poll->setTopic($topic);
+      $poll->setSession($session);
+      $session->setCurrentPoll($poll);
+    }
     
     // Update session
     $session->setLastAction(new DateTime());
-    $session->setCurrentPoll($poll);
     
-    // Set or result result
+    // Set or reset result
     $poll->setResult(0);
     
     // Save changes

@@ -8,25 +8,10 @@ class SessionController extends ControllerBase
   private function getAllSessions()
   {
     // Create query finding all active sessions
-    $query = $this->entityManager->createQuery('SELECT session FROM Session session WHERE session.lastAction > ?1');
+    $query = $this->entityManager->createQuery('SELECT s.id, s.name, s.isPrivate, COUNT(m.id) memberCount  FROM Session s JOIN s.members m WHERE s.lastAction > ?1');
     $query->setParameter(1, new DateTime('-2 hour'));
     $sessions = $query->getResult();
-    
-    // Delete old sessions, filter active ones
-    $index = 0;
-    $activeSessions = array();
-    foreach($sessions as $session)
-    {
-      // Feth active ones
-      $transformed = new stdClass();
-      $transformed->id = $session->getId();
-      $transformed->name = $session->getName();
-      $transformed->memberCount = $session->getMembers()->count();
-      $transformed->isPrivate = $session->getIsPrivate();
-      $activeSessions[$index++] = $transformed;
-    }
-    
-    return $activeSessions;
+    return $sessions;
   }
   
   // Create session with name and private flag

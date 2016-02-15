@@ -1,4 +1,5 @@
 <?php
+include "config.php";
 include "templates/templates.php";
 
 $navItems = [
@@ -70,7 +71,7 @@ $navItems = [
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-73795360-1', 'auto');
+    ga('create', '<?= $ga ?>', 'auto');
     ga('send', 'pageview');
   </script>
   

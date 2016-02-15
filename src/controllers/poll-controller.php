@@ -162,6 +162,8 @@ class PollController extends ControllerBase
     $response->votes = $votes;
     $response->flipped = $flipped;
     $response->consensus = $consensus;
+    $response->name = $session->getName();
+    $response->topic = $currentPoll != null ? $currentPoll->getTopic() : "";
     
     return $response;
   }
@@ -192,7 +194,6 @@ class PollController extends ControllerBase
 
         // Result object. Only votable until all votes received
         $result = new stdClass();
-        $result->name = $session->getName();
         $result->topic = is_null($currentPoll) ? "No topic" : $currentPoll->getTopic();
         $result->votable = is_null($currentPoll) ? false : $currentPoll->getResult() == 0;
         

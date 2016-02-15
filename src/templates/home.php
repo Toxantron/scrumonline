@@ -7,6 +7,7 @@
       a named session and invite your team to join you. It is recommended to display the scrum master view on the big screen 
       (TV or projector) and let everyone else join via smartphone. To join a session just enter the id displayed in the 
       heading of the scrum master view. For more information please visit my <a href="https://github.com/Toxantron/scrumonline">github repo</a>.
+      There you can also find a changelog and open issues about bugs or feature requests.
     </p>
   </article>
 </div>
@@ -58,7 +59,7 @@
           </div>
           <div class="form-group" data-ng-class="{'has-error': join.nameError}">
             <label>Your name:</label>
-            <div class="has-feedback" data-ng-init="join.name = '<?= $_COOKIE['scrum_member_name'] ?>'">
+            <div class="has-feedback" data-ng-init="join.name = '<?= isset($_COOKIE['scrum_member_name']) ? $_COOKIE['scrum_member_name'] : "" ?>'">
               <input type="text" class="form-control"  data-ng-model="join.name" placeholder="John">
               <span data-ng-if="join.nameError" class="glyphicon glyphicon-remove form-control-feedback"></span>
             </div>

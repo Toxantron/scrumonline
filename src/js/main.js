@@ -23,10 +23,11 @@ var scrum = scrum || {
       	return;
       }
     	
-      scrum.$http.post('/api.php?c=session&m=join', scrum.$scope.join).success(function (response) {
-      	if(response.success)
+      scrum.$http.post('/api.php?c=session&m=join', scrum.$scope.join).then(function (response) {
+      	var data = response.data;
+      	if(data.success)
       	{
-      	  var result = response.result;
+      	  var result = data.result;
       	  scrum.$location.url('/member/' + result.sessionId + '/' + result.memberId);
       	}
         else
@@ -93,10 +94,10 @@ scrum.hc = function () {
   	  return;
   	}
   	
-  	scrum.$http.post('/api.php?c=session&m=create', scrum.$scope.create).success(function (response) {
-  		if(response.success)
+  	scrum.$http.post('/api.php?c=session&m=create', scrum.$scope.create).then(function (response) {
+  		if(response.data.success)
   		{
-  	      scrum.$location.url('/session/' + response.result);
+  	      scrum.$location.url('/session/' + response.data.result);
   		}
   	});
   };
@@ -126,8 +127,8 @@ scrum.lc = function () {
   var lc = { name: 'ListController' };
   
   lc.update = function() {
-  	scrum.$http.get('/api.php?c=session&m=list').success(function(response) {
-  	  scrum.$scope.sessions = response.result;	
+  	scrum.$http.get('/api.php?c=session&m=list').then(function(response) {
+  	  scrum.$scope.sessions = response.data.result;	
   	});
   };
   
@@ -140,8 +141,9 @@ scrum.lc = function () {
   	else {
       // Check password
   	  if(transmit) {
-  	  	scrum.$http.post('api.php?c=session&m=check', session).success(function (response){
-  	  	  if(response.success && response.result === true)
+  	  	scrum.$http.post('api.php?c=session&m=check', session).then(function (response){
+  	      var data = response.data;
+  	  	  if(data.success && data.result === true)
   	  	    scrum.$location.url('/session/' + session.id);
   	  	  else
   	  	    session.pwdError = true;
@@ -203,9 +205,10 @@ scrum.pc = function () {
     scrum.$http.post('/api.php?c=poll&m=start', { 
         sessionId: scrum.$scope.id, 
         topic: scrum.$scope.topic
-    }).success(function(response) {
+    }).then(function(response) {
+      var data = response.data;
       // Exit if call failed
-      if(!response.success)
+      if(!data.success)
         return;
       
       // Reset our GUI
@@ -216,6 +219,7 @@ scrum.pc = function () {
         vote.active = false;
       }
       scrum.$scope.flipped = false;
+      scrum.$scope.focus = false;
     });
   };
   // Poll current votes of time members
@@ -223,19 +227,25 @@ scrum.pc = function () {
   	if (scrum.current !== pc)
   	  return;
   	
-    scrum.$http.get("/api.php?c=poll&m=current&id=" + scrum.$scope.id).success(function(response){
-      if(!response.success)
+    scrum.$http.get("/api.php?c=poll&m=current&id=" + scrum.$scope.id).then(function(response){
+      var data = response.data;
+      if(!data.success)
       {
       	// Error handling
       	return;
       }
       
-      var result = response.result;
+      var result = data.result;
+      scrum.$scope.name = result.name;
       scrum.$scope.votes = result.votes;
       scrum.$scope.flipped = result.flipped;
       scrum.$scope.consensus = result.consensus;
+      if (!scrum.$scope.focus)
+        scrum.$scope.topic = result.topic;
       
       setTimeout(scrum.pc.pollVotes, 200);
+    }, function(){
+      setTimeout(scrum.pc.pollVotes, 200); 
     });
   };
   // Remove a member from the session
@@ -259,10 +269,6 @@ scrum.pc = function () {
     
     // Start polling
     scrum.pc.pollVotes();
-    $http.get("/api.php?c=poll&m=topic&sid=" + $scope.id).success(function(response){
-      scrum.$scope.name = response.result.name;
-      scrum.$scope.topic = response.result.topic;
-    });
   };
   
   return pc;
@@ -295,9 +301,9 @@ scrum.cc = function() {
       sessionId: scrum.$scope.id, 
       memberId: scrum.$scope.member, 
       vote: card.value
-    }).success(function (response) {
+    }).then(function (response) {
       card.active = false;
-      card.confirmed = response.success;
+      card.confirmed = response.data.success;
     });
   }; 
   // Fetch the current topic from the server
@@ -305,14 +311,15 @@ scrum.cc = function() {
   	if (scrum.current !== cc)
   	  return; 
   	
-    scrum.$http.get("/api.php?c=poll&m=topic&sid=" + scrum.$scope.id).success(function(response){
-      if(!response.success)
+    scrum.$http.get("/api.php?c=poll&m=topic&sid=" + scrum.$scope.id).then(function(response){
+      var data = response.data;
+      if(!data.success)
       {
       	cc.reset();
       	return;
       }
     	
-      var result = response.result;
+      var result = data.result;
       var scope = scrum.$scope;
       if(scope.topic !== result.topic || (!scope.votable && result.votable))
       {
@@ -323,6 +330,8 @@ scrum.cc = function() {
       scope.votable = result.votable;
       
       setTimeout(scrum.cc.fetchTopic, 400);
+    }, function() {
+      setTimeout(scrum.cc.fetchTopic, 400);	
     });
   };
   // Initialize the controller
@@ -335,8 +344,7 @@ scrum.cc = function() {
     
     // Init model
     $scope.id = $routeParams.sessionId;
-    $scope.member = $routeParams.memberId;
-    
+    $scope.member = $routeParams.memberId;    
     $scope.votable = false;
     $scope.selectCard = scrum.cc.selectCard;   
     

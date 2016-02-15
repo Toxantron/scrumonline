@@ -8,9 +8,9 @@ class SessionController extends ControllerBase
   private function getAllSessions()
   {
     // Create query finding all active sessions
-    $query = $this->entityManager->createQuery('SELECT s.id, s.name, s.isPrivate, COUNT(m.id) memberCount  FROM Session s JOIN s.members m WHERE s.lastAction > ?1');
+    $query = $this->entityManager->createQuery('SELECT s.id, s.name, s.isPrivate, count(m.id) memberCount  FROM Session s LEFT JOIN s.members m WHERE s.lastAction > ?1 GROUP BY s.id');
     $query->setParameter(1, new DateTime('-2 hour'));
-    $sessions = $query->getResult();
+    $sessions = $query->getArrayResult();
     return $sessions;
   }
   

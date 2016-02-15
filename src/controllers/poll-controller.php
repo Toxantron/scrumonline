@@ -27,13 +27,17 @@ class PollController extends ControllerBase
     return $poll;
   }
   
-  // Place a vote for the current pull
+  // Place a vote for the current poll
   private function placeVote($sessionId, $memberId, $voteValue)
   {
     // Fetch entities
     $session = $this->getSession($sessionId);
     $currentPoll = $session->getCurrentPoll();
     $member = $this->getMember($memberId);
+    
+    // Reject votes if poll is completed
+    if($currentPoll != null && $currentPoll->getResult() > 0)
+      throw new Exception("Can not vote on completed polls!");
     
     // Find or create vote
     foreach($currentPoll->getVotes() as $vote)

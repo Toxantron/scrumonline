@@ -21,7 +21,7 @@ $navItems = [
 
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
     
-  <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
+  <script src="/js/modernizr-2.8.3.min.js"></script>
   
   <!-- Style sheets -->
   <link rel="stylesheet" href="/css/combined.css">
@@ -61,8 +61,8 @@ $navItems = [
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
-  <script src="/js/vendor/angular-google-analytics.min.js"></script>
-  <script src="/js/vendor/bootstrap.min.js"></script>
+  <script src="/js/angular-google-analytics.min.js"></script>
+  <script src="/js//bootstrap.min.js"></script>
   <script src="/js/plugins.js"></script>
   <script type="text/javascript">
     var ga_id = '<?= $ga ?>';

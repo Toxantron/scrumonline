@@ -41,7 +41,7 @@ div.topic .form-control {
    width: 500px;
 }
 
-div.selectable {
+.selectable {
   cursor: pointer;
 }
 

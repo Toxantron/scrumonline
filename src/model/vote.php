@@ -11,6 +11,9 @@ class Vote
     /** @Column(type="float") **/
     protected $value;
   
+    /** @Column(type="boolean") **/
+    protected $highlighted = false;
+  
     /** @ManyToOne(targetEntity="Poll", inversedBy="votes") **/
     protected $poll;
   
@@ -30,6 +33,16 @@ class Vote
     public function setValue($value)
     {
         $this->value = $value;
+    }
+
+    // Getter and setter for start time
+    public function getHighlighted()
+    {
+        return $this->highlighted; 
+    }
+    public function setHighlighted($highlighted)
+    {
+        $this->highlighted = $highlighted;
     }
   
     // Getter and setter for poll association

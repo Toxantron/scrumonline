@@ -32,6 +32,7 @@ class UserVote
     {
       $vote->placed = true;
       $vote->value = $match->getValue();  
+      $vote->active = $match->getHighlighted();
     }
     
     return $vote;

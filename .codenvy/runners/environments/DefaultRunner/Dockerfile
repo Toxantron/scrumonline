@@ -20,6 +20,7 @@ RUN sudo rm -r /var/www/html && \
 # Run composer and doctrine
 RUN cd /var/www && \
     sudo php bin/composer install -q && \
+    sudo php vendor/bin/doctrine orm:schema-tool:update --force && \
     sudo php vendor/bin/doctrine orm:generate-proxies && \
     sudo chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP vendor
     

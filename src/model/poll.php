@@ -5,14 +5,29 @@
  **/
 class Poll
 {
+    function __construct()
+    {
+      $this->startTime = new DateTime();
+      $this->endTime = new DateTime();  
+    }
+  
     /** @Id @Column(type="integer") @GeneratedValue **/
     protected $id;
   
     /** @Column(type="string") **/
     protected $topic;
   
+    /** @Column(type="datetime") **/
+    protected $startTime;
+  
+    /** @Column(type="datetime") **/
+    protected $endTime;
+  
     /** @Column(type="float") **/
-    protected $result;
+    protected $result = 0;
+
+    /** @Column(type="boolean") **/
+    protected $consensus = false;
   
     /** @ManyToOne(targetEntity="Session", inversedBy="polls") **/
     protected $session;
@@ -34,6 +49,26 @@ class Poll
     {
         $this->topic = $topic;
     }
+
+    // Getter and setter for start time
+    public function getStartTime()
+    {
+        return $this->startTime; 
+    }
+    public function setStartTime($startTime)
+    {
+        $this->startTime = $startTime;
+    }
+
+    // Getter and setter for end time
+    public function getEndTime()
+    {
+        return $this->endTime; 
+    }
+    public function setEndTime($endTime)
+    {
+        $this->endTime = $endTime;
+    }
   
   	 // Getter and setter for result field
     public function getResult()
@@ -43,6 +78,16 @@ class Poll
     public function setResult($result)
     {
         $this->result = $result;
+    }
+
+  	 // Getter and setter for consensus field
+    public function getConsensus()
+    {
+        return $this->consensus;
+    }
+    public function setConsensus($consensus)
+    {
+        $this->consensus = $consensus;
     }
   
     // Getter and setter for session field

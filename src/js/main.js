@@ -1,5 +1,5 @@
 /*eslint-env browser, jquery*/
-/*globals angular */
+/*globals angular ga_id*/
 
 var scrum = scrum || {
 	// Set scope values on global var
@@ -39,13 +39,13 @@ var scrum = scrum || {
 };
 
 // Define angular app
-scrum.app = angular.module('scrum-online', ['ngRoute']);
+scrum.app = angular.module('scrum-online', ['ngRoute', 'angular-google-analytics']);
 
 //------------------------------
 // Configure routing
 // -----------------------------
 scrum.app.config(
-  function($routeProvider) {
+  function($routeProvider, AnalyticsProvider) {
   	// Configure routing
     $routeProvider
       .when('/', {
@@ -73,7 +73,11 @@ scrum.app.config(
       	templateUrl: '404.html'
       })
     ;
+    
+  AnalyticsProvider.setAccount(ga_id);
 });
+// Run once to activate tracking
+scrum.app.run(function(Analytics) {});
 
 //------------------------------
 // Home controller
@@ -262,6 +266,11 @@ scrum.pc = function () {
     
     // Int model
     $scope.id = $routeParams.id;
+    $scope.currentSource = "Default";
+    $scope.storySources = ["Default", "Redmine", "JIRA", "+"];
+    $scope.selectSource = function(source) {
+      $scope.currentSource = source;
+    }
     
     $scope.startPoll = scrum.pc.startPoll;
     $scope.remove = scrum.pc.deleteMember;

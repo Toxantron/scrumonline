@@ -12,21 +12,27 @@ include __DIR__ . "/../config.php";
 <!-- Poll control -->
 <div class="row topic">
   <div class="col-xs-12">
-    <form role="form" class="form-inline">
-      <div class="form-group">
+    <ul class="nav nav-tabs">
+      <li data-ng-class="{active: currentSource == source}" data-ng-repeat="source in storySources">
+        <a class="selectable" data-ng-click="selectSource(source)">{{ source }}</a>
+      </li>
+    </ul>
+    <form role="form">
+      <div class="form-group" data-ng-if="currentSource == 'Default'">
         <label for="topic">Story:</label>
         <input type="text" class="form-control" data-ng-model="topic" data-ng-focus="focus=true" placeholder="#4711 Create foo">
-        <button class="btn btn-default" data-ng-click="startPoll()">Start</button>
+      </div>
+      <div class="form-group" data-ng-if="currentSource == 'Redmine'">
+        <p>Work in progress!</p>
+      </div>
+      <div class="form-group" data-ng-if="currentSource == 'JIRA'">
+        <p>Work in progress! Help wanted on the <a href="https://github.com/Toxantron/scrumonline">github repo.</a></p>
+      </div>
+      <div class="form-group" data-ng-if="currentSource == '+'">
+        <p>Would like to contribute a ticketing system? Check out the <a href="https://github.com/Toxantron/scrumonline">github repo.</a></p>
       </div>
     </form>
-  </div>
-</div>
-
-<div data-ng-if="consensus" class="row">
-  <div class="col-xs-12">
-    <div class="alert alert-success" role="alert">
-      <strong>Estimation done!</strong> The team agreed on <strong data-ng-bind="votes[0].value"></strong>!
-    </div>
+    <button class="btn btn-default" data-ng-click="startPoll()">Start</button>
   </div>
 </div>
   
@@ -41,7 +47,7 @@ include __DIR__ . "/../config.php";
               <div class="card front" data-ng-class="{active: vote.active}">
       	       <div data-ng-if="vote.placed" class="inner"><span class="card-label">?</span></div>
               </div>
-              <div class="card back" data-ng-class="{active: vote.active}">
+              <div class="card back" data-ng-class="{active: vote.active, confirmed: consensus}">
     	          <div class="inner"><span class="card-label" data-ng-bind="vote.value"></span></div>
               </div>
             </div>

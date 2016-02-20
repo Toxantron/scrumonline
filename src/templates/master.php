@@ -20,7 +20,7 @@ include __DIR__ . "/../config.php";
     <form role="form">
       <div class="form-group" data-ng-if="currentSource == 'Default'">
         <label for="topic">Story:</label>
-        <input type="text" class="form-control" data-ng-model="topic" data-ng-focus="focus=true" placeholder="#4711 Create foo">
+        <input type="text" class="form-control" data-ng-model="currentStory.topic" data-ng-focus="focus=true" placeholder="#4711 Create foo">
       </div>
       <div class="form-group" data-ng-if="currentSource == 'Redmine'">
         <p>Work in progress!</p>
@@ -31,8 +31,8 @@ include __DIR__ . "/../config.php";
       <div class="form-group" data-ng-if="currentSource == '+'">
         <p>Would like to contribute a ticketing system? Check out the <a href="https://github.com/Toxantron/scrumonline">github repo.</a></p>
       </div>
+      <button class="btn btn-default" data-ng-click="startPoll()">Start</button>
     </form>
-    <button class="btn btn-default" data-ng-click="startPoll()">Start</button>
   </div>
 </div>
   

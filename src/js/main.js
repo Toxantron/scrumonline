@@ -77,7 +77,7 @@ scrum.app.config(
   AnalyticsProvider.setAccount(ga_id);
 });
 // Run once to activate tracking
-scrum.app.run(function(Analytics) {});
+//scrum.app.run(function(Analytics) {});
 
 //------------------------------
 // Home controller
@@ -208,7 +208,7 @@ scrum.pc = function () {
   pc.startPoll = function () {
     scrum.$http.post('/api.php?c=poll&m=start', { 
         sessionId: scrum.$scope.id, 
-        topic: scrum.$scope.topic
+        topic: scrum.$scope.currentStory.topic
     }).then(function(response) {
       var data = response.data;
       // Exit if call failed
@@ -245,7 +245,7 @@ scrum.pc = function () {
       scrum.$scope.flipped = result.flipped;
       scrum.$scope.consensus = result.consensus;
       if (!scrum.$scope.focus)
-        scrum.$scope.topic = result.topic;
+        //scrum.$scope.currentStory.topic = result.topic;
       
       setTimeout(scrum.pc.pollVotes, 200);
     }, function(){
@@ -266,11 +266,12 @@ scrum.pc = function () {
     
     // Int model
     $scope.id = $routeParams.id;
+    $scope.currentStory = { topic: "" };
     $scope.currentSource = "Default";
     $scope.storySources = ["Default", "Redmine", "JIRA", "+"];
     $scope.selectSource = function(source) {
       $scope.currentSource = source;
-    }
+    };
     
     $scope.startPoll = scrum.pc.startPoll;
     $scope.remove = scrum.pc.deleteMember;

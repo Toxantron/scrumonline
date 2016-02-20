@@ -159,10 +159,13 @@ class PollController extends ControllerBase
     $response->name = $session->getName();
     $response->topic = $currentPoll != null ? $currentPoll->getTopic() : "";
     // Time taken for estimation
-    $diff = $currentPoll->getEndTime()->diff($currentPoll->getStartTime());
-    $response->duration = new stdClass();
-    $response->duration->min = $diff->i;
-    $response->duration->sec = $diff->s;
+    if($currentPoll != null)
+    {
+      $diff = $currentPoll->getEndTime()->diff($currentPoll->getStartTime());
+      $response->duration = new stdClass();
+      $response->duration->min = $diff->i;
+      $response->duration->sec = $diff->s;
+    }
     // Vote estimation
     $response->votes = $votes;
     $response->flipped = is_null($currentPoll) ? false : $currentPoll->getResult() > 0;

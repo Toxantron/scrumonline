@@ -13,22 +13,6 @@ The "deployment" is a general scrum meeting where the ScrumMaster has a laptop c
 
 For every story the Scrum Master will than start a poll and each member of the session must select a card. As they select a card the main screen will show a card over their name, but without showing the number. Once everyone selected a card the main page (beamer) flips all the cards. According to planning poker it will than highlight the minimum and maximum estimation for colleagues to bring their arguments.
 
-## Requirements
-The app requires a couple of packages you need to install on your system. Those are:
-- Apache with PHP >= 5.6
-- MySQL
-- MySQL-PDO
-
-## Deployment
-The easiest way is to deploy the application to your webserver and execute the following commands from the root directory. Make sure to adjust the config.php to your requirments
-<pre>
-$ php bin/composer install
-$ vendor/bin/doctrine orm:schema-tool:create
-$ vendor/bin/doctrine orm:generate-proxies
-$ cp src/sample-config.php src/config.php
-</pre>
-The web root should point to the src directory.
-
 ## Road Map
 * Include vote history of previous stories at the bottom of the master view
 * Statistics tab in navigation bar

@@ -1,6 +1,7 @@
 /* ==========================================================================
-   Author's custom styles
+   Scrum poker style
    ========================================================================== */
+   
 /* Container */
 .container-fluid.main, .container-fluid.navigation {
   padding-left: 10px;
@@ -140,14 +141,25 @@ button.vote {
   width: 100%;
 }
 div.delete-member {
+  top: 0px;
+  right: 0px;
+  display: block;
   position: absolute;
   height: 32px;
   width: 32px;
-  top: 0;
-  left: 85px;
-  font-size: 28px;
-  border-radius: 16px;
-  background-color: #FF0000;
+  color: white;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.25);
+  border: 1px solid;
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 1px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 1px rgba(0, 0, 0, 0.08);
+  
+  background: #fa623f;
+  border-color: #fa5a35;
+  background-image: -webkit-linear-gradient(top, #fc9f8a, #fa623f);
+  background-image: -moz-linear-gradient(top, #fc9f8a, #fa623f);
+  background-image: -o-linear-gradient(top, #fc9f8a, #fa623f);
+  background-image: linear-gradient(to bottom, #fc9f8a, #fa623f);
 }
 @media (min-width: 992px) {
   div.delete-member {

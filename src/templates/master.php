@@ -13,7 +13,7 @@ include __DIR__ . "/../config.php";
 <div class="row topic">
   <div class="col-xs-12">
     <ul class="nav nav-tabs">
-      <li data-ng-class="{active: current == source}" data-ng-repeat="source in sources| orderBy: position">
+      <li data-ng-class="{active: current == source}" data-ng-repeat="source in sources| orderBy: 'position'">
         <a class="selectable" data-ng-click="selectSource(source)">{{ source.name }}</a>
       </li>
     </ul>

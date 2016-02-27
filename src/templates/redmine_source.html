@@ -1,0 +1,11 @@
+<form role="form">
+  <div class="form-group">
+    <label for="topic">URL:</label>
+    <input type="text" class="form-control" data-ng-model="current.url">
+  </div>
+  <div class="form-group">
+    <label for="topic">Story id:</label>
+    <input type="text" class="form-control" data-ng-model="current.story">
+  </div>
+  <button class="btn btn-default" data-ng-click="current.loadIssue()">Start</button>
+</form>

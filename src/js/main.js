@@ -244,11 +244,16 @@ scrum.pc = function () {
       	return;
       }
       
+      var scope = scrum.$scope;
       var result = data.result;
-      scrum.$scope.name = result.name;
-      scrum.$scope.votes = result.votes;
-      scrum.$scope.flipped = result.flipped;
-      scrum.$scope.consensus = result.consensus;
+      scope.name = result.name;
+      scope.votes = result.votes;
+      scope.flipped = result.flipped;
+      scope.consensus = result.consensus;
+      
+      // Forward result to ticketing system
+      if(scope.current.feedback && scope.flipped && scope.consensus)
+        scope.current.completed(scope.votes[0].value);
       
       setTimeout(scrum.pc.pollVotes, 200);
     }, function(){

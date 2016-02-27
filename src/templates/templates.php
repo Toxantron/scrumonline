@@ -31,6 +31,8 @@ class Template
       new Template("join.html", "templates/join.php"),
       new Template("list.html", "templates/list.html"),
       new Template("master.html", "templates/master.php"),
+      new Template("default_source.html", "templates/default_source.html"),
+      new Template("add_source.html", "templates/add_source.html"),
       new Template("member.html", "templates/member.php"),
       new Template("404.html", "templates/404.html")
     ];

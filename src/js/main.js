@@ -35,7 +35,13 @@ var scrum = scrum || {
           scrum.$scope.join.idError = true;
         }
       });
-    }
+    },
+    
+    // Ticketing sources
+    sources: [
+      {name: "Default", position: 1, view: "default_source.html"}, 
+      {name: "+", position: 99, view: "add_source.html"},
+    ]
 };
 
 // Define angular app
@@ -208,7 +214,7 @@ scrum.pc = function () {
   pc.startPoll = function () {
     scrum.$http.post('/api.php?c=poll&m=start', { 
         sessionId: scrum.$scope.id, 
-        topic: scrum.$scope.currentStory.topic
+        topic: scrum.$scope.current.topic
     }).then(function(response) {
       var data = response.data;
       // Exit if call failed
@@ -223,7 +229,6 @@ scrum.pc = function () {
         vote.active = false;
       }
       scrum.$scope.flipped = false;
-      scrum.$scope.focus = false;
     });
   };
   // Poll current votes of time members
@@ -244,8 +249,6 @@ scrum.pc = function () {
       scrum.$scope.votes = result.votes;
       scrum.$scope.flipped = result.flipped;
       scrum.$scope.consensus = result.consensus;
-      if (!scrum.$scope.focus)
-        //scrum.$scope.currentStory.topic = result.topic;
       
       setTimeout(scrum.pc.pollVotes, 200);
     }, function(){
@@ -256,6 +259,10 @@ scrum.pc = function () {
   pc.deleteMember = function (id) {
     scrum.$http.post("/api.php?c=session&m=remove", { memberId: id });  
   };
+  // Select a ticketing system
+  pc.selectTicketing = function(source) {
+  	scrum.$scope.current = source;
+  };  
   // init the controller
   pc.init = function($scope, $http, $routeParams) {
   	// Set current controller
@@ -266,16 +273,13 @@ scrum.pc = function () {
     
     // Int model
     $scope.id = $routeParams.id;
-    $scope.currentStory = { topic: "" };
-    $scope.currentSource = "Default";
-    $scope.storySources = ["Default", "Redmine", "JIRA", "+"];
-    $scope.selectSource = function(source) {
-      $scope.currentSource = source;
-    };
+    $scope.votes = [];
+    $scope.current = scrum.sources[0];
+    $scope.sources = scrum.sources;
     
+    $scope.selectSource = scrum.pc.selectTicketing;
     $scope.startPoll = scrum.pc.startPoll;
     $scope.remove = scrum.pc.deleteMember;
-    $scope.votes = [];
     
     // Start polling
     scrum.pc.pollVotes();

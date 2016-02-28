@@ -1,3 +1,8 @@
+<div class="alert alert-warning" data-ng-if="current.warning">
+  <p>This feature requires CORS - either on server or client side!
+    <a class="selectable" data-ng-click="current.warning = false"><span class="glyphicon glyphicon-remove"></span></a>
+  </p>
+</div>
 <form role="form">
   <div class="form-group">
     <label for="topic">URL:</label>

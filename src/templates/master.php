@@ -17,7 +17,7 @@ include __DIR__ . "/../config.php";
         <a class="selectable" data-ng-click="selectSource(source)">{{ source.name }}</a>
       </li>
     </ul>
-    <div data-ng-include="current.view">
+    <div class="ticketing" data-ng-include="current.view">
     </div>
   </div>
 </div>

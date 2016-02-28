@@ -39,11 +39,20 @@ div.row.topic {
   margin-bottom: 20px;
 }
 div.topic .form-control {
-   width: 500px;
+   width: 300px;
 }
 
 .selectable {
   cursor: pointer;
+}
+
+/*
+ * Ticketing
+ */
+div.ticketing {
+  padding: 10px;
+  border-width: 0px, 1px, 1px, 1px
+ ;
 }
 
 /*

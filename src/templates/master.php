@@ -13,26 +13,12 @@ include __DIR__ . "/../config.php";
 <div class="row topic">
   <div class="col-xs-12">
     <ul class="nav nav-tabs">
-      <li data-ng-class="{active: currentSource == source}" data-ng-repeat="source in storySources">
-        <a class="selectable" data-ng-click="selectSource(source)">{{ source }}</a>
+      <li data-ng-class="{active: current == source}" data-ng-repeat="source in sources| orderBy: 'position'">
+        <a class="selectable" data-ng-click="selectSource(source)">{{ source.name }}</a>
       </li>
     </ul>
-    <form role="form">
-      <div class="form-group" data-ng-if="currentSource == 'Default'">
-        <label for="topic">Story:</label>
-        <input type="text" class="form-control" data-ng-model="currentStory.topic" data-ng-focus="focus=true" placeholder="#4711 Create foo">
-      </div>
-      <div class="form-group" data-ng-if="currentSource == 'Redmine'">
-        <p>Work in progress!</p>
-      </div>
-      <div class="form-group" data-ng-if="currentSource == 'JIRA'">
-        <p>Work in progress! Help wanted on the <a href="https://github.com/Toxantron/scrumonline">github repo.</a></p>
-      </div>
-      <div class="form-group" data-ng-if="currentSource == '+'">
-        <p>Would like to contribute a ticketing system? Check out the <a href="https://github.com/Toxantron/scrumonline">github repo.</a></p>
-      </div>
-      <button class="btn btn-default" data-ng-click="startPoll()">Start</button>
-    </form>
+    <div class="ticketing" data-ng-include="current.view">
+    </div>
   </div>
 </div>
   

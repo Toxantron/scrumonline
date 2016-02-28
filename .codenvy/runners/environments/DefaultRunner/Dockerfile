@@ -12,19 +12,5 @@
 FROM codenvy/php56_apache2
 
 # Load source tree to web root
-ADD $src$ /var/www/
-RUN sudo rm -r /var/www/html && \
-    sudo mv /var/www/src /var/www/html && \
-    sudo chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP /var/www/html
-    
-# Run composer and doctrine
-RUN cd /var/www && \
-    sudo php bin/composer install -q && \
-    sudo php vendor/bin/doctrine orm:schema-tool:update --force && \
-    sudo php vendor/bin/doctrine orm:generate-proxies && \
-    sudo chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP vendor
-    
-# Mount src to copy changes later
-RUN cd /home/user && mkdir scrum_online
-ENV CODENVY_APP_BIND_DIR /home/user/scrum_online
-VOLUME ["/home/user/scrum_online"]
+ENV CODENVY_APP_BIND_DIR /var/www
+VOLUME ["/var/www"]

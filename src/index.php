@@ -61,13 +61,13 @@ $navItems = [
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
-  <script src="/js/angular-google-analytics.min.js"></script>
+  <script src="/js/angular-google-analytics.js"></script>
   <script src="/js//bootstrap.min.js"></script>
-  <script src="/js/plugins.js"></script>
   <script type="text/javascript">
     var ga_id = '<?= $ga ?>';
   </script>
   <script src="/js/main.js"></script>
+  <script src="/js/plugins.js"></script>
   
   <!-- Templates of the page -->
 <?php

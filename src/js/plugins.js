@@ -1,24 +1,26 @@
-// Avoid `console` errors in browsers that lack a console.
-(function() {
-    var method;
-    var noop = function () {};
-    var methods = [
-        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
-        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
-        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
-        'timeline', 'timelineEnd', 'timeStamp', 'trace', 'warn'
-    ];
-    var length = methods.length;
-    var console = (window.console = window.console || {});
+/*globals scrum */
 
-    while (length--) {
-        method = methods[length];
-
-        // Only stub undefined methods.
-        if (!console[method]) {
-            console[method] = noop;
-        }
-    }
-}());
-
-// Place any jQuery/helper plugins in here.
+// Add a plugin for redmine integration
+scrum.sources.push({
+  name: "Redmine",
+  position: 2,
+  view: "templates/redmine_source.html",
+  warning: true,
+  // Load issue from redmine server
+  loadIssue: function() {
+  	var self = this;
+  	self.feedback = true;
+  	
+  	var url = self.url + '/issues/' + self.story + '.json';
+  	scrum.$http.get(url).then(function(response) {
+      var issue = response.data.issue;
+  	  self.topic = issue.subject;
+  	  scrum.pc.startPoll();
+  	});
+  },
+  
+  // Feedback call for completed poll
+  completed: function(result) {
+  	var value = result;
+  }
+});

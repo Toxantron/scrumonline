@@ -1,6 +1,7 @@
 /* ==========================================================================
-   Author's custom styles
+   Scrum poker style
    ========================================================================== */
+   
 /* Container */
 .container-fluid.main, .container-fluid.navigation {
   padding-left: 10px;
@@ -38,7 +39,7 @@ div.row.topic {
   margin-bottom: 20px;
 }
 div.topic .form-control {
-   width: 300px;
+   width: 500px;
 }
 
 .selectable {
@@ -46,13 +47,20 @@ div.topic .form-control {
 }
 
 /*
+ * Story style
+ */
+form.storysetter {
+  margin-top: 10px;
+}
+
+/*
  * Ticketing
  */
 div.ticketing {
   padding: 10px;
-  border-width: 0px, 1px, 1px, 1px
- ;
+  border-width: 0px, 1px, 1px, 1px;
 }
+
 
 /*
  * Cards style
@@ -81,7 +89,8 @@ div.card {
 div.card .inner {
   margin: 3px 3px 0;
   border-radius: 12px;
-  background: #0F1593;
+  background-image: linear-gradient(to bottom, #0F1593, #161ec9);
+  background-image: -webkit-linear-gradient(top, #0F1593, #161ec9);
   text-align: center;
 }
 
@@ -140,31 +149,49 @@ div.card-flip.flipped {
 
 /* Selectable card */
 div.card.active {
-  box-shadow: 0px 0px 20px 10px #c80020;
+  box-shadow: 0px 0px 20px 5px #c80020;
 }
 div.card.confirmed {
-  box-shadow: 0px 0px 20px 10px #7ec500;
+  box-shadow: 0px 0px 20px 5px #7ec500;
 }
 button.vote {
   width: 100%;
 }
 div.delete-member {
-  position: absolute;
-  height: 32px;
-  width: 32px;
-  top: 0;
+  top: 3px;
+  right: 0px;
   left: 85px;
-  font-size: 28px;
-  border-radius: 16px;
-  background-color: #FF0000;
+  display: block;
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  color: white;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.25);
+  border: 1px solid;
+  border-radius: 3px;
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 1px rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 1px rgba(0, 0, 0, 0.08);
+  background: #fa623f;
+  border-color: #fa5a35;
+  background-image: linear-gradient(to bottom, #fc9f8a, #fa623f);
+  background-image: -webkit-linear-gradient(top, #fc9f8a, #fa623f);
 }
+
+div.delete-member span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+div.delete-member:hover {
+  /* color:??; color is missing here */
+}
+
 @media (min-width: 992px) {
   div.delete-member {
     left: 115px;
   }
-}
-div.delete-member span {
-  margin-left: 2px;
 }
 
 /*

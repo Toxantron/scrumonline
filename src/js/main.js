@@ -80,7 +80,9 @@ scrum.app.config(
       })
     ;
     
-  AnalyticsProvider.setAccount(ga_id);
+  // Set analytics id and remove ids from routes
+  AnalyticsProvider.setAccount(ga_id)
+                   .setRemoveRegExp(/\/\d+?$/);
 });
 // Run once to activate tracking
 scrum.app.run(function(Analytics) {});

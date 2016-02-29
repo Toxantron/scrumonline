@@ -83,7 +83,7 @@ scrum.app.config(
   AnalyticsProvider.setAccount(ga_id);
 });
 // Run once to activate tracking
-//scrum.app.run(function(Analytics) {});
+scrum.app.run(function(Analytics) {});
 
 //------------------------------
 // Home controller

@@ -64,16 +64,19 @@ scrum.app.config(
       })
       .when('/session/:id',{
       	templateUrl : 'master.html',
-      	controller: 'MasterController'
+      	controller: 'MasterController',
+      	pageTrack: '/session'
       })
       .when('/join', { redirectTo: '/join/0' })
       .when('/join/:id', {
       	templateUrl : 'join.html',
-      	controller: 'JoinController'
+      	controller: 'JoinController',
+      	pageTrack: '/join',
       })
       .when('/member/:sessionId/:memberId', {
       	templateUrl : 'member.html',
-      	controller: 'CardController'
+      	controller: 'CardController',
+      	pageTrack: '/member',
       })
       .otherwise({
       	templateUrl: '404.html'
@@ -82,7 +85,7 @@ scrum.app.config(
     
   // Set analytics id and remove ids from routes
   AnalyticsProvider.setAccount(ga_id)
-                   .setRemoveRegExp(/\/\d+?$/);
+                   .readFromRoute();
 });
 // Run once to activate tracking
 scrum.app.run(function(Analytics) {});
@@ -107,10 +110,10 @@ scrum.hc = function () {
   	}
   	
   	scrum.$http.post('/api.php?c=session&m=create', scrum.$scope.create).then(function (response) {
-  		if(response.data.success)
-  		{
-  	      scrum.$location.url('/session/' + response.data.result);
-  		}
+      if(response.data.success)
+  	  {
+  	    scrum.$location.url('/session/' + response.data.result);
+      }
   	});
   };
   

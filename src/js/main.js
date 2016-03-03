@@ -216,10 +216,10 @@ scrum.jc = function () {
 scrum.pc = function () {
   var pc = { name: 'MasterController' };
   // Start a new poll
-  pc.startPoll = function () {
+  pc.startPoll = function (topic) {
     scrum.$http.post('/api.php?c=poll&m=start', { 
         sessionId: scrum.$scope.id, 
-        topic: scrum.$scope.current.topic
+        topic: topic
     }).then(function(response) {
       var data = response.data;
       // Exit if call failed

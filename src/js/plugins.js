@@ -14,8 +14,7 @@ scrum.sources.push({
   	var url = self.url + '/issues/' + self.story + '.json';
   	scrum.$http.get(url).then(function(response) {
       var issue = response.data.issue;
-  	  self.topic = issue.subject;
-  	  scrum.pc.startPoll();
+  	  scrum.pc.startPoll(issue.subject);
   	});
   },
   

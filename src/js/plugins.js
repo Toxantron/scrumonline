@@ -5,6 +5,7 @@ scrum.sources.push({
   name: "Redmine",
   position: 2,
   view: "templates/redmine_source.html",
+  feedback: false;
   warning: true,
   // Load issue from redmine server
   loadIssue: function() {

@@ -1,16 +1,38 @@
-<div class="alert alert-warning" data-ng-if="current.warning">
-  <p>This feature requires CORS - either on server or client side!
-    <a class="selectable" data-ng-click="current.warning = false"><span class="glyphicon glyphicon-remove"></span></a>
-  </p>
+<!-- Initial screen till static information was put in -->
+<div data-ng-if="!current.loggedIn">
+  <div class="alert alert-warning" data-ng-if="current.warning">
+    <p>This feature requires CORS - either on server or client side!
+      <a class="selectable" data-ng-click="current.warning = false"><span class="glyphicon glyphicon-remove"></span></a>
+    </p>
+  </div>
+  <form role="form">
+    <div class="form-group">
+      <label for="topic">URL:</label>
+      <input type="text" class="form-control" data-ng-model="current.url">
+    </div>
+    <div class="form-group">
+      <label for="topic">API token:</label>
+      <input type="text" class="form-control" data-ng-model="current.token">
+    </div>
+    <button class="btn btn-default" data-ng-click="current.login()">Login</button>
+  </form>  
 </div>
-<form role="form">
-  <div class="form-group">
-    <label for="topic">URL:</label>
-    <input type="text" class="form-control" data-ng-model="current.url">
+
+<!-- Screen after static process was completed -->
+<div data-ng-if="current.loggedIn">
+  <div class="row">
+    
   </div>
-  <div class="form-group">
-    <label for="topic">Story id:</label>
-    <input type="text" class="form-control" data-ng-model="current.story">
+  <div class="col-xs-4">
+    <div class="list-group issue-list">
+      <a  data-ng-repeat="story in current.stories track by story.id" class="selectable list-group-item" data-ng-class="{active: current.story == story}" data-ng-click="current.story = story">
+        {{ story.id }}: {{ story.subject }}
+      </a>
+    </div>
   </div>
-  <button class="btn btn-default" data-ng-click="current.loadIssue()">Start</button>
-</form>
+  <div class="col-xs-8">
+    <h2>{{ current.story.id }}: {{ current.story.subject }}</h2>
+    <p data-ng-bind="current.story.description"></p>
+    <button class="btn btn-default" data-ng-click="current.loadIssue()">Start</button>
+  </div>
+</div>

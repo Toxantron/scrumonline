@@ -210,3 +210,12 @@ span.session-list.center {
 span.session-list.right {
   text-align: right;
 }
+
+
+/*
+ * Plugin styles
+ */
+div.issue-list {
+  height: 250px;
+  overflow-y: scroll;
+}

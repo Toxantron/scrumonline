@@ -39,8 +39,8 @@ var scrum = scrum || {
     
     // Ticketing sources
     sources: [
-      {name: "Default", position: 1, view: "default_source.html", feedback: false}, 
-      {name: "+", position: 99, view: "add_source.html", feedback: false},
+      { name: "Default", position: 1, view: "default_source.html", feedback: false }, 
+      { name: "+", position: 99, view: "add_source.html", feedback: false },
     ]
 };
 

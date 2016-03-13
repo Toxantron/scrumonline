@@ -4,14 +4,27 @@
  */
 class Template
 {
+  public $isNavigation = false;
+  
+  public $navigationTag;
+  
+  public $link;
+  
   private $name;
   
   private $path;
   
-  function __construct($name, $path)
+  function __construct($name, $path, $navigationTag)
   {
     $this->name = $name;
     $this->path = $path;
+    
+    if(isset($navigationTag))
+    {
+      $this->isNavigation = true;
+      $this->navigationTag = $navigationTag;
+      $this->link = "#/" . lcfirst($navigationTag);
+    }  
   }
   
   public function toTag()
@@ -19,8 +32,7 @@ class Template
 ?>
   <script type="text/ng-template" id="<?= $this->name ?>">
     <?php include $this->path; ?>
-  </script>
-    
+  </script>    
 <?php    
   }
   
@@ -29,7 +41,7 @@ class Template
     $templates = [
       new Template("home.html", "templates/home.php"),
       new Template("join.html", "templates/join.php"),
-      new Template("list.html", "templates/list.html"),
+      new Template("list.html", "templates/list.html", "Sessions"),
       new Template("master.html", "templates/master.php"),
       new Template("default_source.html", "templates/default_source.html"),
       new Template("add_source.html", "templates/add_source.html"),

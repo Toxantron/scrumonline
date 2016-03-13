@@ -2,12 +2,15 @@
 include "config.php";
 include "templates/templates.php";
 
-$navItems = [
-  [ 
-    "link" => "\"#/sessions\"", 
-    "name" => "Sessions"
-  ],  
-];
+$templates = Template::getAll();
+
+// Find all templates with their own navigation item
+$navItems = [];
+foreach($templates as $index=>$template)
+{
+  if ($template->isNavigation)
+    $navItems[$index] = $template;
+}
 ?>
 <!doctype html>
 <html class="no-js" lang="en-EN">
@@ -47,31 +50,36 @@ $navItems = [
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
       <?php foreach($navItems as $navItem): ?>
-        <li data-toggle="collapse" data-target=".navbar-collapse.in"<?php echo (isset($active) && $navItem["name"] === $active ? " class=\"active\"" : "") ?>><a href=<?php echo $navItem["link"] ?>><?php echo $navItem["name"] ?></a></li>
+        <li data-toggle="collapse" data-target=".navbar-collapse.in"><a href="<?php echo $navItem->link ?>"><?php echo $navItem->navigationTag ?></a></li>
       <?php endforeach; ?>
       </ul>
-    </div><!--/.nav-collapse -->
+    </div> <!--/.nav-collapse -->
   </div>
 </nav>
 
-  <!-- Add your site or application content here -->
-  <div class="container-fluid main" data-ng-view>
-  </div>
+<!-- Add your site or application content here -->
+<div class="container-fluid main" data-ng-view>
+</div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
-  <script src="/js/angular-google-analytics.js"></script>
-  <script src="/js//bootstrap.min.js"></script>
-  <script type="text/javascript">
-    var ga_id = '<?= $ga ?>';
-  </script>
-  <script src="/js/main.js"></script>
-  <script src="/js/plugins.js"></script>
+<!-- Footer of the page -->
+<footer>
+  Tutorials, bug reports and contributions are welcome on <a href="https://github.com/Toxantron/scrumonline">github</a>.
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
+<script src="/js/angular-google-analytics.js"></script>
+<script src="/js//bootstrap.min.js"></script>
+<script type="text/javascript">
+  var ga_id = '<?= $ga ?>';
+</script>
+<script src="/js/main.js"></script>
+<script src="/js/plugins.js"></script>
   
   <!-- Templates of the page -->
 <?php
-  foreach(Template::getAll() as $template)
+  foreach($templates as $template)
   {
     $template->toTag();
   }

@@ -85,7 +85,7 @@ scrum.app.config(
     
   // Set analytics id and remove ids from routes
   AnalyticsProvider.setAccount(ga_id)
-  		   .readFromRoute()
+  		   .readFromRoute(true)
   		   .ignoreFirstPageLoad(true);
 });
 // Run once to activate tracking

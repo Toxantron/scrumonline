@@ -247,7 +247,7 @@
           }
            
           // Otherwise go the old way
-          url = trackUrlParams ? $location.url() : $location.path(); 
+          var url = trackUrlParams ? $location.url() : $location.path(); 
           return removeRegExp ? url.replace(removeRegExp, '') : url;
         };
 

@@ -1,11 +1,3 @@
-/**
- * Angular Google Analytics - Easy tracking for your AngularJS application
- * @version v1.1.7a - 2016-03-02
- * @link http://github.com/revolunet/angular-google-analytics
- * @author Julien Bouquillon <julien@revolunet.com> (https://github.com/revolunet)
- * @contributors Julien Bouquillon (https://github.com/revolunet),Justin Saunders (https://github.com/justinsa),Chris Esplin (https://github.com/deltaepsilon),Adam Misiorny (https://github.com/adam187)
- * @license MIT License, http://www.opensource.org/licenses/MIT
- */
 /* globals define */
 (function (root, factory) {
   'use strict';
@@ -195,8 +187,8 @@
       };
       
       // Enable reading page url from route object
-      this.readFromRoute = function() {
-        readFromRoute = true;
+      this.readFromRoute = function(val) {
+        readFromRoute = !!val;
         return this;
       };
 
@@ -240,9 +232,11 @@
             $route = $injector.get('$route');
           }
         }
+
+        // Get url for current page 
         var getUrl = function () {
           // Using ngRoute provided tracking urls
-          if (readFromRoute && ('pageTrack' in $route.current)) {
+          if (readFromRoute && $route.current && ('pageTrack' in $route.current)) {
             return $route.current.pageTrack;
           }
            
@@ -1090,6 +1084,12 @@
         // activates page tracking
         if (trackRoutes) {
           $rootScope.$on(pageEvent, function () {
+            // Avoid tracking routes not defined as a page
+            if (readFromRoute && !($route.current && $route.current.templateUrl)) {
+              return;
+            }
+            
+            // Track the page
             that._trackPage();
           });
         }

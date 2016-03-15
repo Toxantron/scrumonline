@@ -79,7 +79,8 @@ scrum.app.config(
       	pageTrack: '/member',
       })
       .otherwise({
-      	templateUrl: '404.html'
+      	templateUrl: '404.html',
+      	pageTrack: '/404'
       })
     ;
     

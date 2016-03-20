@@ -2,6 +2,7 @@
 
 // Add a plugin for redmine integration
 scrum.sources.push({
+  // Fixed properties and methods
   name: "Redmine",
   position: 2,
   view: "templates/redmine_source.html",
@@ -14,10 +15,7 @@ scrum.sources.push({
   
   // Custom properties and methods
   warning: true,
-  loggedIn: false,
-  pollComplete: false,
-  pollResult: 0,
-  
+  loggedIn: false,  
   
   // Properties of first view
   url: 'http://',    // Url of the server
@@ -36,12 +34,44 @@ scrum.sources.push({
   
   // Properties after log in was completed
   stories: [],
-  story: '',
+  story: {},
+  pollComplete: false,
+  pollResult: 0,
   
   // Load issue from redmine server
   loadIssue: function() {
     this.feedback = true;
     this.pollComplete = false;
     this.parent.startPoll(this.story.subject);
+  }
+});
+
+// Add a plugin for github integration
+scrum.sources.push({
+  // Fixed properties and methods
+  name: "Github",
+  position: 3,
+  view: "templates/github_source.html",
+  feedback: false,
+  // Feedback call for completed poll
+  completed: function(result) {
+  },
+  
+  // Custom properties and methods
+  loaded: false,
+  user: '',
+  repo: '',
+  issues: [],
+  issue: {},
+  
+  // Load issues from github
+  load: function() {
+    var self = this;
+    this.parent.$http
+      .get('http://api.github.com/repos/' + this.user + '/' + this.repo + '/issues')
+      .then(function (response) {
+        self.issues = response.data;
+        self.loaded = true;
+      });
   }
 });

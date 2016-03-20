@@ -21,18 +21,17 @@
 <!-- Screen after static process was completed -->
 <div ng-if="master.current.loggedIn">
   <div class="row">
-    
-  </div>
-  <div class="col-xs-4">
-    <div class="list-group issue-list">
-      <a  ng-repeat="story in master.current.stories track by story.id" class="selectable list-group-item" ng-class="{active: master.current.story == story}" ng-click="master.current.story = story">
-        {{ story.id }}: {{ story.subject }}
-      </a>
-    </div>
-  </div>
-  <div class="col-xs-8">
-    <h2>{{ master.current.story.id }}: {{ master.current.story.subject }}</h2>
-    <p ng-bind="master.current.story.description"></p>
-    <button class="btn btn-default" ng-click="master.current.loadIssue()">Start</button>
+    <div class="col-xs-4">
+        <div class="list-group issue-list">
+          <a  ng-repeat="story in master.current.stories track by story.id" class="selectable list-group-item" ng-class="{active: master.current.story == story}" ng-click="master.current.story = story">
+            {{ story.id }}: {{ story.subject }}
+          </a>
+        </div>
+      </div>
+      <div class="col-xs-8">
+        <h2>{{ master.current.story.id }}: {{ master.current.story.subject }}</h2>
+        <p ng-bind="master.current.story.description"></p>
+        <button class="btn btn-default" ng-click="master.current.loadIssue()">Start</button>
+      </div>
   </div>
 </div>

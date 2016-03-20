@@ -1,38 +1,38 @@
 <!-- Initial screen till static information was put in -->
-<div data-ng-if="!current.loggedIn">
-  <div class="alert alert-warning" data-ng-if="current.warning">
+<div ng-if="!master.current.loggedIn">
+  <div class="alert alert-warning" ng-if="master.current.warning">
     <p>This feature requires CORS - either on server or client side!
-      <a class="selectable" data-ng-click="current.warning = false"><span class="glyphicon glyphicon-remove"></span></a>
+      <a class="selectable" ng-click="master.current.warning = false"><span class="glyphicon glyphicon-remove"></span></a>
     </p>
   </div>
   <form role="form">
     <div class="form-group">
-      <label for="topic">URL:</label>
-      <input type="text" class="form-control" data-ng-model="current.url">
+      <label>URL:</label>
+      <input type="text" class="form-control" ng-model="master.current.url">
     </div>
     <div class="form-group">
-      <label for="topic">API token:</label>
-      <input type="text" class="form-control" data-ng-model="current.token">
+      <label>API token:</label>
+      <input type="text" class="form-control" ng-model="master.current.token">
     </div>
-    <button class="btn btn-default" data-ng-click="current.login()">Login</button>
+    <button class="btn btn-default" ng-click="master.current.login()">Login</button>
   </form>  
 </div>
 
 <!-- Screen after static process was completed -->
-<div data-ng-if="current.loggedIn">
+<div ng-if="master.current.loggedIn">
   <div class="row">
     
   </div>
   <div class="col-xs-4">
     <div class="list-group issue-list">
-      <a  data-ng-repeat="story in current.stories track by story.id" class="selectable list-group-item" data-ng-class="{active: current.story == story}" data-ng-click="current.story = story">
+      <a  ng-repeat="story in master.current.stories track by story.id" class="selectable list-group-item" ng-class="{active: master.current.story == story}" ng-click="master.current.story = story">
         {{ story.id }}: {{ story.subject }}
       </a>
     </div>
   </div>
   <div class="col-xs-8">
-    <h2>{{ current.story.id }}: {{ current.story.subject }}</h2>
-    <p data-ng-bind="current.story.description"></p>
-    <button class="btn btn-default" data-ng-click="current.loadIssue()">Start</button>
+    <h2>{{ master.current.story.id }}: {{ master.current.story.subject }}</h2>
+    <p ng-bind="master.current.story.description"></p>
+    <button class="btn btn-default" ng-click="master.current.loadIssue()">Start</button>
   </div>
 </div>

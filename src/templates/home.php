@@ -16,55 +16,55 @@
   <h2 class="col-xs-12">Create or join a session</h2>
       
   <!-- Create session panel -->
-  <div class="col-sm-6 col-xs-12">
+  <div class="col-sm-6 col-xs-12" ng-controller="CreateController as create">
     <div class="panel panel-default">
       <div class="panel-heading">Create session</div>
       <div class="panel-body">  
         <form role="form">
-          <div class="form-group" data-ng-class="{'has-error': create.nameError}">
+          <div class="form-group" ng-class="{'has-error': create.nameError}">
             <label for="sessionName">Session name:</label>
             <div class="has-feedback">
-              <input type="text" class="form-control" data-ng-model="create.name" placeholder="My session">
-              <span data-ng-if="create.nameError" class="glyphicon glyphicon-remove form-control-feedback"></span>
+              <input type="text" class="form-control" ng-model="create.name" placeholder="My session">
+              <span ng-if="create.nameError" class="glyphicon glyphicon-remove form-control-feedback"></span>
             </div>
           </div>
           <div class="form-group">
-            <label><input type="checkbox" data-ng-model="create.isPrivate"> is private</label> 
+            <label><input type="checkbox" ng-model="create.isPrivate"> is private</label> 
           </div>
-          <div class="form-group" data-ng-if="create.isPrivate" data-ng-class="{'has-error': create.pwdError}">
+          <div class="form-group" ng-if="create.isPrivate" ng-class="{'has-error': create.pwdError}">
             <label for="password">Password:</label>
             <div class="has-feedback">
-              <input type="password" class="form-control" data-ng-model="create.password">
-              <span data-ng-if="create.pwdError" class="glyphicon glyphicon-remove form-control-feedback"></span>
+              <input type="password" class="form-control" ng-model="create.password">
+              <span ng-if="create.pwdError" class="glyphicon glyphicon-remove form-control-feedback"></span>
             </div>
           </div>
-          <input type="button" class="btn btn-default" value="Create" data-ng-click="createSession()">
+          <input type="button" class="btn btn-default" value="Create" ng-click="create.createSession()">
         </form>
       </div>
     </div>        
   </div>
             
   <!-- Join session panel -->
-  <div class="col-sm-6 col-xs-12">
+  <div class="col-sm-6 col-xs-12" ng-controller="JoinController as join">
     <div class="panel panel-default">
       <div class="panel-heading">Join session</div>
       <div class="panel-body">
         <form role="form">
-          <div class="form-group" data-ng-class="{'has-error': join.idError}">
+          <div class="form-group" ng-class="{'has-error': join.idError}">
             <label>Session id:</label>
             <div class="has-feedback">
-              <input type="text" class="form-control" data-ng-model="join.id" placeholder="4711">
-              <span data-ng-if="join.idError" class="glyphicon glyphicon-remove form-control-feedback"></span>
+              <input type="text" class="form-control" ng-model="join.id" placeholder="4711">
+              <span ng-if="join.idError" class="glyphicon glyphicon-remove form-control-feedback"></span>
             </div>
           </div>
-          <div class="form-group" data-ng-class="{'has-error': join.nameError}">
+          <div class="form-group" ng-class="{'has-error': join.nameError}">
             <label>Your name:</label>
-            <div class="has-feedback" data-ng-init="join.name = '<?= isset($_COOKIE['scrum_member_name']) ? $_COOKIE['scrum_member_name'] : "" ?>'">
-              <input type="text" class="form-control"  data-ng-model="join.name" placeholder="John">
-              <span data-ng-if="join.nameError" class="glyphicon glyphicon-remove form-control-feedback"></span>
+            <div class="has-feedback" ng-init="join.name = '<?= isset($_COOKIE['scrum_member_name']) ? $_COOKIE['scrum_member_name'] : "" ?>'">
+              <input type="text" class="form-control"  ng-model="join.name" placeholder="John">
+              <span ng-if="join.nameError" class="glyphicon glyphicon-remove form-control-feedback"></span>
             </div>
           </div>
-          <input type="button" class="btn btn-default" value="Join" data-ng-click="joinSession()">
+          <input type="button" class="btn btn-default" value="Join" ng-click="join.joinSession()">
        </form>
       </div>
     </div>        

@@ -30,7 +30,7 @@ foreach($templates as $index=>$template)
   <link rel="stylesheet" href="/css/combined.css">
   <link rel="stylesheet" href="/css/scrumonline.css">
 </head>
-<body data-ng-app="scrum-online">
+<body ng-app="scrum-online">
 <!--[if lt IE 8]>
    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -58,7 +58,7 @@ foreach($templates as $index=>$template)
 </nav>
 
 <!-- Add your site or application content here -->
-<div class="container-fluid main" data-ng-view>
+<div class="container-fluid main" ng-view>
 </div>
 
 <!-- Footer of the page -->

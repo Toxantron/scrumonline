@@ -8,21 +8,25 @@ scrum.sources.push({
   feedback: false,
   // Feedback call for completed poll
   completed: function(result) {
-    var value = result;
+    this.pollResult = result;
+    this.pollComplete = true;
   },
   
   // Custom properties and methods
   warning: true,
   loggedIn: false,
+  pollComplete: false,
+  pollResult: 0,
+  
   
   // Properties of first view
   url: 'http://',    // Url of the server
   token: '',  // Token used for REST authentication
   login: function() {
-  	var self = this;
-  	var url = self.url + '/issues.json';
-    scrum.$http.get(url, { header: {
-      'X-Redmine-API-Key': self.token,
+    var self = this;
+    var url = this.url + '/issues.json';
+    this.parent.$http.get(url, { header: {
+      'X-Redmine-API-Key': this.token,
     }}).then(function (response) {
       self.stories = response.data.issues;
       self.story = self.stories[0];
@@ -36,8 +40,8 @@ scrum.sources.push({
   
   // Load issue from redmine server
   loadIssue: function() {
-  	var self = this;
-  	self.feedback = true;
-  	scrum.pc.startPoll(self.story.subject);
-  },
+    this.feedback = true;
+    this.pollComplete = false;
+    this.parent.startPoll(this.story.subject);
+  }
 });

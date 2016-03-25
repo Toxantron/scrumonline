@@ -26,7 +26,7 @@
       <div class="col-xs-8">
         <h2>{{ master.current.issue.id }}: {{ master.current.issue.title }}</h2>
         <p ng-bind="master.current.issue.body"></p>
-        <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.title)">Start</button>
+        <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.title)" ga-track-event="master.current.event">Start</button>
       </div>
   </div>
 </div>

@@ -1,20 +1,21 @@
 /*eslint-env browser, jquery*/
 /*globals angular ga_id*/
 
-var scrum = scrum || {  
+var scrum = {  
   // Ticketing sources
   sources: [ 
     { 
-      name: "Default", 
+      name:'Default', 
       position: 1, 
       feedback: false,
       topic: '',
-      view: "default_source.html"  
+      event: ['poll', 'start', 'Default'],
+      view: 'default_source.html'  
     }, 
     { 
-      name: "+", 
+      name: '+', 
       position: 99, 
-      view: "add_source.html", 
+      view: 'add_source.html', 
       feedback: false 
     },
   ]

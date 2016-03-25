@@ -31,7 +31,7 @@
       <div class="col-xs-8">
         <h2>{{ master.current.story.id }}: {{ master.current.story.subject }}</h2>
         <p ng-bind="master.current.story.description"></p>
-        <button class="btn btn-default" ng-click="master.current.loadIssue()">Start</button>
+        <button class="btn btn-default" ng-click="master.current.loadIssue()" ga-track-event="master.current.event">Start</button>
       </div>
   </div>
 </div>

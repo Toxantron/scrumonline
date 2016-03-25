@@ -37,6 +37,7 @@ scrum.sources.push({
   story: {},
   pollComplete: false,
   pollResult: 0,
+  event: ['poll', 'start', 'Redmine'],
   
   // Load issue from redmine server
   loadIssue: function() {
@@ -63,6 +64,7 @@ scrum.sources.push({
   repo: '',
   issues: [],
   issue: {},
+  event: ['poll', 'start', 'Github'],
   
   // Load issues from github
   load: function() {

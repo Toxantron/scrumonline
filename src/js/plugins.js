@@ -71,6 +71,7 @@ scrum.sources.push({
       .get('http://api.github.com/repos/' + this.user + '/' + this.repo + '/issues')
       .then(function (response) {
         self.issues = response.data;
+        self.issue = self.issues[0];
         self.loaded = true;
       });
   }

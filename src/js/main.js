@@ -219,7 +219,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams) {
       // Reset our GUI
       for(var index=0; index < self.votes.length; index++)
       {
-        var vote = scrum.$scope.votes[index];
+        var vote = self.votes[index];
         vote.placed = false;
         vote.active = false;
       }

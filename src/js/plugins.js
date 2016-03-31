@@ -22,10 +22,8 @@ scrum.sources.push({
   token: '',  // Token used for REST authentication
   login: function() {
     var self = this;
-    var url = this.url + '/issues.json';
-    this.parent.$http.get(url, { header: {
-      'X-Redmine-API-Key': this.token,
-    }}).then(function (response) {
+    var url = this.url + '/issues.json?key=' + this.token;
+    this.parent.$http.get(url).then(function (response) {
       self.stories = response.data.issues;
       self.story = self.stories[0];
       self.loggedIn = true;

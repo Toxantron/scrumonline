@@ -22,9 +22,14 @@ scrum.sources.push({
   token: '',  // Token used for REST authentication
   login: function() {
     var self = this;
-    var url = this.url + '/issues.json?key=' + this.token;
+    var url = this.url + '/issues.json?key=' + this.token +'&tracker_id=2';
     this.parent.$http.get(url).then(function (response) {
-      self.stories = response.data.issues;
+      self.stories.length = 0;
+      for (var story in response.data.issues) {
+        if (!story.fixed_version) {
+          self.stories.push(story);
+        }
+      }
       self.story = self.stories[0];
       self.loggedIn = true;
     });  

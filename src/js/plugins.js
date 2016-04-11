@@ -25,8 +25,9 @@ scrum.sources.push({
     var url = this.url + '/issues.json?key=' + this.token +'&tracker_id=2';
     this.parent.$http.get(url).then(function (response) {
       self.stories.length = 0;
-      for (var story in response.data.issues) {
-        if (!story.fixed_version) {
+      for (var i=0; i < response.data.issues.length; i++)
+        var story = response.data.issues[i];
+        if (!story.fixed_version && story.story_points == null) {
           self.stories.push(story);
         }
       }

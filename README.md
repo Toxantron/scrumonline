@@ -11,7 +11,7 @@ You can find a detailed deployment how-to in the [wiki pages](https://github.com
 The "deployment" is a general scrum meeting where the ScrumMaster has a laptop connected to a beamer while all team members have an internet connected device (phone, tablet, laptop, ... - smartwatch would be awesome). The meeting starts with the ScrumMaster creating a named session and all team members joining that session. The beamer should now show the list of joined members.
 
 ## Estimation workflow
-For every story the Scrum Master will than start a poll and each member of the session must select a card. As they select a card the main screen will show a card over their name, but without showing the number. Once everyone selected a card the main page (beamer) flips all the cards. According to planning poker it will than highlight the minimum and maximum estimation for colleagues to bring their arguments.
+For every story the Scrum Master will than start a poll and each member of the session must select a card. As they select a card the main screen will show a card over their name, but without showing the number. Once everyone selected a card the main page (beamer) flips all the cards. According to planning poker it will than highlight the minimum and maximum estimation for colleagues to bring their arguments. A demonstration using the Redmine plugin is available [on youtube](https://www.youtube.com/watch?v=faRYrNz8MYw).
 
 ## Road Map
 * Include vote history of previous stories at the bottom of the master view

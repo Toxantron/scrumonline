@@ -10,7 +10,6 @@ scrum.sources.push({
   // Feedback call for completed poll
   completed: function(result) {
     this.pollResult = result;
-    this.pollComplete = true;
   },
   
   // Custom properties and methods
@@ -39,15 +38,30 @@ scrum.sources.push({
   // Properties after log in was completed
   stories: [],
   story: {},
-  pollComplete: false,
+  index: 0,
+  pollComplete: true,
   pollResult: 0,
-  event: ['poll', 'start', 'Redmine'],
+  startEvent: ['poll', 'start', 'Redmine'],
+  setEvent: ['poll', 'complete', 'Redmine'],
   
   // Load issue from redmine server
   loadIssue: function() {
     this.feedback = true;
     this.pollComplete = false;
     this.parent.startPoll(this.story.subject);
+  },
+  setPoints: function() {
+    var self = this;
+    this.story.story_points = this.pollResult;
+    var url = this.url + '/issues/' + this.story.id + '.json?key=' + this.token;
+    this.parent.$http.post(url, this.story).then(function () {
+      self.pollComplete = true;
+      self.story = self.stories[++self.index];
+    }, function() { 
+      // Temporary solution
+      self.pollComplete = true;
+      self.story = self.stories[++self.index]; 
+    });
   }
 });
 

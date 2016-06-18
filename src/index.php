@@ -6,10 +6,13 @@ $templates = Template::getAll();
 
 // Find all templates with their own navigation item
 $navItems = [];
+$indexPage;
 foreach($templates as $index=>$template)
 {
   if ($template->isNavigation)
     $navItems[$index] = $template;
+  if ($template->isIndex)
+    $indexPage = $template;
 }
 ?>
 <!doctype html>
@@ -59,6 +62,8 @@ foreach($templates as $index=>$template)
 
 <!-- Add your site or application content here -->
 <div class="container-fluid main" ng-view>
+  <!-- Render index page in here for instand display -->
+  <?php $indexPage->render(false) ?>
 </div>
 
 <!-- Footer of the page -->
@@ -81,7 +86,7 @@ foreach($templates as $index=>$template)
 <?php
   foreach($templates as $template)
   {
-    $template->toTag();
+     $template->render(true);
   }
 ?>
 </body>

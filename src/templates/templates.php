@@ -6,6 +6,8 @@ class Template
 {
   public $isNavigation = false;
   
+  public $isIndex = false;
+  
   public $navigationTag;
   
   public $link;
@@ -27,19 +29,32 @@ class Template
     }  
   }
   
-  public function toTag()
+  public function asIndex()
   {
+    $this->isIndex = true;
+    return $this;
+  }
+  
+  public function render($inTag)
+  {
+    if (!$inTag)
+    {
+      include $this->path;   
+      return;
+    }
+    
 ?>
   <script type="text/ng-template" id="<?= $this->name ?>">
-    <?php include $this->path; ?>
+    <?= include $this->path ?>
   </script>    
-<?php    
+<?php 
   }
   
   public static function getAll()
   {
+    $indexPage = new Template("home.html", "templates/home.php");
     $templates = [
-      new Template("home.html", "templates/home.php"),
+      $indexPage = $indexPage->asIndex(),
       new Template("join.html", "templates/join.php"),
       new Template("list.html", "templates/list.html", "Sessions"),
       new Template("master.html", "templates/master.php"),

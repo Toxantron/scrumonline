@@ -48,7 +48,7 @@ foreach($templates as $index=>$template)
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-    	<a class="navbar-brand" href="#/">Planning poker</a>
+    	<a class="navbar-brand" href="#/">Scrum Poker</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">

@@ -15,10 +15,10 @@ class Statistic
   // Name of the statistic
   public $name; 
   
-  // Value of the statistic
-  public $value;
-  
   // Visualization of the statistic, e.g numeric, percent, etc.
   public $type;
+  
+  // Value of the statistic
+  public $value = 0;
 }
 ?>

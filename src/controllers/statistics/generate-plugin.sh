@@ -18,8 +18,8 @@ echo "    \$result = new Statistic();" >> $file
 echo "    \$result->name = \"$name\";" >> $file
 echo "    \$result->type = \"numeric\"; // Set type" >> $file
 echo "    return \$result;" >> $file
-echo "  };" >> $file
-echo "};" >> $file
+echo "  }" >> $file
+echo "}" >> $file
 
 # Return instance
 echo "" >> $file

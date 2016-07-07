@@ -277,7 +277,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams) {
 // -------------------------------
 // Card controller
 // -------------------------------
-scrum.app.controller('MemberController', function MemberController ($http, $routeParams) {
+scrum.app.controller('MemberController', function MemberController ($http, $location, $routeParams) {
   // Set current
   scrum.current = this;
   
@@ -295,6 +295,15 @@ scrum.app.controller('MemberController', function MemberController ($http, $rout
     card.active = false;
     card.confirmed = false;
   };  
+  
+  // Leave the session
+  this.leave = function () {
+    $http.post("/api.php?c=session&m=remove", { 
+      memberId: this.member 
+    }).then(function (response) {
+      $location.url("/");
+    });  
+  };
   
   // Select a card and try to place a vote
   this.selectCard = function (card) {

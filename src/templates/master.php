@@ -37,7 +37,7 @@ include __DIR__ . "/../config.php";
     	          <div class="inner"><span class="card-label" ng-bind="vote.value"></span></div>
               </div>
             </div>
-            <div class="delete-member selectable" ng-click="master.remove(vote.id)">
+            <div class="delete-member remove selectable" ng-click="master.remove(vote.id)">
               <span class="glyphicon glyphicon-remove"></span>
             </div>
           </div>

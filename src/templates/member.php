@@ -2,13 +2,16 @@
 include __DIR__ . "/../config.php";
 
 ?>
-<div ng-init="member.cards=[<?php foreach($cards as $card)
-  echo '{value: '.$card.', active: false},';
-?>]">
+<div ng-init="member.cards=[<?php foreach($cards as $card) echo '{value: '.$card.', active: false},'; ?>]">
 </div>
 
 <div class="row">
-  <h2 class="col-xs-12" ng-bind="member.topic"></h2>
+  <h2 class="col-xs-10" ng-bind="member.topic"></h2>
+  <div class="col-xs-2">
+    <div class="leave remove selectable" ng-click="member.leave()">
+      <span class="glyphicon glyphicon-remove"></span>
+    </div>
+  </div>
 </div>
       
 <div class="row">

@@ -208,5 +208,5 @@ class PollController extends ControllerBase
   }
 }
 
-$controller = new PollController($entityManager);
+return new PollController($entityManager);
 ?>

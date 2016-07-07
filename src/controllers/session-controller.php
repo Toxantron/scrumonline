@@ -111,5 +111,5 @@ class SessionController extends ControllerBase
   }
 }
 
-$controller = new SessionController($entityManager);
+return new SessionController($entityManager);
 ?>

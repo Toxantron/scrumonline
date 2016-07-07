@@ -28,5 +28,5 @@ class StatisticsController extends ControllerBase
     }
 }
 
-$controller = new StatisticsController($entityManager);
+return new StatisticsController($entityManager);
 ?>

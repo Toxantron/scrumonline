@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "statistic.php";
+require_once __DIR__ . "/statistic.php";
 /*
  * Controller to create session statistics
  */ 
@@ -8,8 +8,9 @@ class StatisticsController extends ControllerBase
     private function loadPlugins()
     {
       $plugins = [];
-      foreach(glob(__DIR__ . 'statistics/*.php') as $file) {
-        include $file;
+      foreach(glob(__DIR__ . '/statistics/*.php') as $file) {
+        $plugin = include $file;
+        array_push($plugins, $plugin);
       }
       return $plugins;
     }

@@ -17,17 +17,28 @@ class StatisticsController extends ControllerBase
     
     public function execute()
     {
+        // Id and session entity
         $id = $_GET["id"];
         $session = $this->getSession($id);
         
+        // Optional filter
+        $filter = isset($_GET["filter"]) ? explode("|", $_GET["filter"]) : null;
+        
+        // Evaluation
         $statistics = [];
         foreach ($this->loadPlugins() as $key => $plugin) {
+          // Check if the plugin was selected in the filter
+          if($filter != null && !in_array($key, $filter))
+            continue;
+          
           $statistic = new Statistic();
           $statistic->name = $key;
           $statistic->type = $plugin->getType();
           $statistic->value = $plugin->evaluate($session);
+          
           $statistics[] = $statistic;
         }
+        
         return $statistics;
     }
 }

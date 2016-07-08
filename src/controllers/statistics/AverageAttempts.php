@@ -20,7 +20,7 @@ class AverageAttempts implements IStatistic
     $attempts = [];
     foreach($session->getPolls() as $poll) {
       $id = $poll->getTopic();
-      if(isset($attempts[$id])) {
+      if (isset($attempts[$id])) {
         $attempts[$id]++;
       } else {
         $attempts[$id] = 1;

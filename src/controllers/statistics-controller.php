@@ -3,7 +3,7 @@ require_once __DIR__ . "/statistic.php";
 /*
  * Controller to create session statistics
  */ 
-class StatisticsController extends ControllerBase
+class StatisticsController extends ControllerBase implements IController
 {
     private function loadPlugins($filter)
     {

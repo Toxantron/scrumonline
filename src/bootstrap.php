@@ -21,7 +21,9 @@ require_once __DIR__ . "/model/poll.php";
 require_once __DIR__ . "/model/session.php";
 require_once __DIR__ . "/model/vote.php";
 
-// Create controller base class
+/*
+ * Base class for all controllers
+ */
 class ControllerBase
 {
   protected $entityManager;
@@ -78,4 +80,15 @@ class ControllerBase
     }
     $this->entityManager->flush();
   }
+}
+
+/*
+ * Interface for all controllers
+ */
+interface IController
+{
+  /*
+   * Extract request parameters and execute the request
+   */
+  function execute();  
 }

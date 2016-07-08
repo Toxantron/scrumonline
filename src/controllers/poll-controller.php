@@ -2,7 +2,7 @@
 /*
  * Poll controller class to handle all session related operations
  */ 
-class PollController extends ControllerBase
+class PollController extends ControllerBase implements IController
 {  
   // Start a new poll in the session
   private function startPoll($sessionId, $topic)

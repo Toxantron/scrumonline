@@ -5,12 +5,16 @@ require_once __DIR__ . "/statistic.php";
  */ 
 class StatisticsController extends ControllerBase
 {
-    private function loadPlugins()
+    private function loadPlugins($filter)
     {
       $plugins = [];
       foreach(glob(__DIR__ . '/statistics/*.php') as $file) {
-        $plugin = include $file;
-        $plugins[$plugin->getName()] = $plugin;
+        // Check if the plugin was selected in the filter
+        $key = basename($file, ".php");
+        if($filter == null || in_array($key, $filter)) {
+          $plugin = include $file;
+          $plugins[$plugin->getName()] = $plugin; 
+        }
       }
       return $plugins;
     }
@@ -26,11 +30,7 @@ class StatisticsController extends ControllerBase
         
         // Evaluation
         $statistics = [];
-        foreach ($this->loadPlugins() as $key => $plugin) {
-          // Check if the plugin was selected in the filter
-          if($filter != null && !in_array($key, $filter))
-            continue;
-          
+        foreach ($this->loadPlugins($filter) as $key => $plugin) {
           $statistic = new Statistic();
           $statistic->name = $key;
           $statistic->type = $plugin->getType();

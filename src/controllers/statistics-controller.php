@@ -10,7 +10,7 @@ class StatisticsController extends ControllerBase
       $plugins = [];
       foreach(glob(__DIR__ . '/statistics/*.php') as $file) {
         $plugin = include $file;
-        array_push($plugins, $plugin);
+        $plugins[$plugin->getName()] = $plugin;
       }
       return $plugins;
     }
@@ -21,8 +21,12 @@ class StatisticsController extends ControllerBase
         $session = $this->getSession($id);
         
         $statistics = [];
-        foreach ($this->loadPlugins() as $index => $plugin) {
-          $statistics[$index] = $plugin->evaluate($session);
+        foreach ($this->loadPlugins() as $key => $plugin) {
+          $statistic = new Statistic();
+          $statistic->name = $key;
+          $statistic->type = $plugin->getType();
+          $statistic->value = $plugin->evaluate($session);
+          $statistics[] = $statistic;
         }
         return $statistics;
     }

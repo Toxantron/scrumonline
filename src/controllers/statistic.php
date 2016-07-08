@@ -5,6 +5,16 @@
 interface IStatistic
 {
   /*
+   * Name of the statistic
+   */
+  function getName();
+  
+  /*
+   * Type of result, e.g. numeric, time, nominal
+   */
+  function getType();
+  
+  /*
    * Evaluate the session
    */
   function evaluate($session);

@@ -1,15 +1,21 @@
 <?php
 /*
- * TODO: Documentation for AverageAttempts
+ * Average number of estimations attempts per topic /story
  */
 class AverageAttempts implements IStatistic
 {
+  public function getName()
+  {
+    return "AverageAttempts";    
+  }
+  
+  public function getType()
+  {
+    return "numeric";
+  }
+  
   public function evaluate($session)
   {
-    $result = new Statistic();
-    $result->name = "AverageAttempts";
-    $result->type = "numeric"; // Set type
-    
     // Calculate attempts
     $attempts = [];
     foreach($session->getPolls() as $poll) {
@@ -26,9 +32,7 @@ class AverageAttempts implements IStatistic
     foreach($attempts as $pollAttempts) {
       $total += $pollAttempts;
     }
-    $result->value = $total / sizeof($attempts);
-    
-    return $result;
+    return $total / sizeof($attempts);
   }
 }
 

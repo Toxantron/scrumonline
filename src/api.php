@@ -5,7 +5,7 @@ require_once "controllers/response.php";
 
 // Load controller
 $controllerName = $_GET["c"];
-include "controllers/" . $controllerName . "-controller.php";
+$controller = include "controllers/" . $controllerName . "-controller.php";
 
 // Execute call on controller
 try

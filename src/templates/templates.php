@@ -16,12 +16,12 @@ class Template
   
   private $path;
   
-  function __construct($name, $path, $navigationTag)
+  function __construct($name, $path, $navigationTag = null)
   {
     $this->name = $name;
     $this->path = $path;
     
-    if(isset($navigationTag))
+    if($navigationTag != null)
     {
       $this->isNavigation = true;
       $this->navigationTag = $navigationTag;

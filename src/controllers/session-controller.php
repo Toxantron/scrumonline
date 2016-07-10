@@ -2,7 +2,7 @@
 /*
  * Session controller class to handle all session related operations
  */ 
-class SessionController extends ControllerBase
+class SessionController extends ControllerBase implements IController
 {
   // Get all sessions from db
   private function getAllSessions()
@@ -111,5 +111,5 @@ class SessionController extends ControllerBase
   }
 }
 
-$controller = new SessionController($entityManager);
+return new SessionController($entityManager);
 ?>

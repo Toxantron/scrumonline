@@ -238,22 +238,54 @@ scrum.app.controller('MasterController', function ($http, $routeParams) {
     // Give source a reference to the this and set as current
     source.parent = this;
     this.current = source;
-  }; 
+  };
+  
+  // Build filter from current statistics
+  function buildQuery() {
+    var query = "/api.php?c=statistics&id=" + self.id;
+    if (!self.statistics) 
+      return query; 
+    
+    query += "&filter=";
+    for(var i=0; i < self.statistics.length; i++) {
+      query += self.statistics[i].name;
+      if (i < self.statistics.length - 1)
+        query += "|";
+    }
+    
+    return query;
+  }
+  
+  // Fetch statistics
+  function fetchStatistics() {
+    var query = buildQuery();    
+    $http.get(query).then(function(response){
+      var data = response.data;
+      var result = data.result;
+      
+      self.statistics = result;
+    });
+  } 
   
   // Poll all votes from the server 
-  this.pollVotes = function () {
+  function pollVotes() {
     if (scrum.current !== self)
       return;
   	
     $http.get("/api.php?c=poll&m=current&id=" + self.id).then(function(response){
       var data = response.data;
-      if(!data.success)
-      {
+      var result = data.result;
+      if(!data.success) {
       	// Error handling
       	return;
       }
       
-      var result = data.result;
+      // Query statistics
+      if (!self.flipped && result.flipped) {
+        fetchStatistics();
+      }        
+      
+      // Copy poll values      
       self.name = result.name;
       self.votes = result.votes;
       self.flipped = result.flipped;
@@ -264,14 +296,14 @@ scrum.app.controller('MasterController', function ($http, $routeParams) {
         self.current.completed(self.votes[0].value);
       }
       
-      setTimeout(self.pollVotes, 200);
+      setTimeout(pollVotes, 200);
     }, function(){
-      setTimeout(self.pollVotes, 200); 
+      setTimeout(pollVotes, 200); 
     });
-  };
+  }
   
   // Start the polling timer
-  this.pollVotes();
+  pollVotes();
 });
   
 // -------------------------------
@@ -325,7 +357,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   
   // Update current topic from server to activate voting
   var self = this;
-  this.fetchTopic = function () {
+  function fetchTopic() {
     if (scrum.current !== self) return; 
   	
     $http.get("/api.php?c=poll&m=topic&sid=" + self.id).then(function(response){
@@ -337,20 +369,19 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
       }
     	
       var result = data.result;
-      if(self.topic !== result.topic || (!self.votable && result.votable))
-      {
+      if(self.topic !== result.topic || (!self.votable && result.votable)) {
         self.reset();
         self.topic = result.topic;
       }
       
       self.votable = result.votable;
       
-      setTimeout(self.fetchTopic, 400);
+      setTimeout(fetchTopic, 400);
     }, function() {
-      setTimeout(self.fetchTopic, 400);	
+      setTimeout(fetchTopic, 400);	
     });
   };
   
       // Start timer
-  this.fetchTopic();
+  fetchTopic();
 });

@@ -71,7 +71,11 @@ include __DIR__ . "/../config.php";
           <tbody>
             <tr ng-repeat="statistic in master.statistics">
               <td><input type="checkbox" ng-model="statistic.enabled"></td>
-              <td>{{ statistic.name }}</td>
+              <td>
+                <a href="<?php echo $src ?>/src/controllers/statistics/{{statistic.name}}.php">
+                  {{ statistic.name }}
+                </a>
+              </td>
               <td><span ng-show="statistic.enabled" ng-bind="statistic.value"></span></td>
             </tr>
           </tbody>

@@ -199,7 +199,17 @@ scrum.app.controller('ListController', function($http, $location) {
 //------------------------------
 // Master controller
 //------------------------------
-scrum.app.controller('MasterController', function ($http, $routeParams) {
+scrum.app.controller('MasterController', function ($http, $routeParams, $location) {
+  // Validate keyring
+  $http.get("api.php?c=session&m=protected&id=" + $routeParams.id).then(function (response) {
+    if(response.data.success && response.data.result) {
+     var id = parseInt($routeParams.id);
+     if(scrum.keyring.indexOf(id) == -1) {
+       $location.url("/404.html");
+     } 
+    }
+  });
+  
   // Set current controller
   scrum.current = this;
   

@@ -72,6 +72,12 @@ class SessionController extends ControllerBase implements IController
     $this->entityManager->flush();
   }
   
+  private function hasPassword($id)
+  {
+    $session = $this->getSession($id);
+    return $session->getIsPrivate();
+  }
+  
   private function checkPassword($id, $password)
   {
     $session = $this->getSession($id);
@@ -103,6 +109,10 @@ class SessionController extends ControllerBase implements IController
         $data = $this->jsonInput();
         $this->removeMember($data["memberId"]);
         return null;
+        
+      case "protected":
+        $id = $_GET["id"];
+        return $this->hasPassword($id);
         
       case "check":
         $data = $this->jsonInput();

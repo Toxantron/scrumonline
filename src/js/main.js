@@ -18,6 +18,10 @@ var scrum = {
       view: 'add_source.html', 
       feedback: false 
     },
+  ],
+  
+  // Store of unlocked sessions
+  keyring: [
   ]
 };
 
@@ -100,6 +104,8 @@ scrum.app.controller('CreateController', function CreateController($http, $locat
     // Post session creation to server
     $http.post('/api.php?c=session&m=create', this).then(function (response) {
       if(response.data.success) {
+        // Add this id to keyring and switch view
+        scrum.keyring.push(response.data.result);
         $location.url('/session/' + response.data.result);
       }
     });
@@ -171,10 +177,13 @@ scrum.app.controller('ListController', function($http, $location) {
         $http.post('api.php?c=session&m=check', session).then(function (response){
           var data = response.data;
   	      if(data.success && data.result === true) {
+            // Add to keyring if not set
+            if (scrum.keyring.indexOf(session.id) === -1)
+              scrum.keyring.push(session.id);
             $location.url('/session/' + session.id);
           } else {
             session.pwdError = true;
-  	  }
+  	      }
         });
       }	else {
         // Toggle the expander

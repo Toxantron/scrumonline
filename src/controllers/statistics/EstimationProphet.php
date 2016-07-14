@@ -58,8 +58,11 @@ class EstimationProphet implements IStatistic
     $maxPoints = 0;
     $prophet = null;
     foreach ($members as $member => $points) {
-      if ($points > $maxPoints)
-        $prophet = $member;
+      if ($points <= $maxPoints)
+        continue;
+        
+      $prophet = $member;
+      $maxPoints = $points;
     }
     
     return $prophet;

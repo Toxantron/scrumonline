@@ -69,7 +69,7 @@ include __DIR__ . "/../config.php";
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="statistic in master.statistics">
+            <tr ng-repeat="statistic in master.statistics | orderBy:'!enabled'">
               <td><input type="checkbox" ng-model="statistic.enabled"></td>
               <td>
                 <a href="<?php echo $src ?>/src/controllers/statistics/{{statistic.name}}.php">
@@ -77,6 +77,15 @@ include __DIR__ . "/../config.php";
                 </a>
               </td>
               <td><span ng-show="statistic.enabled" ng-bind="statistic.value"></span></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <a href="<?php echo $src ?>/src/controllers/statistics">
+                  Want more?
+                </a>
+              </td>
+              <td></td>
             </tr>
           </tbody>
         </table>

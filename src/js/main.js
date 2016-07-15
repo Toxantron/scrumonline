@@ -272,9 +272,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       if (!statistic.enabled)
         continue;
 
-      query += statistic.name;
-      if (i < self.statistics.length - 1)
-        query += "|";
+      query += statistic.name + |;
     }
     
     return query;

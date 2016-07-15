@@ -286,18 +286,21 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       var result = data.result;
       
       if(self.statistics) {
-        // Update value
+        // Update values
         for (var i=0; i < result.length; i++) {
           var item = result[i];
-          self.statistics[item.name].value = item.value;
+          // Find match
+          for(var j=0; j < self.statistics.length; j++) {
+            var statistic = self.statistics[j];
+            if(statistic.name == item.name) {
+              statistic.value = item.value;
+              break;
+            }
+          }
         }
       } else {
         // Initial set
-        self.statistics = [];
-        for(var i=0; i < result.length; i++) {
-          var item = result[i];
-          self.statistics[item.name] = item;
-        }
+        self.statistics = result;
       }      
     });
   } 

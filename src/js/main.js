@@ -267,7 +267,12 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
     
     query += "&filter=";
     for(var i=0; i < self.statistics.length; i++) {
-      query += self.statistics[i].name;
+      // Filter the enabled ones
+      var statistic = self.statistics[i];
+      if (!statistic.enabled)
+        continue;
+
+      query += statistic.name;
       if (i < self.statistics.length - 1)
         query += "|";
     }
@@ -282,7 +287,15 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       var data = response.data;
       var result = data.result;
       
-      self.statistics = result;
+      if(self.statistics) {
+        // Update value
+        for (var i=0; i < self.statistics.length; i++) {
+          self.statistics[i].value = result[i].value;
+        }
+      } else {
+        // Initial set
+        self.statistics = result;
+      }      
     });
   } 
   

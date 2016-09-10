@@ -62,6 +62,9 @@ scrum.app.config(
         controllerAs: 'member',
       	pageTrack: '/member'
       })
+      .when('/impressum', {
+        templateUrl: 'impressum.html',        
+      })
       .otherwise({
       	templateUrl: '404.html',
       	dontTrack: true

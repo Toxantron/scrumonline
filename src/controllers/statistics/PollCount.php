@@ -21,4 +21,3 @@ class PollCount implements IStatistic
 }
 
 return new PollCount();
-?>

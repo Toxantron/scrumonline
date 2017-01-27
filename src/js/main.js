@@ -105,7 +105,7 @@ scrum.app.controller('CreateController', function CreateController($http, $locat
     }
   	
     // Post session creation to server
-    $http.post('/api.php?c=session&m=create', this).then(function (response) {
+    $http.post('/api/session/create', this).then(function (response) {
       if(response.data.success) {
         // Add this id to keyring and switch view
         scrum.keyring.push(response.data.result);
@@ -141,7 +141,7 @@ scrum.app.controller('JoinController', function JoinController($http, $location,
       return;
     }
     	
-    $http.post('/api.php?c=session&m=join', self).then(function (response) {
+    $http.post('/api/session/join', self).then(function (response) {
       var data = response.data;
       if(data.success) {
         var result = data.result;
@@ -163,7 +163,7 @@ scrum.app.controller('ListController', function($http, $location) {
   // Update the list
   var self = this;
   this.update = function() {
-    $http.get('/api.php?c=session&m=list').then(function(response) {
+    $http.get('/api/session/list').then(function(response) {
       self.sessions = response.data.result;
     });
   };
@@ -177,7 +177,7 @@ scrum.app.controller('ListController', function($http, $location) {
       // Private session
       // Check password
       if(transmit) {
-        $http.post('api.php?c=session&m=check', session).then(function (response){
+        $http.post('api/session/check', session).then(function (response){
           var data = response.data;
   	      if(data.success && data.result === true) {
             // Add to keyring if not set
@@ -204,7 +204,7 @@ scrum.app.controller('ListController', function($http, $location) {
 //------------------------------
 scrum.app.controller('MasterController', function ($http, $routeParams, $location) {
   // Validate keyring
-  $http.get("api.php?c=session&m=protected&id=" + $routeParams.id).then(function (response) {
+  $http.get("api/session/protected?id=" + $routeParams.id).then(function (response) {
     if(response.data.success && response.data.result) {
      var id = parseInt($routeParams.id);
      if(scrum.keyring.indexOf(id) == -1) {
@@ -231,7 +231,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   // Starting a new poll
   var self = this;
   this.startPoll = function (topic) {
-    $http.post('/api.php?c=poll&m=start', { 
+    $http.post('/api/poll/start', { 
       sessionId: self.id, 
       topic: topic
     }).then(function(response) {
@@ -252,7 +252,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   
   // Remove a member from the session
   this.remove = function (id) {
-    $http.post("/api.php?c=session&m=remove", { memberId: id });  
+    $http.post("/api/session/remove", { memberId: id });  
   };
   
   // Select a ticketing system
@@ -264,7 +264,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   
   // Build filter from current statistics
   function buildQuery() {
-    var query = "/api.php?c=statistics&id=" + self.id;
+    var query = "/api/statistics/calculate?id=" + self.id;
     if (!self.statistics) 
       return query; 
     
@@ -313,7 +313,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
     if (scrum.current !== self)
       return;
   	
-    $http.get("/api.php?c=poll&m=current&id=" + self.id).then(function(response){
+    $http.get("/api/poll/current?id=" + self.id).then(function(response){
       var data = response.data;
       var result = data.result;
       if(!data.success) {
@@ -371,7 +371,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   
   // Leave the session
   this.leave = function () {
-    $http.post("/api.php?c=session&m=remove", { 
+    $http.post("/api/session/remove", { 
       memberId: this.member 
     }).then(function (response) {
       $location.url("/");
@@ -384,7 +384,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
     this.currentCard = card;
     card.active = true;
     
-    $http.post('/api.php?c=poll&m=place', { 
+    $http.post('/api/poll/place', { 
       sessionId: this.id, 
       memberId: this.member, 
       vote: card.value
@@ -401,7 +401,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   function fetchTopic() {
     if (scrum.current !== self) return; 
   	
-    $http.get("/api.php?c=poll&m=topic&sid=" + self.id).then(function(response){
+    $http.get("/api/poll/topic&sid=" + self.id).then(function(response){
       var data = response.data;
       if(!data.success)
       {

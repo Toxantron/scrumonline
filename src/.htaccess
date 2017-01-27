@@ -1,0 +1,4 @@
+# Use mod_rewrite to direct calls to api.php
+RewriteEngine on
+RewriteRule ^\.htaccess$ - [F]
+RewriteRule api\/(\w+)\/(\w+)\??(.*) api.php?c=$1&m=$2&$3

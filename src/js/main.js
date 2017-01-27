@@ -401,7 +401,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   function fetchTopic() {
     if (scrum.current !== self) return; 
   	
-    $http.get("/api/poll/topic&sid=" + self.id).then(function(response){
+    $http.get("/api/poll/topic?sid=" + self.id).then(function(response){
       var data = response.data;
       if(!data.success)
       {

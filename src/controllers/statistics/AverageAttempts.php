@@ -4,11 +4,6 @@
  */
 class AverageAttempts implements IStatistic
 {
-  public function getName()
-  {
-    return "AverageAttempts";    
-  }
-  
   public function getType()
   {
     return "numeric";

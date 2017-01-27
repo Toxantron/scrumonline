@@ -6,11 +6,6 @@
  */
 class EstimationProphet implements IStatistic
 {
-  public function getName()
-  {
-    return "EstimationProphet";
-  }
-
   public function getType()
   {
     return "nominal"; // Define type

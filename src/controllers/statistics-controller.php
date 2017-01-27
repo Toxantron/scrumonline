@@ -13,7 +13,7 @@ class StatisticsController extends ControllerBase implements IController
         $key = basename($file, ".php");
         if($filter == null || in_array($key, $filter)) {
           $plugin = include $file;
-          $plugins[$plugin->getName()] = $plugin; 
+          $plugins[$key] = $plugin; 
         }
       }
       return $plugins;

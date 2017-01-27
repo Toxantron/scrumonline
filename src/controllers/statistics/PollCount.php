@@ -4,11 +4,6 @@
  */
 class PollCount implements IStatistic
 {
-  public function getName()
-  {
-    return "PollCount";
-  }
-  
   public function getType()
   {
     return "numeric";

@@ -13,13 +13,6 @@ echo " */" >> $file
 echo "class $name implements IStatistic" >> $file
 echo "{" >> $file 
 
-# getName method
-echo "  public function getName()" >> $file
-echo "  {" >> $file
-echo "    return \"$name\";" >> $file
-echo "  }" >> $file
-echo "" >> $file
-
 # getType method
 echo "  public function getType()" >> $file
 echo "  {" >> $file

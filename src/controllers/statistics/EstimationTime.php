@@ -5,11 +5,6 @@
  */
 class EstimationTime implements IStatistic
 {
-  public function getName()
-  {
-    return "EstimationTime";
-  }
-  
   public function getType()
   {
     return "time";

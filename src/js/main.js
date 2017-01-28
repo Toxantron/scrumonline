@@ -359,6 +359,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   this.member = $routeParams.memberId;    
   this.votable = false;
   this.topic = '';
+  this.removed = false;
   
   // Reset the member UI
   this.reset = function () {
@@ -398,9 +399,10 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   
   // Update current topic from server to activate voting
   var self = this;
-  function fetchTopic() {
+  function update() {
     if (scrum.current !== self) return; 
   	
+    // Update topic
     $http.get("/api/poll/topic?sid=" + self.id).then(function(response){
       var data = response.data;
       if(!data.success)
@@ -410,6 +412,13 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
       }
     	
       var result = data.result;
+
+      // Voting was closed, get our peers votes
+      if(self.votable && !result.votable) {
+
+      }
+
+      // Topic changed or poll was opened for voting again
       if(self.topic !== result.topic || (!self.votable && result.votable)) {
         self.reset();
         self.topic = result.topic;
@@ -417,12 +426,20 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
       
       self.votable = result.votable;
       
-      setTimeout(fetchTopic, 400);
+      setTimeout(update, 400);
     }, function() {
-      setTimeout(fetchTopic, 400);	
+      setTimeout(update, 400);	
+    });
+
+    // Check if we are still here
+    $http.get("/api/session/membercheck?sid=" + self.id + '&mid=' + self.member).then(function(response){
+      var data = response.data;
+      if(data.success && !data.result) {
+        self.removed = true;
+      }
     });
   };
   
       // Start timer
-  fetchTopic();
+  update();
 });

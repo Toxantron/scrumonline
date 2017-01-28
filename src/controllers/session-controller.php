@@ -77,6 +77,17 @@ class SessionController extends ControllerBase implements IController
     $session = $this->getSession($id);
     return $session->getIsPrivate();
   }
+
+  private function memberCheck($sid, $mid)
+  {
+    $session = $this->getSession($sid);
+    foreach($session->getMembers() as $member) {
+      if($member->getId() == $mid) {
+        return true;
+      }
+    }
+    return false;
+  }
   
   private function checkPassword($id, $password)
   {
@@ -109,6 +120,9 @@ class SessionController extends ControllerBase implements IController
         $data = $this->jsonInput();
         $this->removeMember($data["memberId"]);
         return null;
+
+      case "membercheck":
+        return $this->memberCheck($_GET["sid"], $_GET["mid"]);
         
       case "protected":
         $id = $_GET["id"];

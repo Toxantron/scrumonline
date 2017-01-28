@@ -62,6 +62,7 @@ class Template
       new Template("add_source.html", "templates/add_source.html"),
       new Template("member.html", "templates/member.php"),
       new Template("impressum.html", "templates/impressum.html", "Impressum"),
+      new Template("removal.html", "templates/removal.html"),
       new Template("404.html", "templates/404.html")
     ];
     return $templates;

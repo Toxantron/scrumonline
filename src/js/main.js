@@ -65,6 +65,9 @@ scrum.app.config(
       .when('/impressum', {
         templateUrl: 'impressum.html',        
       })
+      .when('/removal', {
+        templateUrl: 'removal.html',        
+      })
       .otherwise({
       	templateUrl: '404.html',
       	dontTrack: true
@@ -359,7 +362,6 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   this.member = $routeParams.memberId;    
   this.votable = false;
   this.topic = '';
-  this.removed = false;
   
   // Reset the member UI
   this.reset = function () {
@@ -435,7 +437,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
     $http.get("/api/session/membercheck?sid=" + self.id + '&mid=' + self.member).then(function(response){
       var data = response.data;
       if(data.success && !data.result) {
-        self.removed = true;
+        $location.url("/removal");
       }
     });
   };

@@ -225,6 +225,12 @@ span.session-list.right {
   text-align: right;
 }
 
+/*
+ * Removal styling
+ */
+div.removal {
+  margin-top: 150px;
+}
 
 /*
  * Plugin styles

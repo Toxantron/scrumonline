@@ -361,7 +361,11 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   this.id = $routeParams.sessionId;
   this.member = $routeParams.memberId;    
   this.votable = false;
+  this.leaving = false;
   this.topic = '';
+
+  // Self reference for callbacks
+  var self = this;
   
   // Reset the member UI
   this.reset = function () {
@@ -374,10 +378,13 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   
   // Leave the session
   this.leave = function () {
+    this.leaving = true;
     $http.post("/api/session/remove", { 
       memberId: this.member 
     }).then(function (response) {
       $location.url("/");
+    }, function() {
+      self.leaving = false;
     });  
   };
   
@@ -400,7 +407,6 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   }; 
   
   // Update current topic from server to activate voting
-  var self = this;
   function update() {
     if (scrum.current !== self) return; 
   	
@@ -436,12 +442,16 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
     // Check if we are still here
     $http.get("/api/session/membercheck?sid=" + self.id + '&mid=' + self.member).then(function(response){
       var data = response.data;
-      if(data.success && !data.result) {
+      if (self.leaving) {
+        return;
+      }
+
+      if (data.success && !data.result) {
         $location.url("/removal");
       }
     });
   };
   
-      // Start timer
+  // Start timer
   update();
 });

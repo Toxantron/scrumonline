@@ -2,4 +2,4 @@
 RewriteEngine on
 RewriteBase /
 RewriteRule ^\.htaccess$ - [F]
-RewriteRule api\/(\w+)\/(\w+)\??(.*) api.php?c=$1&m=$2 [QSA]
+RewriteRule api\/(\w+)\/(\w+) api.php?c=$1&m=$2 [QSA]

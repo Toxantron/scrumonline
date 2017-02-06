@@ -1,20 +1,32 @@
 <!-- Initial screen till static information was put in -->
 <div ng-if="!master.current.loaded">
   <form role="form">
-    <div class="form-group">
-      <label>User:</label>
-      <input type="text" class="form-control" ng-model="master.current.user">
-    </div>
-    <div class="form-group">
-      <label><input type="checkbox" ng-model="master.current.isPrivate"> is private</label> 
-    </div>
-     <div class="form-group" ng-if="master.current.isPrivate">
-      <label>Password:</label>
-      <input type="password" class="form-control" ng-model="master.current.password">
-    </div>
-    <div class="form-group">
-      <label>Repo:</label>
-      <input type="text" class="form-control" ng-model="master.current.repo">
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label>User:</label>
+          <input type="text" class="form-control" ng-model="master.current.user">
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label><input type="checkbox" ng-model="master.current.isPrivate"> is private</label> 
+        </div>
+      </div>
+    </div>  
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label>Repo:</label>
+          <input type="text" class="form-control" ng-model="master.current.repo">
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group" ng-if="master.current.isPrivate">
+          <label>Password:</label>
+          <input type="password" class="form-control" ng-model="master.current.password">
+        </div>
+      </div>
     </div>
     <button class="btn btn-default" ng-click="master.current.load()">Load issues</button>
   </form>  

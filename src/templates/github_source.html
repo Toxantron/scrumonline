@@ -6,6 +6,13 @@
       <input type="text" class="form-control" ng-model="master.current.user">
     </div>
     <div class="form-group">
+      <label><input type="checkbox" ng-model="master.current.isPrivate"> is private</label> 
+    </div>
+     <div class="form-group" ng-if="master.current.isPrivate">
+      <label>Password:</label>
+      <input type="password" class="form-control" ng-model="master.current.password">
+    </div>
+    <div class="form-group">
       <label>Repo:</label>
       <input type="text" class="form-control" ng-model="master.current.repo">
     </div>

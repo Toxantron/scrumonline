@@ -83,12 +83,23 @@ scrum.sources.push({
   issues: [],
   issue: {},
   event: ['poll', 'start', 'Github'],
+
+  // Private repo
+  isPrivate: false,
+  password: '',
   
   // Load issues from github
   load: function() {
     var self = this;
+
+    var headers = {};
+    if(self.isPrivate) {
+      var auth = window.btoa(self.user + ':' + self.password);
+      headers.Authorization = 'Basic ' + auth;
+    }
+
     this.parent.$http
-      .get('http://api.github.com/repos/' + this.user + '/' + this.repo + '/issues')
+      .get('https://api.github.com/repos/' + this.user + '/' + this.repo + '/issues', { headers: headers })
       .then(function (response) {
         self.issues = response.data;
         self.issue = self.issues[0];

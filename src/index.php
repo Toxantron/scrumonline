@@ -22,7 +22,7 @@ foreach($templates as $index=>$template)
   <base href="/">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Online planning poker</title>
-  <meta name="description" content="Scrumpoker online is a simple web implementation of planning poker for scrum teams to determine the complexity of stories. It aims to integrate ticketing systems like Redmine or JIRA.">  
+  <meta name="description" content="Scrumpoker online is an open source web implementation of planning poker for scrum teams to determine the complexity of stories. It aims to integrate ticketing systems like Redmine or Github.">  
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="apple-touch-icon" href="apple-touch-icon.png">

@@ -99,7 +99,7 @@ scrum.sources.push({
     }
 
     this.parent.$http
-      .get('https://api.github.com/repos/' + this.user + '/' + this.repo + '/issues', { headers: headers })
+      .get('https://api.github.com/repos/' + this.repo + '/issues', { headers: headers })
       .then(function (response) {
         self.issues = response.data;
         self.issue = self.issues[0];

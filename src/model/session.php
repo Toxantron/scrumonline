@@ -16,6 +16,9 @@ class Session
   
     /** @Column(type="string", nullable=true) **/
     protected $password;
+
+    /** @Column(type="integer") **/ 
+    protected $cardSet;
   
     /** @Column(type="datetime") **/ 
     protected $lastAction;
@@ -62,6 +65,16 @@ class Session
     public function setPassword($password)
     {
         $this->password = $password;
+    }
+
+    // Getter and setter for cardSet field
+    public function getCardSet()
+    {
+    	  return $this->cardSet;
+    }
+    public function setCardSet($cardSet)
+    {
+        $this->password = $cardSet;
     }
 
     // Getter and setter for lastAction field

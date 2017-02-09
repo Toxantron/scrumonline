@@ -74,7 +74,7 @@ class Session
     }
     public function setCardSet($cardSet)
     {
-        $this->password = $cardSet;
+        $this->cardSet = $cardSet;
     }
 
     // Getter and setter for lastAction field

@@ -29,6 +29,19 @@
             </div>
           </div>
           <div class="form-group">
+            <label>Cards:</label>
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                {{ create.selectedSet.value }} <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li ng-repeat="set in create.cardSets" ng-class="{'active': set == create.selectedSet}">
+                  <a class="selectable" ng-click="create.selectedSet = set">{{ set.value }}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group">
             <label><input type="checkbox" ng-model="create.isPrivate"> is private</label> 
           </div>
           <div class="form-group" ng-if="create.isPrivate" ng-class="{'has-error': create.pwdError}">

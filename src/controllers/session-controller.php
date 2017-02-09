@@ -15,13 +15,16 @@ class SessionController extends ControllerBase implements IController
   }
   
   // Create session with name and private flag
-  private function createSession($name, $private, $password)
+  private function createSession($name, $cardSet, $private, $password)
   {
     $session = new Session();
     $session->setName($name);
+    $session->setCardSet($cardSet);
+
     $session->setIsPrivate($private);
     if ($private)
       $session->setPassword($this->createHash($password));
+      
     $session->setLastAction(new DateTime());
 
     $this->save($session);
@@ -109,7 +112,7 @@ class SessionController extends ControllerBase implements IController
         
       case "create":
         $data = $this->jsonInput();        
-        $session = $this->createSession($data["name"], $data["isPrivate"], $data["password"]);
+        $session = $this->createSession($data["name"], $data["cardSet"], $data["isPrivate"], $data["password"]);
         return $session->getId();
         
       case "join":

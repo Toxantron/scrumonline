@@ -1,14 +1,12 @@
 The easiest way is to deploy the application to your webserver and execute the following commands from the root directory. Make sure to adjust the config.php to your requirments
 
-# Requirements
+## Requirements
 The app requires a couple of packages you need to install on your system. Those are:
-- Apache with PHP >= 5.6 or Ngnix >=1.6
+- Apache >= 2.2
+- PHP >= 5.6
 - MySQL
 - MySQL-PDO
 
-# Webservers
-- [Nginx Deploxment](Deploxment-Nginx.md)
-- [Apache Deploxment](Deploxment-Apache.md)
 
-# Database
-- [Create Database](Deploxment-Database.md)
+
+The web root should point to the src directory.

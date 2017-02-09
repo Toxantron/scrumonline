@@ -56,7 +56,7 @@ class PollController extends ControllerBase implements IController
     // Evaluate the poll
     $this->evaluatePoll($session, $currentPoll);
     if($currentPoll->getResult() > 0)
-      $this->highlightVotes($currentPoll);
+      $this->highlightVotes($session, $currentPoll);
         
     // Save all to db
     $this->saveAll([$match, $currentPoll]);
@@ -81,38 +81,39 @@ class PollController extends ControllerBase implements IController
   }
   
   // Highlight highest and lowest estimate
-  private function highlightVotes($currentPoll)
+  private function highlightVotes($session, $currentPoll)
   {
     include "user-vote.php";
     
     $votes = $currentPoll->getVotes();
-    $cards = [1 => new CardFrequency(1), 2 => new CardFrequency(2), 3 => new CardFrequency(3), 5 => new CardFrequency(5), 
+    //foreach()
+    $frequencies = [1 => new CardFrequency(1), 2 => new CardFrequency(2), 3 => new CardFrequency(3), 5 => new CardFrequency(5), 
               8 => new CardFrequency(8), 13 => new CardFrequency(13), 20 => new CardFrequency(20), 40 => new CardFrequency(40),
               100 => new CardFrequency(100)];
     foreach($votes as $vote)
     {
-      $cards[$vote->getValue()]->count++;
+      $frequencies[$vote->getValue()]->count++;
     }
   
     // Determine most common vote
-    foreach($cards as $card)
+    foreach($frequencies as $frequency)
     {
-      if(!isset($mostCommon) || $mostCommon->count < $card->count)
-        $mostCommon = $card;
+      if(!isset($mostCommon) || $mostCommon->count < $frequency->count)
+        $mostCommon = $frequency;
     }
     
     $min = 0; $max = 0;
     // Iterate over frequencies and find lowest
-    foreach($cards as $card)
+    foreach($frequencies as $frequency)
     {
-      $min = $this->selectLimits($votes, $card, $mostCommon);
+      $min = $this->selectLimits($votes, $frequency, $mostCommon);
       if($min != 0) 
         break;
     }
     // Iterate over frequencies and find highest
-    foreach(array_reverse($cards) as $card)
+    foreach(array_reverse($frequencies) as $frequency)
     {
-      $max = $this->selectLimits($votes, $card, $mostCommon);
+      $max = $this->selectLimits($votes, $frequency, $mostCommon);
       if($max != 0)
         break;
     }

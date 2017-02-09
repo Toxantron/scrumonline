@@ -2,9 +2,6 @@
 include __DIR__ . "/../config.php";
 
 ?>
-<div ng-init="member.cards=[<?php foreach($cards as $card) echo '{value: '.$card.', active: false},'; ?>]">
-</div>
-
 <div class="row">
   <h2 class="col-xs-10" ng-bind="member.topic"></h2>
   <div class="col-xs-2">
@@ -20,7 +17,7 @@ include __DIR__ . "/../config.php";
       <div class="card selectable" ng-class="{active: card.active, confirmed: card.confirmed}" ng-click="member.selectCard(card)">
         <div class="inner">
           <span class="card-label" ng-bind="card.value"></span>
-	</div>
+	      </div>
       </div>
     </div>
   </div>

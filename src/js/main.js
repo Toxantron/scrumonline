@@ -373,6 +373,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   this.votable = false;
   this.leaving = false;
   this.topic = '';
+  this.cards = [];
 
   // Self reference for callbacks
   var self = this;
@@ -461,6 +462,15 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
       }
     });
   };
+
+  // Fetch the card set for this session
+  $http.get("/api/session/cardset?id=" + self.id).then(function(response){
+    var data = response.data;
+    var cards = cardSets[data.result].cards;
+    for(var i=0; i<cards.length; i++) {
+      self.cards[i] = { value: cards[i], active: false };
+    }
+  });
   
   // Start timer
   update();

@@ -126,6 +126,10 @@ class SessionController extends ControllerBase implements IController
 
       case "membercheck":
         return $this->memberCheck($_GET["sid"], $_GET["mid"]);
+
+      case "cardset":
+        $session = $this->getSession($_GET["id"]);
+        return $session->getCardSet();
         
       case "protected":
         $id = $_GET["id"];

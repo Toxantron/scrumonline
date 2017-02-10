@@ -91,6 +91,11 @@ scrum.app.controller('CreateController', function CreateController($http, $locat
   
   // Initialize properties
   this.name = '';
+  this.cardSets = [];
+  for(var i=0; i<cardSets.length; i++) {
+    this.cardSets[i] = { key: i, value: cardSets[i].cards.join() };
+  }
+  this.selectedSet = this.cardSets[0];
   this.isPrivate = false;
   this.password = '';
   
@@ -108,7 +113,12 @@ scrum.app.controller('CreateController', function CreateController($http, $locat
     }
   	
     // Post session creation to server
-    $http.post('/api/session/create', this).then(function (response) {
+    $http.post('/api/session/create', {
+      name: self.name,
+      cardSet: self.selectedSet.key,
+      isPrivate: self.isPrivate,
+      password: self.password
+    }).then(function (response) {
       if(response.data.success) {
         // Add this id to keyring and switch view
         scrum.keyring.push(response.data.result);
@@ -363,6 +373,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   this.votable = false;
   this.leaving = false;
   this.topic = '';
+  this.cards = [];
 
   // Self reference for callbacks
   var self = this;
@@ -451,6 +462,15 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
       }
     });
   };
+
+  // Fetch the card set for this session
+  $http.get("/api/session/cardset?id=" + self.id).then(function(response){
+    var data = response.data;
+    var cards = cardSets[data.result].cards;
+    for(var i=0; i<cards.length; i++) {
+      self.cards[i] = { value: cards[i], active: false };
+    }
+  });
   
   // Start timer
   update();

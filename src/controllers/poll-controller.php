@@ -4,6 +4,30 @@
  */ 
 class PollController extends ControllerBase implements IController
 {  
+  // Configured cards sets
+  public $cardSets;
+
+  // Get card set of the session
+  private function getCardSet($session)
+  {
+    return $this->cardSets[$session->getCardSet()];
+  }
+
+  // Get card set array of the session
+  private function getIndex($session, $voteValue)
+  {
+    $cardSet = $this->getCardSet($session);
+    return array_flip($cardSet)[$voteValue];
+  }
+
+  // Get value of session and index
+  private function getValue($session, $vote)
+  {
+    $cardSet = $this->getCardSet($session);
+    $value = $cardSet[$vote->getValue()];
+    return intval($value);
+  }
+
   // Start a new poll in the session
   private function startPoll($sessionId, $topic)
   {
@@ -12,7 +36,8 @@ class PollController extends ControllerBase implements IController
     // Start new poll
     $poll = new Poll();
     $poll->setTopic($topic);
-    $poll->setSession($session);      
+    $poll->setSession($session);   
+    $poll->setResult(-1);   
     
     // Update session
     $session->setLastAction(new DateTime());
@@ -49,9 +74,11 @@ class PollController extends ControllerBase implements IController
       $match = new Vote();
       $match->setPoll($currentPoll);
       $match->setMember($member);
-    }    
+    }
+
     // Set value
-    $match->setValue($voteValue);
+    $voteIndex = $this->getIndex($session, $voteValue);
+    $match->setValue($voteIndex);
     
     // Evaluate the poll
     $this->evaluatePoll($session, $currentPoll);
@@ -86,10 +113,14 @@ class PollController extends ControllerBase implements IController
     include "user-vote.php";
     
     $votes = $currentPoll->getVotes();
-    //foreach()
-    $frequencies = [1 => new CardFrequency(1), 2 => new CardFrequency(2), 3 => new CardFrequency(3), 5 => new CardFrequency(5), 
-              8 => new CardFrequency(8), 13 => new CardFrequency(13), 20 => new CardFrequency(20), 40 => new CardFrequency(40),
-              100 => new CardFrequency(100)];
+    // Frequency for each card
+    $frequencies = [];
+    foreach($this->getCardSet($session) as $key=>$card)
+    {
+      $frequencies[$key] = new CardFrequency($key); 
+    }
+    
+    // Count absolute frequence
     foreach($votes as $vote)
     {
       $frequencies[$vote->getValue()]->count++;
@@ -146,13 +177,14 @@ class PollController extends ControllerBase implements IController
     include __DIR__ .  "/user-vote.php";
     
     $session = $this->getSession($sessionId);
+    $cardSet = $this->getCardSet($session);
     
     // Create response array
     $votes = array();
     $currentPoll = $session->getCurrentPoll();
     foreach($session->getMembers() as $index=>$member)
     {
-      $votes[$index] = UserVote::create($member, $currentPoll);
+      $votes[$index] = UserVote::create($member, $currentPoll, $cardSet);
     }
 
     // Create reponse object
@@ -169,7 +201,7 @@ class PollController extends ControllerBase implements IController
     }
     // Vote estimation
     $response->votes = $votes;
-    $response->flipped = is_null($currentPoll) ? false : $currentPoll->getResult() > 0;
+    $response->flipped = is_null($currentPoll) ? false : $currentPoll->getResult() >= 0;
     $response->consensus = is_null($currentPoll) ? false : $currentPoll->getConsensus();
     
     return $response;
@@ -202,12 +234,14 @@ class PollController extends ControllerBase implements IController
         // Result object. Only votable until all votes received
         $result = new stdClass();
         $result->topic = is_null($currentPoll) ? "No topic" : $currentPoll->getTopic();
-        $result->votable = is_null($currentPoll) ? false : $currentPoll->getResult() == 0;
+        $result->votable = is_null($currentPoll) ? false : $currentPoll->getResult() < 0;
         
         return $result;
     }
   }
 }
 
-return new PollController($entityManager);
+$ctrl = new PollController($entityManager);
+$ctrl->cardSets = $cardSets;
+return $ctrl;
 ?>

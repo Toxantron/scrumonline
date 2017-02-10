@@ -80,8 +80,8 @@ foreach($templates as $index=>$template)
   var ga_id = '<?= $ga ?>';
 
   var cardSets = [
-<?php foreach($cards as $key=>$cardSet) { ?>
-    { set: <?= $key ?>, cards: [<?= join(',', $cardSet) ?>]  },
+<?php foreach($cardSets as $key=>$cardSet) { ?>
+    { set: <?= $key ?>, cards: <?= json_encode($cardSet) ?>  },
 <?php } ?>
   ];
 </script>

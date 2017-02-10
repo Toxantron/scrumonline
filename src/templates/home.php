@@ -1,3 +1,7 @@
+<?php
+include "config.php";
+?>
+
 <!-- Introduction -->
 <div class="row">
   <article class="col-xs-12">
@@ -29,7 +33,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Cards:</label>
+            <label>Cards: <a href="<?= $src ?>src/sample-config.php#L15">?</a></label>
             <div class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                 {{ create.selectedSet.value }} <span class="caret"></span>

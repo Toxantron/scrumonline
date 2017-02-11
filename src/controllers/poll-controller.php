@@ -82,7 +82,7 @@ class PollController extends ControllerBase implements IController
     
     // Evaluate the poll
     $this->evaluatePoll($session, $currentPoll);
-    if($currentPoll->getResult() > 0)
+    if($currentPoll->getResult() >= 0)
       $this->highlightVotes($session, $currentPoll);
         
     // Save all to db

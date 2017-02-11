@@ -22,4 +22,4 @@ $ cp src/sample-config.php src/config.php
 ````
 
 # Database
-- [Create Database](Deploxment-Database.md)
+- [Create Database](Deployment-Database.md)

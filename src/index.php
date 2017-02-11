@@ -41,6 +41,13 @@ foreach($templates as $index=>$template)
    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
+<!--Github Fork Badge -->
+<div class="github-fork-ribbon-wrapper hidden-xs">
+  <div class="github-fork-ribbon">
+    <a target="_blank" href="https://github.com/Toxantron/scrumonline">Fork me on GitHub</a>
+  </div>
+</div>
+
 <!-- Top navigation bar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid navigation">
@@ -68,11 +75,6 @@ foreach($templates as $index=>$template)
   <!-- Render index page in here for instand display -->
   <?php $indexPage->render(false) ?>
 </div>
-
-<!-- Footer of the page -->
-<footer>
-  Tutorials, bug reports and contributions are welcome on <a href="https://github.com/Toxantron/scrumonline">github</a>.
-</footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>

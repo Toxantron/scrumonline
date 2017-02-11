@@ -1,3 +1,7 @@
+<?php
+include "config.php";
+?>
+
 <!-- Introduction -->
 <div class="row">
   <article class="col-xs-12">
@@ -26,6 +30,19 @@
             <div class="has-feedback">
               <input type="text" class="form-control" ng-model="create.name" placeholder="My session">
               <span ng-if="create.nameError" class="glyphicon glyphicon-remove form-control-feedback"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Cards: <a href="<?= $src ?>src/sample-config.php#L15">?</a></label>
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                {{ create.selectedSet.value }} <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li ng-repeat="set in create.cardSets" ng-class="{'active': set == create.selectedSet}">
+                  <a class="selectable" ng-click="create.selectedSet = set">{{ set.value }}</a>
+                </li>
+              </ul>
             </div>
           </div>
           <div class="form-group">

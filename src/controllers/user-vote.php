@@ -9,7 +9,7 @@ class UserVote
   }
   
   // Create instance from member entity
-  public static function create($member, $currentPoll)
+  public static function create($member, $currentPoll, $cardSet)
   {
     $vote = new UserVote();
     $vote->id = $member->getId();
@@ -31,7 +31,7 @@ class UserVote
     if(isset($match))
     {
       $vote->placed = true;
-      $vote->value = $match->getValue();  
+      $vote->value = $cardSet[$match->getValue()];  
       $vote->active = $match->getHighlighted();
     }
     

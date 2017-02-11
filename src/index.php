@@ -78,6 +78,12 @@ foreach($templates as $index=>$template)
 <script src="/js//bootstrap.min.js"></script>
 <script type="text/javascript">
   var ga_id = '<?= $ga ?>';
+
+  var cardSets = [
+<?php foreach($cardSets as $key=>$cardSet) { ?>
+    { set: <?= $key ?>, cards: <?= json_encode($cardSet) ?>  },
+<?php } ?>
+  ];
 </script>
 <script src="/js/main.js"></script>
 <script src="/js/plugins.js"></script>

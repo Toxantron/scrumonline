@@ -1,4 +1,7 @@
-The easiest way is to deploy the application to your webserver and execute the following commands from the root directory. Make sure to adjust the config.php to your requirments
+# Deployment
+
+The easiest way is to deploy the application to your webserver and execute the following commands from the root directory. 
+Make sure to adjust the config.php to your requirements
 
 # Requirements
 The app requires a couple of packages you need to install on your system. Those are:
@@ -7,8 +10,8 @@ The app requires a couple of packages you need to install on your system. Those 
 - MySQL, MySQL-PDO
 
 # Webservers
-- [Nginx Deploxment](Deployment-Nginx.md)
-- [Apache Deploxment](Deployment-Apache.md)
+- [Nginx Deployment](Deployment-Nginx.md)
+- [Apache Deployment](Deployment-Apache.md)
 
 # Configuration
 The repository provides a sample config (config-sample.php). 

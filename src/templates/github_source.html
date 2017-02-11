@@ -38,12 +38,12 @@
     <div class="col-xs-4">
         <div class="list-group issue-list">
           <a  ng-repeat="issue in master.current.issues track by issue.id" class="selectable list-group-item" ng-class="{active: master.current.issue == issue}" ng-click="master.current.issue = issue">
-            {{ issue.id }}: {{ issue.title }}
+            #{{ issue.number }}: {{ issue.title }}
           </a>
         </div>
       </div>
       <div class="col-xs-8">
-        <h2>{{ master.current.issue.id }}: {{ master.current.issue.title }}</h2>
+        <h2>#{{ master.current.issue.number }}: {{ master.current.issue.title }}</h2>
         <p ng-bind="master.current.issue.body"></p>
         <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.title)" ga-track-event="master.current.event">Start</button>
       </div>

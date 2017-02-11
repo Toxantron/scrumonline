@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>  
-    <div class="row"  ng-if="master.current.isPrivate">
+    <div class="row" ng-if="master.current.isPrivate">
       <div class="col-xs-12 col-md-6">
         <div class="form-group">
           <label>User:</label>
@@ -38,13 +38,32 @@
     <div class="col-xs-4">
         <div class="list-group issue-list">
           <a  ng-repeat="issue in master.current.issues track by issue.id" class="selectable list-group-item" ng-class="{active: master.current.issue == issue}" ng-click="master.current.issue = issue">
-            {{ issue.id }}: {{ issue.title }}
+            #{{ issue.number }}: {{ issue.title }}
           </a>
         </div>
       </div>
       <div class="col-xs-8">
-        <h2>{{ master.current.issue.id }}: {{ master.current.issue.title }}</h2>
-        <p ng-bind="master.current.issue.body"></p>
+        <div class="row">
+          <div class="col-xs-1">
+            <img src="{{ master.current.issue.user.avatar_url }}&s=50" alt="{{ master.current.issue.user.login }}" />
+          </div>
+          <div class="col-xs-11">
+            <h2><a href="{{ master.current.issue.html_url }}" target="_blank">#{{ master.current.issue.number }}</a>: {{ master.current.issue.title }}</h2>
+          </div>
+        </div>
+        <div ng-if="master.current.issue.labels.length > 0">
+          <p><span ng-repeat="label in master.current.issue.labels" class="label label-default">{{ label.name }}</span></p>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            {{ master.current.issue.user.login }} created issue on {{ master.current.issue.created_at | date : "medium" }}
+          </div>
+          <div class="panel-body">
+            {{ master.current.issue.body }}
+          </div>
+        </div>
+        
         <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.title)" ga-track-event="master.current.event">Start</button>
       </div>
   </div>

@@ -30,7 +30,10 @@ foreach($templates as $index=>$template)
   <script src="/js/modernizr-2.8.3.min.js"></script>
   
   <!-- Style sheets -->
-  <link rel="stylesheet" href="/css/combined.css">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/normalize.css">
   <link rel="stylesheet" href="/css/scrumonline.css">
 </head>
 <body ng-app="scrum-online">

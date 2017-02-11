@@ -1,16 +1,25 @@
-The easiest way is to deploy the application to your webserver and execute the following commands from the root directory. Make sure to adjust the config.php to your requirments
+# Deployment
 
-## Requirements
+The easiest way is to deploy the application to your webserver and execute the following commands from the root directory. 
+Make sure to adjust the config.php to your requirements
+
+# Requirements
 The app requires a couple of packages you need to install on your system. Those are:
-- Apache with PHP >= 5.6
-- MySQL
-- MySQL-PDO
+- Apache or Ngnix
+- PHP >= 5.6
+- MySQL, MySQL-PDO
 
-## Create Database
-<pre>
-$ php bin/composer install
+# Webservers
+- [Nginx Deployment](Deployment-Nginx.md)
+- [Apache Deployment](Deployment-Apache.md)
+
+# Configuration
+The repository provides a sample config (config-sample.php). 
+Rename the file to `config.php` and make your changes.
+
+````
 $ cp src/sample-config.php src/config.php
-$ vendor/bin/doctrine orm:schema-tool:create
-$ vendor/bin/doctrine orm:generate-proxies
-</pre>
-The web root should point to the src directory.
+````
+
+# Database
+- [Create Database](Deployment-Database.md)

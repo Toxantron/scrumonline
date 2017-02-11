@@ -19,7 +19,7 @@ extension=php_pdo_mysql.dll
 
 ## Nginx Configuration
 The nginx configuration is really default. Add the virtual host to your section. 
-If you are using php fastcgi, dont forget to change the port, or add a unix socket.
+If you are using php fastcgi, dont forget to change the port or add a unix socket.
 
 As nginx will ignore apaches .htacces and it is [also bad](https://www.nginx.com/resources/wiki/start/topics/examples/likeapache-htaccess/), we add the needed rewrite rules to the servers configuration.
 

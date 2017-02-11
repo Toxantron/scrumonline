@@ -7,8 +7,8 @@ The app requires a couple of packages you need to install on your system. Those 
 - MySQL, MySQL-PDO
 
 # Webservers
-- [Nginx Deploxment](Deploxment-Nginx.md)
-- [Apache Deploxment](Deploxment-Apache.md)
+- [Nginx Deploxment](Deployment-Nginx.md)
+- [Apache Deploxment](Deployment-Apache.md)
 
 # Configuration
 The repository provides a sample config (config-sample.php). 

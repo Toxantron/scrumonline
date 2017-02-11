@@ -51,8 +51,8 @@
             <h2><a href="{{ master.current.issue.html_url }}" target="_blank">#{{ master.current.issue.number }}</a>: {{ master.current.issue.title }}</h2>
           </div>
         </div>
-        <div>
-          <span ng-repeat="label in master.current.issue.labels" class="label label-default">{{ label.name }}</span>
+        <div ng-if="master.current.issue.labels.length > 0">
+          <p><span ng-repeat="label in master.current.issue.labels" class="label label-default">{{ label.name }}</span></p>
         </div>
 
         <div class="panel panel-default">

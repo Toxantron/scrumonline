@@ -2,7 +2,7 @@
 // Class for frequency of a certain card value
 class CardFrequency
 {
-  function CardFrequency($value)
+  function __construct($value)
   {
     $this->value = $value;
     $this->count = 0;

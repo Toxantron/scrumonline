@@ -53,19 +53,3 @@ class UserVote
   // Member must explain his vote
   public $active;
 }
-
-// Class for frequency of a certain card value
-class CardFrequency
-{
-  function CardFrequency($value)
-  {
-    $this->value = $value;
-    $this->count = 0;
-  }
-  
-  // Value of the card
-  public $value;
-  
-  // Number of votes in poll
-  public $count;
-}

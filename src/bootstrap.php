@@ -27,10 +27,14 @@ require_once __DIR__ . "/model/vote.php";
 class ControllerBase
 {
   protected $entityManager;
+
+  // Configured cards sets
+  public $cardSets;
   
-  function __construct($entityManager)
+  function __construct($entityManager, $cardSets = [])
   {
     $this->entityManager = $entityManager;
+    $this->cardSets = $cardSets;
   }
   
   // Get session by id
@@ -47,6 +51,12 @@ class ControllerBase
   {
     $member = $this->entityManager->find("Member", $id);
     return $member;
+  }
+
+  // Get card set of the session
+  protected function getCardSet($session)
+  {
+    return $this->cardSets[$session->getCardSet()];
   }
   
   // Find out witch method was requested

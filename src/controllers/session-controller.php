@@ -70,8 +70,22 @@ class SessionController extends ControllerBase implements IController
   // Remove member from session
   private function removeMember($id)
   {
-    $member = $this->getMember($id);
+    include __DIR__ .  "/session-evaluation.php";
+
+    // Get and remove member
+    $member = $this->getMember($id);    
     $this->entityManager->remove($member);
+    $this->entityManager->flush();
+
+    // Get the members session and its current poll
+    $session = $member->getSession();
+    $poll = $session->getCurrentPoll();
+    if($poll !== null && SessionEvaluation::evaluatePoll($session, $poll))
+    {
+      $cardSet = $this->getCardSet($session);
+      SessionEvaluation::highlightVotes($session, $poll, $cardSet);
+    }
+
     $this->entityManager->flush();
   }
   
@@ -142,5 +156,5 @@ class SessionController extends ControllerBase implements IController
   }
 }
 
-return new SessionController($entityManager);
+return new SessionController($entityManager, $cardSets);
 ?>

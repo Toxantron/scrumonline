@@ -4,15 +4,6 @@
  */ 
 class PollController extends ControllerBase implements IController
 {  
-  // Configured cards sets
-  public $cardSets;
-
-  // Get card set of the session
-  private function getCardSet($session)
-  {
-    return $this->cardSets[$session->getCardSet()];
-  }
-
   // Get card set array of the session
   private function getIndex($session, $voteValue)
   {
@@ -52,6 +43,8 @@ class PollController extends ControllerBase implements IController
   // Place a vote for the current poll
   private function placeVote($sessionId, $memberId, $voteValue)
   {
+    include __DIR__ .  "/session-evaluation.php";
+
     // Fetch entities
     $session = $this->getSession($sessionId);
     $currentPoll = $session->getCurrentPoll();
@@ -81,93 +74,15 @@ class PollController extends ControllerBase implements IController
     $match->setValue($voteIndex);
     
     // Evaluate the poll
-    $this->evaluatePoll($session, $currentPoll);
-    if($currentPoll->getResult() >= 0)
-      $this->highlightVotes($session, $currentPoll);
+    if(SessionEvaluation::evaluatePoll($session, $currentPoll))
+    {
+      $cardSet = $this->getCardSet($session);
+      SessionEvaluation::highlightVotes($session, $currentPoll, $cardSet);
+    }
         
     // Save all to db
     $this->saveAll([$match, $currentPoll]);
     $this->saveAll($currentPoll->getVotes()->toArray());
-  }
-  
-  // Evaluate the polls average
-  private function evaluatePoll($session, $currentPoll)
-  {
-    $sum = 0;
-    $count = $currentPoll->getVotes()->count();
-    
-    if($count != $session->getMembers()->count())
-      return;
-    
-    foreach($currentPoll->getVotes() as $vote)
-    {
-      $sum += $vote->getValue();  
-    }
-    $currentPoll->setResult($sum / $count); 
-    $currentPoll->setEndTime(new DateTime());
-  }
-  
-  // Highlight highest and lowest estimate
-  private function highlightVotes($session, $currentPoll)
-  {
-    include "user-vote.php";
-    
-    $votes = $currentPoll->getVotes();
-    // Frequency for each card
-    $frequencies = [];
-    foreach($this->getCardSet($session) as $key=>$card)
-    {
-      $frequencies[$key] = new CardFrequency($key); 
-    }
-    
-    // Count absolute frequence
-    foreach($votes as $vote)
-    {
-      $frequencies[$vote->getValue()]->count++;
-    }
-  
-    // Determine most common vote
-    foreach($frequencies as $frequency)
-    {
-      if(!isset($mostCommon) || $mostCommon->count < $frequency->count)
-        $mostCommon = $frequency;
-    }
-    
-    $min = 0; $max = 0;
-    // Iterate over frequencies and find lowest
-    foreach($frequencies as $frequency)
-    {
-      $min = $this->selectLimits($votes, $frequency, $mostCommon);
-      if($min != 0) 
-        break;
-    }
-    // Iterate over frequencies and find highest
-    foreach(array_reverse($frequencies) as $frequency)
-    {
-      $max = $this->selectLimits($votes, $frequency, $mostCommon);
-      if($max != 0)
-        break;
-    }
-    
-    $currentPoll->setConsensus($min == -1 && $max == -1);
-  }
-  
-  // Select highest or lowest estimates -  depends on direction of loop
-  private function selectLimits($votes, $frequency, $mostCommon)
-  {
-    // No card at all
-    if($frequency->count == 0)
-      return 0;
-    // This is the most common, no lowest found
-    if($frequency == $mostCommon)
-      return -1;
-    
-    foreach($votes as $vote)
-    {
-      if($vote->getValue() == $frequency->value)
-        $vote->setHighlighted(true);
-    }
-    return 1;
   }
   
   // Wrap up current poll in reponse object
@@ -241,7 +156,5 @@ class PollController extends ControllerBase implements IController
   }
 }
 
-$ctrl = new PollController($entityManager);
-$ctrl->cardSets = $cardSets;
-return $ctrl;
+return new PollController($entityManager, $cardSets);
 ?>

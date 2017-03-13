@@ -13,13 +13,11 @@ class EstimationTime implements IStatistic
   public function evaluate($session)
   {
     // Iterate over polls and calculate average time
-    $total = 0.0;
-    $count = 0;
+    $times = [];
     foreach($session->getPolls() as $poll) {
-      $total += $poll->getEndTime()->diff($poll->getStartTime())->s;
-      $count++;
+      $times[] = $poll->getEndTime()->diff($poll->getStartTime())->s;
     }
-    return $total / $count;
+    return array_sum($times) / count($times);
   }
 }
 

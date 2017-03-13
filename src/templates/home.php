@@ -7,7 +7,7 @@ include "config.php";
   <article class="col-xs-12">
     <p>
       <h2>Scrum Online</h2>
-      Welcome to my open source planning poker web app. Use of this app is free of charge for everyone. As a scrum master just start 
+      Welcome to my open source Planning Poker&reg; web app. Use of this app is free of charge for everyone. As a scrum master just start 
       a named session and invite your team to join you. It is recommended to display the scrum master view on the big screen 
       (TV or projector) and let everyone else join via smartphone. To join a session just enter the id displayed in the 
       heading of the scrum master view.

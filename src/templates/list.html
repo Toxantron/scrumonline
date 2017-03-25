@@ -1,14 +1,16 @@
 <div class="row">
   <div class="col-xs-12 col-md-8 col-md-offset-2">
+    <span class="session-private"><strong class="hidden-xs">Private</strong></span>
     <span class="session-list left"><strong>Name</strong></span>
     <span class="session-list center"><strong>Members</strong></span>
-    <span class="session-list right"><strong>Private</strong></span>
+    <span class="session-list right"><strong>Options</strong></span>
     <div class="list-group">
       <div class="list-group-item" ng-repeat="session in list.sessions track by session.id">
         <div class="selectable" ng-click="list.open(session)">
+          <span class="session-private"><span ng-if="session.isPrivate" class="glyphicon glyphicon-lock"></span></span>
           <span class="session-list left"><strong ng-bind="session.name"></strong></span>
           <span class="session-list center"><strong ng-bind="session.memberCount"></strong></span>
-          <span class="session-list right" ng-if="session.isPrivate"><span class="glyphicon glyphicon-lock"></span></span>
+          <span class="session-list right"></span>
         </div>
         <div ng-if="session.expanded">
           <form role="form" class="form-inline">

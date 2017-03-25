@@ -416,6 +416,21 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
       card.confirmed = true;
     });
   }; 
+
+  // Check if we are part of the session
+  // callback: function (stillPresent : boolean)
+  function selfCheck(callback) {
+    $http.get("/api/session/membercheck?sid=" + self.id + '&mid=' + self.member).then(function(response){
+      var data = response.data;
+      if (self.leaving) {
+        return;
+      }
+
+      if (data.success) {
+        callback(data.result);
+      }
+    });
+  }
   
   // Update current topic from server to activate voting
   function update() {
@@ -451,27 +466,35 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
     });
 
     // Check if we are still here
-    $http.get("/api/session/membercheck?sid=" + self.id + '&mid=' + self.member).then(function(response){
-      var data = response.data;
-      if (self.leaving) {
-        return;
-      }
-
-      if (data.success && !data.result) {
+    selfCheck(function (stillPresent){
+      if(!stillPresent) {
         $location.url("/removal");
       }
     });
   };
 
-  // Fetch the card set for this session
-  $http.get("/api/session/cardset?id=" + self.id).then(function(response){
-    var data = response.data;
-    var cards = cardSets[data.result].cards;
-    for(var i=0; i<cards.length; i++) {
-      self.cards[i] = { value: cards[i], active: false };
+  // Get card set of our session
+  function getCardSet() {
+    $http.get("/api/session/cardset?id=" + self.id).then(function(response){
+      var data = response.data;
+      var cards = cardSets[data.result].cards;
+      for(var i=0; i<cards.length; i++) {
+        self.cards[i] = { value: cards[i], active: false };
+      }
+
+      // Start timer to fetch current session state
+      update();
+    });
+  }
+
+  // Check if our member-id is still present
+  // This may happen if users navigate-back from removal page
+  selfCheck(function (present) {
+    if (present) {
+      // Fetch cards
+      getCardSet();
+    } else {
+      $location.url("/join/" + self.id);
     }
-  });
-  
-  // Start timer
-  update();
+  })
 });

@@ -1,7 +1,7 @@
 # Deployment
 
 The easiest way is to deploy the application to your webserver and execute the following commands from the root directory. 
-Make sure to adjust the config.php to your requirements
+Make sure to adjust the config.php to your requirements. The web-root of the application is the _src_ directory.
 
 # Requirements
 The app requires a couple of packages you need to install on your system. Those are:

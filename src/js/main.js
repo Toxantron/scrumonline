@@ -206,7 +206,7 @@ scrum.app.controller('ListController', function($http, $location) {
       session.expanded = !session.expanded;
       this.continue = function() {
         checkPassword(session, 'session');
-      }
+      };
     }
   };
 
@@ -220,7 +220,7 @@ scrum.app.controller('ListController', function($http, $location) {
       session.expanded = !session.expanded;
       this.continue = function() {
         checkPassword(session, 'join');
-      }
+      };
     }
   };
   

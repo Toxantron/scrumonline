@@ -15,7 +15,7 @@ service apache2 restart
 ```
 
 ## Configuration
-COnfigure Apache to run the application from the _src_ directory and make sure to ether `AllowOverride All` or move the rewrite rule from _.htaccess_ to the VirtualHost config.
+Configure Apache to run the application from the _src_ directory and make sure to ether `AllowOverride All` or move the rewrite rule from _.htaccess_ to the VirtualHost config.
 
 With _.htaccess_:
 

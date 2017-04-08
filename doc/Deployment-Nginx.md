@@ -28,9 +28,9 @@ server {
     listen       80;
     server_name  scrum.local;
 
-    root /var/www/scrumonline;
+    root /var/www/scrumonline/src;
 
-    rewrite /api\/(\w+)\/(\w+) /api.php?c=$1&m=$2 ;
+    rewrite /api\/(\w+)\/(\w+) /api.php?c=$1&m=$2;
 
     location / {
         index  index.html index.htm index.php;

@@ -6,11 +6,14 @@
     <span class="session-list right"><strong>Options</strong></span>
     <div class="list-group">
       <div class="list-group-item" ng-repeat="session in list.sessions track by session.id">
-        <div class="selectable" ng-click="list.open(session)">
+        <div>
           <span class="session-private"><span ng-if="session.isPrivate" class="glyphicon glyphicon-lock"></span></span>
           <span class="session-list left"><strong ng-bind="session.name"></strong></span>
           <span class="session-list center"><strong ng-bind="session.memberCount"></strong></span>
-          <span class="session-list right"></span>
+          <span class="session-list right">
+            <button type="button" class="btn btn-default" ng-click="list.open(session)">Open</button>
+            <button type="button" class="btn btn-default" ng-click="list.join(session)">Join</button>
+          </span>
         </div>
         <div ng-if="session.expanded">
           <form role="form" class="form-inline">
@@ -19,7 +22,7 @@
               <input type="password" class="form-control" ng-model="session.password">
               <span ng-if="session.pwdError" class="glyphicon glyphicon-remove form-control-feedback"></span>
             </div>
-            <button type="button" class="btn btn-default" ng-click="list.open(session, true)">Open</button>
+            <button type="button" class="btn btn-default" ng-click="list.continue()">Continue</button>
           </form>
         </div>
       </div>

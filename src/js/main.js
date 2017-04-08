@@ -180,30 +180,46 @@ scrum.app.controller('ListController', function($http, $location) {
       self.sessions = response.data.result;
     });
   };
+
+  // Check the password of a session
+  function checkPassword(session, url) {
+    $http.post('api/session/check', session).then(function (response){
+      var data = response.data;
+      if(data.success && data.result === true) {
+        // Add to keyring if not set
+        if (scrum.keyring.indexOf(session.id) === -1)
+          scrum.keyring.push(session.id);
+        $location.url(url + '/' + session.id);
+      } else {
+        session.pwdError = true;
+      }
+    });
+  }
   
   // Open session
-  this.open = function (session, transmit) {
+  this.open = function (session) {
     // Public session
     if (!session.isPrivate) {
       $location.url('/session/' + session.id);	
     } else {
-      // Private session
-      // Check password
-      if(transmit) {
-        $http.post('api/session/check', session).then(function (response){
-          var data = response.data;
-  	      if(data.success && data.result === true) {
-            // Add to keyring if not set
-            if (scrum.keyring.indexOf(session.id) === -1)
-              scrum.keyring.push(session.id);
-            $location.url('/session/' + session.id);
-          } else {
-            session.pwdError = true;
-  	      }
-        });
-      }	else {
-        // Toggle the expander
-        session.expanded = !session.expanded;
+      // Toggle the expander and set continue method
+      session.expanded = !session.expanded;
+      this.continue = function() {
+        checkPassword(session, 'session');
+      }
+    }
+  };
+
+  // Join the session
+  this.join = function(session) {
+    // Public session
+    if (!session.isPrivate) {
+      $location.url('/join/' + session.id);	
+    } else {
+      // Toggle the expander and set continue method
+      session.expanded = !session.expanded;
+      this.continue = function() {
+        checkPassword(session, 'join');
       }
     }
   };

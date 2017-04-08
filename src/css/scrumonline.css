@@ -213,7 +213,12 @@ div.delete-member:hover {
  * Session style
  */
 span.session-list {
-  width: 30%;
+  width: 27%;
+  display: inline-block;
+}
+span.session-private {
+  width: 10%;
+  text-align: left;
   display: inline-block;
 }
 span.session-list.left {

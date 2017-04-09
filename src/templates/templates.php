@@ -44,9 +44,9 @@ class Template
     }
     
 ?>
-  <script type="text/ng-template" id="<?= $this->name ?>">
-    <?php include $this->path; ?>
-  </script>    
+<script type="text/ng-template" id="<?= $this->name ?>">
+  <?php include $this->path; ?>
+</script>    
 <?php 
   }
   

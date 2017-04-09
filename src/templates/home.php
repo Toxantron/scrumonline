@@ -1,7 +1,6 @@
 <?php
 include "config.php";
 ?>
-
 <!-- Introduction -->
 <div class="row">
   <article class="col-xs-12">

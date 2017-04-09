@@ -91,9 +91,11 @@ foreach($templates as $index=>$template)
   ];
 </script>
 <script src="/js/main.js"></script>
-<script src="/js/plugins.js"></script>
+<?php foreach($plugins as $plugin) {?>
+<script src="/js/<?= $plugin ?>-plugin.js"></script>
+<?php } ?>
   
-  <!-- Templates of the page -->
+<!-- Templates of the page -->
 <?php
   foreach($templates as $template)
   {

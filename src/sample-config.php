@@ -25,4 +25,9 @@ $cardSets = [
     ['cup', '1', '2', '3', '5', '8', '13', '20', '?'],
 ];
 
+$plugins = [
+    // Plugin to load issues from github
+    'GitHub',
+];
+
 $src = "https://github.com/Toxantron/scrumonline/tree/master";

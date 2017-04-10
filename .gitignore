@@ -2,3 +2,4 @@ vendor/
 src/config.php
 *.lock
 proxies/
+.vagrant

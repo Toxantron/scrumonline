@@ -2,13 +2,13 @@
 // database configuration parameters
 $conn = array(
     'dbname' => 'scrum_online',
-    'user' => 'user',
-    'password' => 'password',
+    'user' => 'root',
+    'password' => 'passwd',
     'host' => 'localhost',
     'driver' => 'pdo_mysql',
 );
-  
-$host = "www.scrumpoker.online";
+
+$host = "scrumonline.local";
   
 $ga = 'GOOGLE-ANALYTICS';
   

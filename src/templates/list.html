@@ -5,7 +5,7 @@
     <span class="session-list center"><strong>Members</strong></span>
     <span class="session-list right"><strong>Options</strong></span>
     <div class="list-group">
-      <div class="list-group-item" ng-repeat="session in list.sessions track by session.id">
+      <div class="list-group-item slim" ng-repeat="session in list.sessions track by session.id">
         <div>
           <span class="session-private"><span ng-if="session.isPrivate" class="glyphicon glyphicon-lock"></span></span>
           <span class="session-list left"><strong ng-bind="session.name"></strong></span>

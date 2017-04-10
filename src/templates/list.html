@@ -22,7 +22,8 @@
               <input type="password" class="form-control" ng-model="session.password">
               <span ng-if="session.pwdError" class="glyphicon glyphicon-remove form-control-feedback"></span>
             </div>
-            <button type="button" class="btn btn-default" ng-click="list.continue()">Continue</button>
+            <button type="button" class="btn btn-default" ng-click="list.continue(session)">Continue</button>
+            <button type="button" class="btn btn-default" ng-click="session.expanded = false">Cancel</button>
           </form>
         </div>
       </div>

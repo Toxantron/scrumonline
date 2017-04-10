@@ -195,18 +195,28 @@ scrum.app.controller('ListController', function($http, $location) {
       }
     });
   }
+
+  // Continue opening operation 
+  function continueOpen(session) {
+    checkPassword(session, 'session');
+  }
+
+  // Continue joining operation
+  function continueJoin(session) {
+    checkPassword(session, 'join');
+  }
   
   // Open session
   this.open = function (session) {
     // Public session
     if (!session.isPrivate) {
       $location.url('/session/' + session.id);	
+    } else if (session.expanded) {
+      this.continue = continueOpen;
     } else {
       // Toggle the expander and set continue method
-      session.expanded = !session.expanded;
-      this.continue = function() {
-        checkPassword(session, 'session');
-      };
+      session.expanded = true;
+      this.continue = continueOpen;
     }
   };
 
@@ -214,13 +224,13 @@ scrum.app.controller('ListController', function($http, $location) {
   this.join = function(session) {
     // Public session
     if (!session.isPrivate) {
-      $location.url('/join/' + session.id);	
+      $location.url('/join/' + session.id);
+    } else if (session.expanded) {
+      this.continue = continueJoin;
     } else {
       // Toggle the expander and set continue method
-      session.expanded = !session.expanded;
-      this.continue = function() {
-        checkPassword(session, 'join');
-      };
+      session.expanded = true;
+      this.continue = continueJoin;
     }
   };
   

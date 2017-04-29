@@ -9,6 +9,8 @@ The app requires a couple of packages you need to install on your system. Those 
 - PHP >= 5.6
 - MySQL, MySQL-PDO
 
+or alternatively you can use [Vagrant](Vagrant.md) or [Docker](Docker.md).
+
 # Webservers
 - [Nginx Deployment](Deployment-Nginx.md)
 - [Apache Deployment](Deployment-Apache.md)

@@ -1,0 +1,9 @@
+<VirtualHost *:80>
+        DocumentRoot /var/www/scrumonline/src
+
+        RewriteEngine on
+        RewriteRule ^/api/(\w+)/(\w+) /api.php?c=$1&m=$2 [QSA]
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>

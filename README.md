@@ -19,6 +19,6 @@ For every story the Scrum Master will than start a poll and each member of the s
 * Mobile apps with watch support. Imagine voting on Android Wear or Apple Watch. Wouldn't that be cool? :D
 
 ## Contribute
-If you want to contribute you can just clone the repository and follow the deployment instructions. Any changes must be commited to a fork and then merged by issuing a pull request. For information on the REST API or ticketing plugins please have a look at the [wiki documentation](https://github.com/Toxantron/scrumonline/blob/master/doc/).
+If you want to contribute you can just clone the repository and follow the deployment instructions. We also offer support for [Vagrant](doc/Vagrant.md) and [Docker](doc/Docker.md). Any changes must be commited to a fork and then merged by issuing a pull request. For information on the REST API or ticketing plugins please have a look at the [wiki documentation](https://github.com/Toxantron/scrumonline/blob/master/doc/).
 
-You could also use the [REST API](https://github.com/Toxantron/scrumonline/blob/master/doc/Developer-Documentation.md) to build a mobile for iOS or Android. In that case I am happy to link your app in the README and on the page.
+You can also use the [REST API](https://github.com/Toxantron/scrumonline/blob/master/doc/Developer-Documentation.md) to build a mobile for iOS or Android. In that case I am happy to link your app in the README and on the page.

@@ -8,8 +8,10 @@ $conn = array(
     'driver' => 'pdo_mysql',
 );
 
+// This is used to create the join link
 $host = "scrumonline.local";
-  
+
+// Google analytics id
 $ga = 'GOOGLE-ANALYTICS';
   
 $cardSets = [
@@ -25,4 +27,5 @@ $cardSets = [
     ['cup', '1', '2', '3', '5', '8', '13', '20', '?'],
 ];
 
+// Src tree for documentation linking from page
 $src = "https://github.com/Toxantron/scrumonline/tree/master";

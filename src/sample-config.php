@@ -40,7 +40,9 @@ $plugins = [
     // Plugin to load issues from github
     'GitHub',
     // Plugin to load issues from JIRA
-    'JIRA'
+    'JIRA',
+    // Import issues from CSV file
+    'CSV',
 ];
 
 // Configuration for the server side JIRA controller

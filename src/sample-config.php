@@ -37,3 +37,12 @@ $plugins = [
     // Plugin to load issues from JIRA
     'JIRA'
 ];
+
+// Configuration for the server side JIRA controller
+$jiraConfiguration = [
+    'base_url' => '',
+    'username' => '',
+    'password' => '',
+    'project' => '',
+    'jql' => '',
+];

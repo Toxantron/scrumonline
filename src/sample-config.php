@@ -2,14 +2,16 @@
 // database configuration parameters
 $conn = array(
     'dbname' => 'scrum_online',
-    'user' => 'user',
-    'password' => 'password',
+    'user' => 'root',
+    'password' => 'passwd',
     'host' => 'localhost',
     'driver' => 'pdo_mysql',
 );
-  
-$host = "www.scrumpoker.online";
-  
+
+// This is used to create the join link
+$host = "scrumonline.local";
+
+// Google analytics id
 $ga = 'GOOGLE-ANALYTICS';
   
 $cardSets = [
@@ -28,6 +30,15 @@ $cardSets = [
 $plugins = [
     // Plugin to load issues from github
     'GitHub',
+];
+
+// Src tree for documentation linking from page
+$jiraConfiguration = [
+    'base_url' => '',
+    'username' => '',
+    'password' => '',
+    'project' => '',
+    'jql' => '',
 ];
 
 $src = "https://github.com/Toxantron/scrumonline/tree/master";

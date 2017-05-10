@@ -22,7 +22,33 @@ var scrum = {
   
   // Store of unlocked sessions
   keyring: [
-  ]
+  ],
+
+  // At peak times the number of polling clients exceeds the servers capacity.
+  // To avoid error 503 and rather keep the page running this strategy adapts
+  // the polling interval to the response behavior -> Few clients & fast polling
+  // or many clients and slow polling
+  pollingScale: (function () {
+    // Scale goes from 1.0 to 5.0 and starts in the middle
+    var min = 1.0, current = 2.5, max = 5.0;
+
+    return {
+      // Call was successful -> decrease scale slowly
+      success: function() {
+        if (current > min)
+          current -= 0.05;
+      },
+      // Call failed, so increase scale 4 times faster then decrease
+      failed: function() {
+        if (current < max)
+          current += 0.2
+      },
+      // Scale interval using the current scaling value
+      scale: function(interval) {
+        return interval * current;
+      }
+    };
+  })()
 };
 
 // Define angular app
@@ -376,9 +402,11 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
         self.current.completed(self.votes[0].value);
       }
       
-      setTimeout(pollVotes, 200);
+      scrum.pollingScale.success();
+      setTimeout(pollVotes, scrum.pollingScale.scale(300));
     }, function(){
-      setTimeout(pollVotes, 200); 
+      scrum.pollingScale.failed();
+      setTimeout(pollVotes, scrum.pollingScale.scale(300)); 
     });
   }
   
@@ -486,9 +514,11 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
       
       self.votable = result.votable;
       
-      setTimeout(update, 400);
+      scrum.pollingScale.success();
+      setTimeout(update, scrum.pollingScale.scale(500));
     }, function() {
-      setTimeout(update, 400);	
+      scrum.pollingScale.failed();
+      setTimeout(update, scrum.pollingScale.scale(500));	
     });
 
     // Check if we are still here

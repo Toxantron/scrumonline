@@ -86,40 +86,68 @@ class PollController extends ControllerBase implements IController
   }
   
   // Wrap up current poll in reponse object
-  private function currentPoll($sessionId)
+  private function current($sessionId)
   {
     // Load the user-vote.php required for this
     include __DIR__ .  "/user-vote.php";
     
     $session = $this->getSession($sessionId);
-    $cardSet = $this->getCardSet($session);
     
-    // Create response array
-    $votes = array();
-    $currentPoll = $session->getCurrentPoll();
-    foreach($session->getMembers() as $index=>$member)
-    {
-      $votes[$index] = UserVote::create($member, $currentPoll, $cardSet);
-    }
-
     // Create reponse object
     $response = new stdClass();
     $response->name = $session->getName();
-    $response->topic = $currentPoll != null ? $currentPoll->getTopic() : "";
-    // Time taken for estimation
-    if($currentPoll != null)
+    $response->votes = array();
+
+    // Include votes in response
+    $currentPoll = $session->getCurrentPoll();
+    if ($currentPoll == null)
     {
-      $diff = $currentPoll->getEndTime()->diff($currentPoll->getStartTime());
-      $response->duration = new stdClass();
-      $response->duration->min = $diff->i;
-      $response->duration->sec = $diff->s;
+      $response->topic = "";
+      $response->flipped = false;
+      $response->consensus = false;
     }
-    // Vote estimation
-    $response->votes = $votes;
-    $response->flipped = is_null($currentPoll) ? false : $currentPoll->getResult() >= 0;
-    $response->consensus = is_null($currentPoll) ? false : $currentPoll->getConsensus();
+    else
+    {
+      $response->topic = $currentPoll->getTopic();
+      $response->flipped = $currentPoll->getResult() >= 0;
+      $response->consensus = $currentPoll->getConsensus();
+
+      $diff = $currentPoll->getEndTime()->diff($currentPoll->getStartTime());
+      $response->duration = $diff;
+    } 
+
+    // Members votes
+    $cardSet = $this->getCardSet($session);
+    $query = $this->entityManager
+      ->createQuery('SELECT m.id, m.name, v.value, v.highlighted FROM member m LEFT JOIN m.votes v WITH (v.member = m AND v.poll = ?1) WHERE m.session = ?2')
+      ->setParameter(1, $currentPoll)
+      ->setParameter(2, $session);
+    $result = $query->getArrayResult();
+    foreach($result as $vote)
+      $response->votes[] = UserVote::fromQuery($cardSet, $vote);
     
     return $response;
+  }
+
+  private function topic($sessionId)
+  {
+      $session = $this->getSession($sessionId);
+      $currentPoll = $session->getCurrentPoll();
+
+      // Result object. Only votable until all votes received
+      $result = new stdClass();
+      if ($currentPoll == null)
+      {
+          $result->topic = "No topic";
+          $result->votable = false;
+      }
+      else
+      {
+          $result->topic = $currentPoll->getTopic();
+          $result->votable = $currentPoll->getResult() < 0;
+      }
+
+      return $result;
   }
   
   public function execute()
@@ -128,33 +156,23 @@ class PollController extends ControllerBase implements IController
     {
       case "current":
         $sessionId = $_GET["id"];
-        return $this->currentPoll($sessionId);
+        return $this->current($sessionId);
         
       case "start":
-        $data = $this->jsonInput();
-        
+        $data = $this->jsonInput();        
         $this->startPoll($data["sessionId"], $data["topic"]);
         return null;
         
       case "place":
         $data = $this->jsonInput();
-
         $this->placeVote($data["sessionId"], $data["memberId"], $data["vote"]);
         return null;
         
       case "topic":
-        $session = $this->getSession($_GET["sid"]);
-        $currentPoll = $session->getCurrentPoll();
-
-        // Result object. Only votable until all votes received
-        $result = new stdClass();
-        $result->topic = is_null($currentPoll) ? "No topic" : $currentPoll->getTopic();
-        $result->votable = is_null($currentPoll) ? false : $currentPoll->getResult() < 0;
-        
-        return $result;
+        $sessionId = $_GET["sid"];
+        return $this->topic($sessionId);
     }
   }
 }
 
 return new PollController($entityManager, $cardSets);
-?>

@@ -8,31 +8,17 @@ class UserVote
     $this->active = false;
   }
   
-  // Create instance from member entity
-  public static function create($member, $currentPoll, $cardSet)
+  // Create vote object from query object
+  public static function fromQuery($cardSet, $entity)
   {
     $vote = new UserVote();
-    $vote->id = $member->getId();
-    $vote->name = $member->getName();
-    
-    // Poll related values
-    if(is_null($currentPoll))
-      return $vote;
-  
-    // Find matching member in poll
-    foreach($currentPoll->getVotes() as $candidate)
-    {
-      if($candidate->getMember() === $member)
-      {
-        $match = $candidate; 
-      }
-    }
-  
-    if(isset($match))
+    $vote->id = $entity['id'];
+    $vote->name = $entity['name'];
+    if($entity['value'] !== null)
     {
       $vote->placed = true;
-      $vote->value = $cardSet[$match->getValue()];  
-      $vote->active = $match->getHighlighted();
+      $vote->value = $cardSet[$entity['value']];  
+      $vote->active = $entity['highlighted'];
     }
     
     return $vote;

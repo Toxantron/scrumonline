@@ -23,7 +23,7 @@ class Session
     /** @Column(type="datetime") **/ 
     protected $lastAction;
     
-    /** @OneToMany(targetEntity="Member", mappedBy="session", fetch="EAGER", orphanRemoval=true) **/
+    /** @OneToMany(targetEntity="Member", mappedBy="session", orphanRemoval=true) **/
     protected $members;
   
     /** @OneToMany(targetEntity="Poll", mappedBy="session", orphanRemoval=true) **/

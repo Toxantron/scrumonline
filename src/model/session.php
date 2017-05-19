@@ -29,7 +29,7 @@ class Session
     /** @OneToMany(targetEntity="Poll", mappedBy="session", orphanRemoval=true) **/
     protected $polls;
   
-    /** @ManyToOne(targetEntity="Poll", fetch="EAGER", cascade={"remove"}) **/
+    /** @ManyToOne(targetEntity="Poll", cascade={"remove"}) **/
     protected $currentPoll;
   
     public function getId()

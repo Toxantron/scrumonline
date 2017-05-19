@@ -19,6 +19,13 @@ class PollController extends ControllerBase implements IController
     return intval($value);
   }
 
+  // Check if the session as changed since the last polling call
+  private function sessionUnchanged($session)
+  {
+    // Check if anything changed since the last polling call
+    return isset($_GET['last']) && $_GET['last'] >= $session->getLastAction()->getTimestamp();
+  }
+
   // Start a new poll in the session
   private function startPoll($sessionId, $topic)
   {
@@ -47,6 +54,7 @@ class PollController extends ControllerBase implements IController
 
     // Fetch entities
     $session = $this->getSession($sessionId);
+    $session->setLastAction(new DateTime());
     $currentPoll = $session->getCurrentPoll();
     $member = $this->getMember($memberId);
     
@@ -57,8 +65,11 @@ class PollController extends ControllerBase implements IController
     // Find or create vote
     foreach($currentPoll->getVotes() as $vote)
     {
-      if($vote->getMember() == $member)
-        $match = $vote;
+      if($vote->getMember() != $member)
+        continue;
+
+      $match = $vote;
+      break;
     }
     
     // Create vote if not found
@@ -81,7 +92,7 @@ class PollController extends ControllerBase implements IController
     }
         
     // Save all to db
-    $this->saveAll([$match, $currentPoll]);
+    $this->saveAll([$session, $match, $currentPoll]);
     $this->saveAll($currentPoll->getVotes()->toArray());
   }
   
@@ -90,14 +101,23 @@ class PollController extends ControllerBase implements IController
   {
     // Load the user-vote.php required for this
     include __DIR__ .  "/user-vote.php";
-    
-    $session = $this->getSession($sessionId);
-    
+
     // Create reponse object
     $response = new stdClass();
-    $response->name = $session->getName();
-    $response->votes = array();
+    
+    $session = $this->getSession($sessionId);
 
+    // Check if anything changed since the last polling call
+    if($this->sessionUnchanged($session))
+    {
+      $response->unchanged = true;
+      return $response;
+    }
+    
+    // Fill response object
+    $response->name = $session->getName();
+    $response->timestamp = $session->getLastAction()->getTimestamp();
+    $response->votes = array();
     // Include votes in response
     $currentPoll = $session->getCurrentPoll();
     if ($currentPoll == null)
@@ -131,23 +151,32 @@ class PollController extends ControllerBase implements IController
 
   private function topic($sessionId)
   {
-      $session = $this->getSession($sessionId);
-      $currentPoll = $session->getCurrentPoll();
+    $session = $this->getSession($sessionId);
 
-      // Result object. Only votable until all votes received
-      $result = new stdClass();
-      if ($currentPoll == null)
-      {
-          $result->topic = "No topic";
-          $result->votable = false;
-      }
-      else
-      {
-          $result->topic = $currentPoll->getTopic();
-          $result->votable = $currentPoll->getResult() < 0;
-      }
-
+    // Check if anything changed since the last polling call
+    if($this->sessionUnchanged($session))
+    {
+      $result->unchanged = true;
       return $result;
+    }
+
+    $currentPoll = $session->getCurrentPoll();
+
+    // Result object. Only votable until all votes received
+    $result = new stdClass();
+    $result->timestamp = $session->getLastAction()->getTimestamp();
+    if ($currentPoll == null)
+    {
+        $result->topic = "No topic";
+        $result->votable = false;
+    }
+    else
+    {
+        $result->topic = $currentPoll->getTopic();
+        $result->votable = $currentPoll->getResult() < 0;
+    }
+
+    return $result;
   }
   
   public function execute()

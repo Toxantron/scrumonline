@@ -378,12 +378,19 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
     if (scrum.current !== self)
       return;
   	
-    $http.get("/api/poll/current?id=" + self.id).then(function(response){
+    $http.get("/api/poll/current?id=" + self.id + "&last=" + self.timestamp).then(function(response){
       var data = response.data;
       var result = data.result;
-      if(!data.success) {
-      	// Error handling
-      	return;
+
+      // Call succeeded, but execution failed
+      if (!data.success) {
+        setTimeout(pollVotes, scrum.pollingScale.scale(300));
+        return;
+      }
+      // Session was not modified
+      if (result.unchanged) {
+        setTimeout(pollVotes, scrum.pollingScale.scale(300));
+        return;
       }
       
       // Query statistics
@@ -393,6 +400,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       
       // Copy poll values      
       self.name = result.name;
+      self.timestamp = result.timestamp;
       self.votes = result.votes;
       self.flipped = result.flipped;
       self.consensus = result.consensus;
@@ -403,10 +411,10 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       }
       
       scrum.pollingScale.success();
-      setTimeout(pollVotes, scrum.pollingScale.scale(300));
+      setTimeout(pollVotes, scrum.pollingScale.scale(400));
     }, function(){
       scrum.pollingScale.failed();
-      setTimeout(pollVotes, scrum.pollingScale.scale(300)); 
+      setTimeout(pollVotes, scrum.pollingScale.scale(400)); 
     });
   }
   
@@ -491,15 +499,23 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
     if (scrum.current !== self) return; 
   	
     // Update topic
-    $http.get("/api/poll/topic?sid=" + self.id).then(function(response){
+    $http.get("/api/poll/topic?sid=" + self.id + "&last=" + self.timestamp).then(function(response){
       var data = response.data;
       if(!data.success)
       {
       	self.reset();
+        setTimeout(update, scrum.pollingScale.scale(500));
       	return;
       }
     	
       var result = data.result;
+
+      if (result.unchanged) {
+        setTimeout(update, scrum.pollingScale.scale(500));
+        return
+      }
+
+      self.timestamp = result.timestamp;
 
       // Voting was closed, get our peers votes
       if(self.votable && !result.votable) {

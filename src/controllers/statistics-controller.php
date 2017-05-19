@@ -11,7 +11,7 @@ class StatisticsController extends ControllerBase implements IController
       foreach(glob(__DIR__ . '/statistics/*.php') as $file) {
         // Check if the plugin was selected in the filter
         $key = basename($file, ".php");
-        if($filter == null || in_array($key, $filter)) {
+        if($filter == null || sizeof($filter) == 0 || in_array($key, $filter)) {
           $plugin = include $file;
           $plugins[$key] = $plugin; 
         }

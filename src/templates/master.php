@@ -51,7 +51,14 @@ include __DIR__ . "/../config.php";
   <div class="col-xs-12 col-md-5">
     <h2>Invite members</h1>
     <p>Invite members to join your session. Session id: <strong ng-bind="master.id"></strong></p>
-    <p>Or send them this link: <a href="http://<?= $host ?>/#/join/{{ master.id }}"><?= $host ?>/#/join/{{ master.id }}</a>
+<?php
+$joinUrl = "http://". $host . "/#/join/";
+?>
+    <img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=<?= urlencode($joinUrl) . "{{ master.id }}" ?>&choe=UTF-8" title="Join {{ master.id }}" />
+<?php
+$joinUrl = $joinUrl . "{{ master.id }}";
+?>
+    <p>Or send them this link: <a href="<?= $joinUrl ?>"><?= $joinUrl ?></a>
   </div>  
     
   <!-- Statistics column -->

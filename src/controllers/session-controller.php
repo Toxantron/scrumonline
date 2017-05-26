@@ -53,8 +53,9 @@ class SessionController extends ControllerBase implements IController
       $member = new Member();
       $member->setName($name);
       $member->setSession($session);
+      $session->setLastAction(new DateTime());
         
-      $this->save($member);
+      $this->saveAll([$member, $session]);
     }
     
     // Store name in cookie if not done yet

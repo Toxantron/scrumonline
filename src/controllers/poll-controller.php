@@ -151,6 +151,7 @@ class PollController extends ControllerBase implements IController
 
   private function topic($sessionId)
   {
+    $result = new stdClass();
     $session = $this->getSession($sessionId);
 
     // Check if anything changed since the last polling call
@@ -163,7 +164,6 @@ class PollController extends ControllerBase implements IController
     $currentPoll = $session->getCurrentPoll();
 
     // Result object. Only votable until all votes received
-    $result = new stdClass();
     $result->timestamp = $session->getLastAction()->getTimestamp();
     if ($currentPoll == null)
     {

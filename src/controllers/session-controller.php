@@ -87,6 +87,10 @@ class SessionController extends ControllerBase implements IController
       SessionEvaluation::highlightVotes($session, $poll, $cardSet);
     }
 
+    // Update session to trigger polling
+    $session->setLastAction(new DateTime());
+    $this->save($session);
+
     $this->entityManager->flush();
   }
   

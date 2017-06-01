@@ -59,8 +59,8 @@ class PollController extends ControllerBase implements IController
     $member = $this->getMember($memberId);
     
     // Reject votes if poll is completed
-    if($currentPoll != null && $currentPoll->getResult() > 0)
-      throw new Exception("Can not vote on completed polls!");
+    if($currentPoll == null || $currentPoll->getResult() > 0)
+      throw new Exception("Can not vote without poll or on completed polls!");
     
     // Find or create vote
     foreach($currentPoll->getVotes() as $vote)

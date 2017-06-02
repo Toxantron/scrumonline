@@ -180,7 +180,7 @@ scrum.app.controller('JoinController', function JoinController($http, $location,
       return;
     }
     	
-    $http.post('/api/session/join', self).then(function (response) {
+    $http.put('/api/session/member/' + self.id, { name: self.name }).then(function (response) {
       var data = response.data;
       if(data.success) {
         var result = data.result;
@@ -209,7 +209,7 @@ scrum.app.controller('ListController', function($http, $location) {
 
   // Check the password of a session
   function checkPassword(session, url) {
-    $http.post('api/session/check', session).then(function (response){
+    $http.post('api/session/check/' + session.id, {password: session.password}).then(function (response){
       var data = response.data;
       if(data.success && data.result === true) {
         // Add to keyring if not set
@@ -269,7 +269,7 @@ scrum.app.controller('ListController', function($http, $location) {
 //------------------------------
 scrum.app.controller('MasterController', function ($http, $routeParams, $location) {
   // Validate keyring
-  $http.get("api/session/protected?id=" + $routeParams.id).then(function (response) {
+  $http.get("api/session/protected/" + $routeParams.id).then(function (response) {
     if(response.data.success && response.data.result) {
      var id = parseInt($routeParams.id);
      if(scrum.keyring.indexOf(id) == -1) {
@@ -296,10 +296,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   // Starting a new poll
   var self = this;
   this.startPoll = function (topic) {
-    $http.post('/api/poll/start', { 
-      sessionId: self.id, 
-      topic: topic
-    }).then(function(response) {
+    $http.post('/api/poll/topic/' + self.id, { topic: topic }).then(function(response) {
       var data = response.data;
       // Exit if call failed
       if (!data.success) return;
@@ -317,7 +314,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   
   // Remove a member from the session
   this.remove = function (id) {
-    $http.post("/api/session/remove", { memberId: id });  
+    $http.delete("/api/session/member/" + self.id + "/" + id);  
   };
   
   // Select a ticketing system
@@ -327,28 +324,9 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
     this.current = source;
   };
   
-  // Build filter from current statistics
-  function buildQuery() {
-    var query = "/api/statistics/calculate?id=" + self.id;
-    if (!self.statistics) 
-      return query; 
-    
-    query += "&filter=";
-    for(var i=0; i < self.statistics.length; i++) {
-      // Filter the enabled ones
-      var statistic = self.statistics[i];
-      if (!statistic.enabled)
-        continue;
-
-      query += statistic.name + "|";
-    }
-    
-    return query;
-  }
-  
   // Fetch statistics
   function fetchStatistics() {
-    var query = buildQuery();    
+    var query = "/api/statistics/calculate/" + self.id    
     $http.get(query).then(function(response){
       var data = response.data;
       var result = data.result;
@@ -378,7 +356,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
     if (scrum.current !== self)
       return;
   	
-    $http.get("/api/poll/current?id=" + self.id + "&last=" + self.timestamp).then(function(response){
+    $http.get("/api/poll/current/" + self.id + "?last=" + self.timestamp).then(function(response){
       var data = response.data;
       var result = data.result;
 
@@ -452,9 +430,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   // Leave the session
   this.leave = function () {
     this.leaving = true;
-    $http.post("/api/session/remove", { 
-      memberId: this.member 
-    }).then(function (response) {
+    $http.delete("/api/session/member/" + self.id + "/" + self.member).then(function (response) {
       $location.url("/");
     }, function() {
       self.leaving = false;
@@ -467,9 +443,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
     this.currentCard = card;
     card.active = true;
     
-    $http.post('/api/poll/place', { 
-      sessionId: this.id, 
-      memberId: this.member, 
+    $http.post('/api/poll/vote/' + this.id + "/" + this.member, {
       vote: card.value
     }).then(function (response) {
       if(!response.data.success)
@@ -482,7 +456,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   // Check if we are part of the session
   // callback: function (stillPresent : boolean)
   function selfCheck(callback) {
-    $http.get("/api/session/membercheck?sid=" + self.id + '&mid=' + self.member).then(function(response){
+    $http.get("/api/session/membercheck/" + self.id + '/' + self.member).then(function(response){
       var data = response.data;
       if (self.leaving) {
         return;
@@ -499,7 +473,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
     if (scrum.current !== self) return; 
   	
     // Update topic
-    $http.get("/api/poll/topic?sid=" + self.id + "&last=" + self.timestamp).then(function(response){
+    $http.get("/api/poll/topic/" + self.id + "?last=" + self.timestamp).then(function(response){
       var data = response.data;
       if(!data.success)
       {
@@ -547,7 +521,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
 
   // Get card set of our session
   function getCardSet() {
-    $http.get("/api/session/cardset?id=" + self.id).then(function(response){
+    $http.get("/api/session/cardset/" + self.id).then(function(response){
       var data = response.data;
       var cards = cardSets[data.result].cards;
       for(var i=0; i<cards.length; i++) {

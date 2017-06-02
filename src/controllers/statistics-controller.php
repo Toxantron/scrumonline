@@ -5,7 +5,7 @@ require_once __DIR__ . "/statistic.php";
  */ 
 class StatisticsController extends ControllerBase implements IController
 {
-    private function loadPlugins($filter)
+    private static function loadPlugins()
     {
       $plugins = [];
       foreach(glob(__DIR__ . '/statistics/*.php') as $file) {
@@ -24,7 +24,7 @@ class StatisticsController extends ControllerBase implements IController
         
         // Evaluation
         $statistics = [];
-        foreach ($this->loadPlugins($filter) as $key => $plugin) {
+        foreach ($this->loadPlugins() as $key => $plugin) {
           $statistic = new Statistic();
           $statistic->name = $key;
           $statistic->type = $plugin->getType();

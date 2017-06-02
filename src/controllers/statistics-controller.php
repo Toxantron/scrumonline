@@ -11,10 +11,7 @@ class StatisticsController extends ControllerBase implements IController
       foreach(glob(__DIR__ . '/statistics/*.php') as $file) {
         // Check if the plugin was selected in the filter
         $key = basename($file, ".php");
-        if($filter == null || sizeof($filter) == 0 || in_array($key, $filter)) {
-          $plugin = include $file;
-          $plugins[$key] = $plugin; 
-        }
+        $plugins[$key] = include $file;
       }
       return $plugins;
     }
@@ -24,9 +21,6 @@ class StatisticsController extends ControllerBase implements IController
         // Id and session entity
         $id = $_GET["id"];
         $session = $this->getSession($id);
-        
-        // Optional filter
-        $filter = isset($_GET["filter"]) ? explode("|", $_GET["filter"]) : null;
         
         // Evaluation
         $statistics = [];

@@ -134,17 +134,21 @@ class SessionController extends ControllerBase implements IController
         $session = $this->createSession($data["name"], $data["cardSet"], $data["isPrivate"], $data["password"]);
         return $session->getId();
         
-      case "join":
-        $data = $this->jsonInput();        
-        return $this->addMember($data["id"], $data["name"]);
-        
-      case "remove":
-        $data = $this->jsonInput();
-        $this->removeMember($data["memberId"]);
-        return null;
+      case "member":
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method == "PUT")
+        { 
+          $data = $this->jsonInput();        
+          return $this->addMember($_GET["id"], $data["name"]);
+        }
+        if ($method == "DELETE")
+        {
+          $this->removeMember($_GET["mid"]);
+          return null;
+        }
 
       case "membercheck":
-        return $this->memberCheck($_GET["sid"], $_GET["mid"]);
+        return $this->memberCheck($_GET["id"], $_GET["mid"]);
 
       case "cardset":
         $session = $this->getSession($_GET["id"]);
@@ -156,7 +160,7 @@ class SessionController extends ControllerBase implements IController
         
       case "check":
         $data = $this->jsonInput();
-        return $this->checkPassword($data["id"], $data["password"]);
+        return $this->checkPassword($_GET["id"], $data["password"]);
     }
   }
 }

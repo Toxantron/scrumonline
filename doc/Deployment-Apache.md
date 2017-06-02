@@ -39,6 +39,12 @@ Without _.htaccess_:
         DocumentRoot /var/www/scrumonline/src
 
         RewriteEngine on
+
+        # Rule that includes session and member id
+        RewriteRule ^/api/(\w+)/(\w+)/(\d+)/(\d+) /api.php?c=$1&m=$2&id=$3&mid=$4 [QSA]
+        # Rule that includes the session id, mostly used for HTTP GET
+        RewriteRule ^/api/(\w+)/(\w+)/(\d+) /api.php?c=$1&m=$2&id=$3 [QSA]
+        # Standard rule for controller and method - applies to most queries
         RewriteRule ^/api/(\w+)/(\w+) /api.php?c=$1&m=$2 [QSA]
 
         ErrorLog ${APACHE_LOG_DIR}/error.log

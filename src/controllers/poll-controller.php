@@ -187,19 +187,24 @@ class PollController extends ControllerBase implements IController
         $sessionId = $_GET["id"];
         return $this->current($sessionId);
         
-      case "start":
-        $data = $this->jsonInput();        
-        $this->startPoll($data["sessionId"], $data["topic"]);
-        return null;
-        
-      case "place":
-        $data = $this->jsonInput();
-        $this->placeVote($data["sessionId"], $data["memberId"], $data["vote"]);
-        return null;
-        
       case "topic":
-        $sessionId = $_GET["sid"];
-        return $this->topic($sessionId);
+        $sessionId = $_GET["id"];
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method == "GET")
+          return $this->topic($sessionId);
+
+        if ($method == "POST")
+        {
+          $data = $this->jsonInput();        
+          $this->startPoll($sessionId, $data["topic"]);
+        }
+        
+        return null;
+        
+      case "vote":
+        $data = $this->jsonInput();
+        $this->placeVote($_GET["id"], $_GET["mid"], $data["vote"]);
+        return null;
     }
   }
 }

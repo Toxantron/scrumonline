@@ -2,7 +2,7 @@
 /*
  * Poll controller class to handle all session related operations
  */ 
-class PollController extends ControllerBase implements IController
+class PollController extends ControllerBase
 {  
   // Get card set array of the session
   private function getIndex($session, $voteValue)
@@ -25,31 +25,13 @@ class PollController extends ControllerBase implements IController
     // Check if anything changed since the last polling call
     return isset($_GET['last']) && $_GET['last'] >= $session->getLastAction()->getTimestamp();
   }
-
-  // Start a new poll in the session
-  private function startPoll($sessionId, $topic)
-  {
-    $session = $this->getSession($sessionId);
-      
-    // Start new poll
-    $poll = new Poll();
-    $poll->setTopic($topic);
-    $poll->setSession($session);   
-    $poll->setResult(-1);   
-    
-    // Update session
-    $session->setLastAction(new DateTime());
-    $session->setCurrentPoll($poll);
-    
-    // Save changes
-    $this->saveAll([$session, $poll]);
-    
-    return $poll;
-  }
   
   // Place a vote for the current poll
-  private function placeVote($sessionId, $memberId, $voteValue)
+  // URL: /api/poll/vote/{id}/{mid}
+  public function vote($sessionId, $memberId)
   {
+    $voteValue = $data = $this->jsonInput()["vote"];
+
     include __DIR__ .  "/session-evaluation.php";
 
     // Fetch entities
@@ -97,14 +79,14 @@ class PollController extends ControllerBase implements IController
   }
   
   // Wrap up current poll in reponse object
-  private function current($sessionId)
+  // URL: /api/poll/current/{id}
+  public function current($sessionId)
   {
     // Load the user-vote.php required for this
     include __DIR__ .  "/user-vote.php";
 
     // Create reponse object
     $response = new stdClass();
-    
     $session = $this->getSession($sessionId);
 
     // Check if anything changed since the last polling call
@@ -149,8 +131,17 @@ class PollController extends ControllerBase implements IController
     return $response;
   }
 
-  private function topic($sessionId)
+  // Get or set topic of the current poll
+  public function topic($sessionId)
   {
+    $method = $_SERVER['REQUEST_METHOD'];
+    if ($method == "POST")
+    {
+      $data = $this->jsonInput();        
+      $this->startPoll($sessionId, $data["topic"]);
+      return null;
+    }
+
     $result = new stdClass();
     $session = $this->getSession($sessionId);
 
@@ -178,34 +169,26 @@ class PollController extends ControllerBase implements IController
 
     return $result;
   }
-  
-  public function execute()
-  {
-    switch($this->requestedMethod())
-    {
-      case "current":
-        $sessionId = $_GET["id"];
-        return $this->current($sessionId);
-        
-      case "topic":
-        $sessionId = $_GET["id"];
-        $method = $_SERVER['REQUEST_METHOD'];
-        if ($method == "GET")
-          return $this->topic($sessionId);
 
-        if ($method == "POST")
-        {
-          $data = $this->jsonInput();        
-          $this->startPoll($sessionId, $data["topic"]);
-        }
-        
-        return null;
-        
-      case "vote":
-        $data = $this->jsonInput();
-        $this->placeVote($_GET["id"], $_GET["mid"], $data["vote"]);
-        return null;
-    }
+  // Start a new poll in the session
+  private function startPoll($sessionId, $topic)
+  {
+    $session = $this->getSession($sessionId);
+      
+    // Start new poll
+    $poll = new Poll();
+    $poll->setTopic($topic);
+    $poll->setSession($session);   
+    $poll->setResult(-1);   
+    
+    // Update session
+    $session->setLastAction(new DateTime());
+    $session->setCurrentPoll($poll);
+    
+    // Save changes
+    $this->saveAll([$session, $poll]);
+    
+    return $poll;
   }
 }
 

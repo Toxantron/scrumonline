@@ -1,30 +1,24 @@
 <?php
-class Response
+// Wrapper class for a boolean server response
+class BoolResponse
 {  
   // Indicator if operation was successful
-  public $success;
-  
-  // Result object
-  public $result;
-  
-  // Error message on server side
-  public $error;  
-  
-  // Create response object for successful operation
-  public static function createSuccess($result)
+  public $success; 
+
+  function __construct($value = false)
   {
-    $response = new Response();
-    $response->success = true;
-    $response->result = $result;
-    return $response;
+    $this->success = $value;
   }
-  
-  // Create reponse object for failed operation
-  public static function createFailure($error)
+}
+
+// Wrapper class for a numeric server response
+class NumericResponse
+{
+  // Value of the numeric response
+  public $value;
+
+  function __construct($value = 0)
   {
-    $response = new Response();
-    $response->success = false;
-    $response->error = $error;
-    return $response;
+    $this->value = $value;
   }
 }

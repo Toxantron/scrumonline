@@ -145,11 +145,9 @@ scrum.app.controller('CreateController', function CreateController($http, $locat
       isPrivate: self.isPrivate,
       password: self.password
     }).then(function (response) {
-      if(response.data.success) {
-        // Add this id to keyring and switch view
-        scrum.keyring.push(response.data.result);
-        $location.url('/session/' + response.data.result);
-      }
+      // Add this id to keyring and switch view
+      scrum.keyring.push(response.data.value);
+      $location.url('/session/' + response.data.value);
     });
   };
 });
@@ -180,15 +178,13 @@ scrum.app.controller('JoinController', function JoinController($http, $location,
       return;
     }
     	
-    $http.put('/api/session/member/' + self.id, { name: self.name }).then(function (response) {
-      var data = response.data;
-      if(data.success) {
-        var result = data.result;
-      	$location.url('/member/' + result.sessionId + '/' + result.memberId);
-      } else {
+    $http.put('/api/session/member/' + self.id, { name: self.name })
+      .then(function (response) {
+        var result = response.data;
+        $location.url('/member/' + result.sessionId + '/' + result.memberId);
+      }, function () {
         self.idError = true;
-      }
-    });
+      });
   };
 });
 
@@ -203,7 +199,7 @@ scrum.app.controller('ListController', function($http, $location) {
   var self = this;
   this.update = function() {
     $http.get('/api/session/list').then(function(response) {
-      self.sessions = response.data.result;
+      self.sessions = response.data;
     });
   };
 
@@ -211,7 +207,7 @@ scrum.app.controller('ListController', function($http, $location) {
   function checkPassword(session, url) {
     $http.post('api/session/check/' + session.id, {password: session.password}).then(function (response){
       var data = response.data;
-      if(data.success && data.result === true) {
+      if (data.success === true) {
         // Add to keyring if not set
         if (scrum.keyring.indexOf(session.id) === -1)
           scrum.keyring.push(session.id);
@@ -270,7 +266,7 @@ scrum.app.controller('ListController', function($http, $location) {
 scrum.app.controller('MasterController', function ($http, $routeParams, $location) {
   // Validate keyring
   $http.get("api/session/protected/" + $routeParams.id).then(function (response) {
-    if(response.data.success && response.data.result) {
+    if(response.data.success) {
      var id = parseInt($routeParams.id);
      if(scrum.keyring.indexOf(id) == -1) {
        $location.url("/404.html");
@@ -298,9 +294,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   this.startPoll = function (topic) {
     $http.post('/api/poll/topic/' + self.id, { topic: topic }).then(function(response) {
       var data = response.data;
-      // Exit if call failed
-      if (!data.success) return;
-      
+
       // Reset our GUI
       for(var index=0; index < self.votes.length; index++)
       {
@@ -328,10 +322,9 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   function fetchStatistics() {
     var query = "/api/statistics/calculate/" + self.id    
     $http.get(query).then(function(response){
-      var data = response.data;
-      var result = data.result;
+      var result = response.data;
       
-      if(self.statistics) {
+      if (self.statistics) {
         // Update values
         for (var i=0; i < result.length; i++) {
           var item = result[i];
@@ -357,14 +350,8 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       return;
   	
     $http.get("/api/poll/current/" + self.id + "?last=" + self.timestamp).then(function(response){
-      var data = response.data;
-      var result = data.result;
+      var result = response.data;
 
-      // Call succeeded, but execution failed
-      if (!data.success) {
-        setTimeout(pollVotes, scrum.pollingScale.scale(300));
-        return;
-      }
       // Session was not modified
       if (result.unchanged) {
         setTimeout(pollVotes, scrum.pollingScale.scale(300));
@@ -446,8 +433,6 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
     $http.post('/api/poll/vote/' + this.id + "/" + this.member, {
       vote: card.value
     }).then(function (response) {
-      if(!response.data.success)
-        return;
       card.active = false;
       card.confirmed = true;
     });
@@ -462,9 +447,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
         return;
       }
 
-      if (data.success) {
-        callback(data.result);
-      }
+      callback(data.success);
     });
   }
   
@@ -474,16 +457,9 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   	
     // Update topic
     $http.get("/api/poll/topic/" + self.id + "?last=" + self.timestamp).then(function(response){
-      var data = response.data;
-      if(!data.success)
-      {
-      	self.reset();
-        setTimeout(update, scrum.pollingScale.scale(500));
-      	return;
-      }
-    	
-      var result = data.result;
+      var result = response.data;
 
+      // Keep current state
       if (result.unchanged) {
         setTimeout(update, scrum.pollingScale.scale(500));
         return
@@ -523,7 +499,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   function getCardSet() {
     $http.get("/api/session/cardset/" + self.id).then(function(response){
       var data = response.data;
-      var cards = cardSets[data.result].cards;
+      var cards = cardSets[data.value].cards;
       for(var i=0; i<cards.length; i++) {
         self.cards[i] = { value: cards[i], active: false };
       }

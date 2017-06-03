@@ -38,10 +38,10 @@ scrum.sources.push({
       .then(function (response) {
         var data = response.data;
 
-        if (!data || !data.result || !data.result.issues) {
+        if (!data || !data.issues) {
           self.error = 'Can\'t load Jira issues, check configuration';
         } else {
-          self.issues = response.data.result.issues;
+          self.issues = response.data.issues;
           self.issue = self.issues[0];
           self.loaded = true;
         }

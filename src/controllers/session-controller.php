@@ -2,10 +2,16 @@
 /*
  * Session controller class to handle all session related operations
  */ 
-class SessionController extends ControllerBase implements IController
+class SessionController extends ControllerBase
 {
+  private function createHash($password)
+  {
+    return hash('md5', $password);
+  }
+
   // Get all sessions from db
-  private function getAllSessions()
+  // URL: /api/session/list
+  public function list()
   {
     // Create query finding all active sessions
     $query = $this->entityManager->createQuery('SELECT s.id, s.name, s.isPrivate, count(m.id) memberCount  FROM Session s LEFT JOIN s.members m WHERE s.lastAction > ?1 GROUP BY s.id');
@@ -15,21 +21,41 @@ class SessionController extends ControllerBase implements IController
   }
   
   // Create session with name and private flag
-  private function createSession($name, $cardSet, $private, $password)
+  // URL: /api/session/create
+  public function create()
   {
-    $session = new Session();
-    $session->setName($name);
-    $session->setCardSet($cardSet);
+    $data = $this->jsonInput();        
 
+    $session = new Session();
+    $session->setName($data["name"]);
+    $session->setCardSet($data["cardSet"]);
+
+    $private = $data["isPrivate"];
     $session->setIsPrivate($private);
     if ($private)
-      $session->setPassword($this->createHash($password));
+      $session->setPassword($this->createHash($data["password"]));
       
     $session->setLastAction(new DateTime());
 
     $this->save($session);
     
-    return $session;
+    return new NumericResponse($session->getId());
+  }
+
+  // Add or remove member
+  // URL: /api/session/member/{id}/?{mid}
+  public function member($sessionId, $memberId = 0)
+  {
+    $method = $_SERVER['REQUEST_METHOD'];
+    if ($method == "PUT")
+    { 
+      $data = $this->jsonInput();        
+      return $this->addMember($sessionId, $data["name"]);
+    }
+    if ($method == "DELETE")
+    {
+      $this->removeMember($memberId);
+    }
   }
   
   // Add a member with this name to the session
@@ -94,76 +120,44 @@ class SessionController extends ControllerBase implements IController
     $this->entityManager->flush();
   }
   
-  private function hasPassword($id)
+  // Check if session is protected by password
+  // URL: /api/session/protected/{id}
+  public function protected($id)
   {
     $session = $this->getSession($id);
-    return $session->getIsPrivate();
+    return new BoolResponse($session->getIsPrivate());
   }
 
-  private function memberCheck($sid, $mid)
+  // Check if member is still part of the session
+  // URL: /api/session/membercheck/{id}/{mid}
+  public function membercheck($sid, $mid)
   {
     $session = $this->getSession($sid);
     foreach($session->getMembers() as $member) {
       if($member->getId() == $mid) {
-        return true;
+        return new BoolResponse(true);
       }
     }
-    return false;
+    return new BoolResponse();
   }
   
-  private function checkPassword($id, $password)
+  // Check given password for a session
+  // URL: /api/session/check/{id}
+  public function check($id)
+  {
+    $data = $this->jsonInput();
+    $session = $this->getSession($id);
+    $result = $session->getPassword() === $this->createHash($data["password"]);
+    return new BoolResponse($result);
+  }
+
+  // Get the card set of this session
+  // URL: /api/session/cardset/{id}
+  public function cardset($id)
   {
     $session = $this->getSession($id);
-    return $session->getPassword() === $this->createHash($password);
-  }
-  
-  private function createHash($password)
-  {
-    return hash('md5', $password);
-  }
-  
-  public function execute()
-  {
-    switch($this->requestedMethod())
-    {
-      case "list": 
-        return $this->getAllSessions();
-        
-      case "create":
-        $data = $this->jsonInput();        
-        $session = $this->createSession($data["name"], $data["cardSet"], $data["isPrivate"], $data["password"]);
-        return $session->getId();
-        
-      case "member":
-        $method = $_SERVER['REQUEST_METHOD'];
-        if ($method == "PUT")
-        { 
-          $data = $this->jsonInput();        
-          return $this->addMember($_GET["id"], $data["name"]);
-        }
-        if ($method == "DELETE")
-        {
-          $this->removeMember($_GET["mid"]);
-          return null;
-        }
-
-      case "membercheck":
-        return $this->memberCheck($_GET["id"], $_GET["mid"]);
-
-      case "cardset":
-        $session = $this->getSession($_GET["id"]);
-        return $session->getCardSet();
-        
-      case "protected":
-        $id = $_GET["id"];
-        return $this->hasPassword($id);
-        
-      case "check":
-        $data = $this->jsonInput();
-        return $this->checkPassword($_GET["id"], $data["password"]);
-    }
+    return new NumericResponse($session->getCardSet());
   }
 }
 
 return new SessionController($entityManager, $cardSets);
-?>

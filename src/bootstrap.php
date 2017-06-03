@@ -59,13 +59,6 @@ class ControllerBase
     return $this->cardSets[$session->getCardSet()];
   }
   
-  // Find out witch method was requested
-  protected function requestedMethod()
-  {
-    $method = $_GET['m'];
-    return $method;
-  }
-  
   protected function jsonInput()
   {
     $post = file_get_contents('php://input');
@@ -90,15 +83,4 @@ class ControllerBase
     }
     $this->entityManager->flush();
   }
-}
-
-/*
- * Interface for all controllers
- */
-interface IController
-{
-  /*
-   * Extract request parameters and execute the request
-   */
-  function execute();  
 }

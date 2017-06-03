@@ -3,7 +3,7 @@ require_once __DIR__ . "/statistic.php";
 /*
  * Controller to create session statistics
  */ 
-class StatisticsController extends ControllerBase implements IController
+class StatisticsController extends ControllerBase
 {
     private static function loadPlugins()
     {
@@ -16,24 +16,23 @@ class StatisticsController extends ControllerBase implements IController
       return $plugins;
     }
     
-    public function execute()
+    public function calculate($id)
     {
-        // Id and session entity
-        $id = $_GET["id"];
-        $session = $this->getSession($id);
+      // Id and session entity
+      $session = $this->getSession($id);
+      
+      // Evaluation
+      $statistics = [];
+      foreach ($this->loadPlugins() as $key => $plugin) {
+        $statistic = new Statistic();
+        $statistic->name = $key;
+        $statistic->type = $plugin->getType();
+        $statistic->value = $plugin->evaluate($session);
         
-        // Evaluation
-        $statistics = [];
-        foreach ($this->loadPlugins() as $key => $plugin) {
-          $statistic = new Statistic();
-          $statistic->name = $key;
-          $statistic->type = $plugin->getType();
-          $statistic->value = $plugin->evaluate($session);
-          
-          $statistics[] = $statistic;
-        }
-        
-        return $statistics;
+        $statistics[] = $statistic;
+      }
+      
+      return $statistics;
     }
 }
 

@@ -30,6 +30,10 @@ server {
 
     root /var/www/scrumonline/src;
 
+    rewrite /api\/(\w+)\/(\w+)\/(\d+)\/(\d+) /api.php?c=$1&m=$2&id=$3&mid=$4;
+
+    rewrite /api\/(\w+)\/(\w+)\/(\d+) /api.php?c=$1&m=$2&id=$3;
+
     rewrite /api\/(\w+)\/(\w+) /api.php?c=$1&m=$2;
 
     location / {

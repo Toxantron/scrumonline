@@ -156,7 +156,7 @@ class SessionController extends ControllerBase
   public function cardset($id)
   {
     $session = $this->getSession($id);
-    return new NumericResponse($session->getCardSet());
+    return $this->getCardSet($session);
   }
 }
 

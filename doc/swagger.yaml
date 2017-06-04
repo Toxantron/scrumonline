@@ -1,0 +1,510 @@
+swagger: '2.0'
+info:
+  description: >-
+    API for the scrumpoker online project. This is used by the web application
+    as well as possible mobile appes
+  version: 2.0.0
+  title: Scrumpoker Online
+  contact:
+    email: info@scrumpoker.online
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: www.scrumpoker.online
+basePath: /api
+tags:
+  - name: session
+    description: >-
+      The session management to list or create sessions, add members and much
+      more
+  - name: poll
+    description: 'Create polls, fetch the current topic and place a vote'
+  - name: statistics
+    description: Calculate statistics about the current poll
+  - name: jira
+    description: Load issues from a JIRA server
+schemes:
+  - http
+paths:
+  /session/list:
+    get:
+      tags:
+        - session
+      summary: Retrieve all sessions active within the last hour
+      description: ''
+      operationId: addPet
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Session'
+  /session/create:
+    post:
+      tags:
+        - session
+      summary: Create a new session
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Session object that shall be created
+          required: true
+          schema:
+            $ref: '#/definitions/Session'
+      responses:
+        '200':
+          description: Session creted
+  '/session/member/{id}':
+    put:
+      tags:
+        - session
+      summary: Add member or join as existing meber
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session to add the member to
+        - name: body
+          in: body
+          description: Member object with name of member
+          required: true
+          schema:
+            $ref: '#/definitions/Member'
+      responses:
+        '200':
+          description: Added member to session
+  '/session/member/{id}/{mid}':
+    delete:
+      tags:
+        - session
+      summary: Remove member from session
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session to add the member to
+        - name: mid
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session to add the member to
+        - name: body
+          in: body
+          description: Member object with name of member
+          required: true
+          schema:
+            $ref: '#/definitions/Member'
+      responses:
+        '200':
+          description: Added member to session
+          schema:
+            $ref: '#/definitions/NumericResponse'
+  '/session/protected/{id}':
+    get:
+      tags:
+        - session
+      summary: Check if session is protected by password
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session that is checked for password protection
+      responses:
+        '200':
+          description: Boolean if session has a password
+          schema:
+            $ref: '#/definitions/BoolResponse'
+  '/session/membercheck/{id}/{mid}':
+    get:
+      tags:
+        - session
+      summary: Check if member is still part of the session
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session
+        - name: mid
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the member
+      responses:
+        '200':
+          description: Boolean if member is still part of the session
+          schema:
+            $ref: '#/definitions/BoolResponse'
+  '/session/check/{id}':
+    post:
+      tags:
+        - session
+      summary: Check the password of a session
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session
+        - name: body
+          in: body
+          description: Password to compare to the sessions hash
+          required: true
+          schema:
+            type: object
+            properties:
+              path:
+                type: string
+      responses:
+        '200':
+          description: Boolean if the password was correct
+          schema:
+            $ref: '#/definitions/BoolResponse'
+  '/session/cardset/{id}':
+    get:
+      tags:
+        - session
+      summary: Get the cardset of that session
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session
+      responses:
+        '200':
+          description: Arrays with the face values of each card
+          schema:
+            type: array
+            items:
+              type: string
+  '/poll/vote/{id}/{mid}':
+    post:
+      tags:
+        - poll
+      summary: Create a new session
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session
+        - name: mid
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the member
+        - in: body
+          name: body
+          description: Value of the vote
+          required: true
+          schema:
+            type: object
+            properties:
+              vote:
+                type: string
+      responses:
+        '200':
+          description: Vote was placed
+        '500':
+          description: Failed to place vote
+  '/poll/current/{id}':
+    get:
+      tags:
+        - poll
+      summary: 'Get the current poll, its topic and votes'
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session
+        - name: last
+          in: query
+          required: false
+          type: integer
+          format: int64
+          description: Timestamp of last known modification
+      responses:
+        '200':
+          description: Poll object with votes
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PollResponse'
+  '/poll/topic/{id}':
+    get:
+      tags:
+        - poll
+      summary: Get the topic of the current poll
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session
+        - name: last
+          in: query
+          required: false
+          type: integer
+          format: int64
+          description: Timestamp of last known modification
+      responses:
+        '200':
+          description: Topic object with timestamp and voting indicator
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TopicResponse'
+    post:
+      tags:
+        - poll
+      summary: Set new topic and start poll
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session
+        - in: body
+          name: body
+          description: The topic of the new poll
+          required: true
+          schema:
+            type: object
+            properties:
+              topic:
+                type: string
+      responses:
+        '200':
+          description: Topic was set
+        '500':
+          description: Failed to start poll and set topic
+  '/statistics/calculate/{id}':
+    get:
+      tags:
+        - statistics
+      summary: Calculate statistics for the session after a poll was completed
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session
+      responses:
+        '200':
+          description: Arrays with result of the statistics calculation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Statistic'
+  /jira/getIssues:
+    get:
+      tags:
+        - jira
+      summary: 'Fetch issues of a project from JIRA '
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: base_url
+          in: formData
+          description: URL of the JIRA server
+          required: true
+          type: string
+        - name: username
+          in: formData
+          description: User name for authenication
+          required: true
+          type: string
+        - name: password
+          in: formData
+          description: Password for authenication
+          required: true
+          type: string
+        - name: project
+          in: formData
+          description: The project of the issues
+          required: true
+          type: string
+        - name: jql
+          in: formData
+          description: JIRA query string to filter the issues
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Arrays with result of the statistics calculation
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: integer
+                  format: int64
+definitions:
+  Session:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      isPrivate:
+        type: boolean
+      password:
+        type: string
+      membercount:
+        type: integer
+        format: int32
+  Member:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      name:
+        type: string
+  BoolResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
+  NumericResponse:
+    type: object
+    properties:
+      value:
+        type: integer
+        format: int32
+  Statistic:
+    type: object
+    properties:
+      key:
+        type: string
+        description: Class and file name of the statistic
+      type:
+        type: string
+        enum:
+          - numeric
+          - time
+          - nominal
+      value:
+        type: string
+  PollResponse:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of the sesion
+      timestamp:
+        type: integer
+        description: >-
+          Timestamp of last known modification. Can be used in queries for
+          client-side caching
+      topic:
+        type: string
+        description: Topic or feature name of the current poll
+      flipped:
+        type: boolean
+        description: Indicator if the cards shall be flipped
+      consensus:
+        type: boolean
+        description: Indicator that the team reached a consensus on the estimation
+      votes:
+        type: array
+        items:
+          $ref: '#/definitions/UserVote'
+      unchanged:
+        type: boolean
+        description: Flag that the polls values have not changed since the last call
+  UserVote:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Id of the member who placed the vote
+      name:
+        type: string
+        description: Name of the member who placed the vote
+      placed:
+        type: boolean
+        description: Flag if the member already voted in the current poll
+      value:
+        type: string
+      active:
+        type: boolean
+        description: >-
+          Flag that the vote shall be highlighted because it is either the
+          highest or lowest value
+  TopicResponse:
+    type: object
+    properties:
+      timestamp:
+        type: integer
+        description: >-
+          Timestamp of last known modification. Can be used in queries for
+          client-side caching
+      votable:
+        type: boolean
+        description: Flag if poll is still open for voting
+      unchanged:
+        type: boolean
+        description: Flag that the polls values have not changed since the last call

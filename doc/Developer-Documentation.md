@@ -1,28 +1,5 @@
 # REST API
-Scrumonline offers a JSON REST API for developers of apps or to extend the project. The API is available at /api/**{controller}**/**{method}**?**query** and 
-requires two default query parameters - the controller and the method. So the standard query URL might look like this: _/api/session/list_. All methods return 
-a response object in the following form:
-````js
-{
-  success: bool,
-  result: object,
-  error: string
-}
-````
-
-| **Controller** | **Method** | **Query** | **Description** |
-|----------------|------------|--------------|-----------------|
-| session | list | - | List of currently running sessions |
-| session | create | | Create session with `{"name": "Foo", "isPrivate":true, "password":"Test"}` |
-| session | join | - | Join a session with `{"id":1337, "name":"Thomas"}` |
-| session | remove | - | Remove a member from a session with `{"memberId":42}` |
-| session | protected | id=1337 | Check if a session is protected by password |
-| session | check | - | Check of a sessions password is defined by `{"id":1337, "password":"Test"}` |
-| poll | current | id=1337 | All votes and result of a sessions current poll |
-| poll | start | - | Start a new poll in a session with `{"sessionId":1337, "topic":"Foo"}` |
-| poll | place | - | Place a vote in a poll as a member `{"sessionId":1337, "memberId":42, "vote":3}` |
-| poll | topic | sid=1337 | Current topic of a session |
-| statistics | calcuate | id=1337&filter=PollCount\|AverageAttempts | Calculate statistics of the session. The filters are optional. |
+Scrumonline offers a JSON REST API for developers of apps or to extend the project. The API is specified in [swagger.yaml](swagger.yaml) using the OpenAPI format. You can generate source code from it or simply upload the file to [the online editor](http://editor.swagger.io/) to generate the full documentation.
 
 # Ticketing plugin
 On the client side the app can be extended with plugins for ticketing systems. A ticketing plugin consists of two components:

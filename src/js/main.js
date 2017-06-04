@@ -498,8 +498,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   // Get card set of our session
   function getCardSet() {
     $http.get("/api/session/cardset/" + self.id).then(function(response){
-      var data = response.data;
-      var cards = cardSets[data.value].cards;
+      var cards = response.data;
       for(var i=0; i<cards.length; i++) {
         self.cards[i] = { value: cards[i], active: false };
       }

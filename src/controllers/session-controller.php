@@ -158,6 +158,13 @@ class SessionController extends ControllerBase
     $session = $this->getSession($id);
     return $this->getCardSet($session);
   }
+
+  // Get the card set of this session
+  // URL: /api/session/cardsets
+  public function cardsets()
+  {
+    return $this->cardSets;
+  }
 }
 
 return new SessionController($entityManager, $cardSets);

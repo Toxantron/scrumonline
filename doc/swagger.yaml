@@ -191,6 +191,22 @@ paths:
           description: Boolean if the password was correct
           schema:
             $ref: '#/definitions/BoolResponse'
+  /session/cardsets:
+    get:
+      tags:
+        - session
+      summary: Get all configured cardsets
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Arrays with the face values of each card
+          schema:
+            type: array
+            items:
+              type: array
+              items:
+                type: string
   '/session/cardset/{id}':
     get:
       tags:

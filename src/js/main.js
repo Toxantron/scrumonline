@@ -44,8 +44,14 @@ var scrum = {
           current += 0.2
       },
       // Scale interval using the current scaling value
-      scale: function(interval) {
-        return interval * current;
+      scale: function(interval, callback) {
+        interval *= current;
+
+        // Quadruple polling interval while tab is out of focus
+        if (!document.hasFocus()) 
+          interval *= 4;
+
+        setTimeout(callback, interval);
       }
     };
   })()
@@ -348,13 +354,20 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   function pollVotes() {
     if (scrum.current !== self)
       return;
+
+    // If document is hidden keep timer running but do
+    // not query server
+    if (document.hidden) {
+      setTimeout(pollVotes, 250); 
+      return;
+    }       
   	
     $http.get("/api/poll/current/" + self.id + "?last=" + self.timestamp).then(function(response){
       var result = response.data;
 
       // Session was not modified
       if (result.unchanged) {
-        setTimeout(pollVotes, scrum.pollingScale.scale(300));
+        scrum.pollingScale.scale(300, pollVotes);
         return;
       }
       
@@ -376,10 +389,10 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       }
       
       scrum.pollingScale.success();
-      setTimeout(pollVotes, scrum.pollingScale.scale(400));
+      scrum.pollingScale.scale(400, pollVotes);
     }, function(){
       scrum.pollingScale.failed();
-      setTimeout(pollVotes, scrum.pollingScale.scale(400)); 
+      scrum.pollingScale.scale(400, pollVotes);
     });
   }
   
@@ -453,7 +466,15 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   
   // Update current topic from server to activate voting
   function update() {
-    if (scrum.current !== self) return; 
+    if (scrum.current !== self) 
+      return;
+
+    // If document is hidden keep timer running but do
+    // not query server
+    if (document.hidden) {
+      setTimeout(pollVotes, 250); 
+      return;
+    }  
   	
     // Update topic
     $http.get("/api/poll/topic/" + self.id + "?last=" + self.timestamp).then(function(response){
@@ -461,7 +482,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
 
       // Keep current state
       if (result.unchanged) {
-        setTimeout(update, scrum.pollingScale.scale(500));
+        scrum.pollingScale.scale(500, update);
         return
       }
 
@@ -481,10 +502,10 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
       self.votable = result.votable;
       
       scrum.pollingScale.success();
-      setTimeout(update, scrum.pollingScale.scale(500));
+      scrum.pollingScale.scale(500, update);
     }, function() {
       scrum.pollingScale.failed();
-      setTimeout(update, scrum.pollingScale.scale(500));	
+      scrum.pollingScale.scale(500, update);	
     });
 
     // Check if we are still here

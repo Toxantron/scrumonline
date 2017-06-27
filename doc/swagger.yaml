@@ -31,8 +31,6 @@ paths:
       tags:
         - session
       summary: Retrieve all sessions active within the last hour
-      description: ''
-      operationId: addPet
       produces:
         - application/json
       responses:
@@ -60,15 +58,15 @@ paths:
             $ref: '#/definitions/Session'
       responses:
         '200':
-          description: Session creted
+          description: Session created
+          schema:
+            $ref: '#/definitions/Session'
   '/session/member/{id}':
     put:
       tags:
         - session
       summary: Add member or join as existing meber
       consumes:
-        - application/json
-      produces:
         - application/json
       parameters:
         - name: id
@@ -91,34 +89,22 @@ paths:
       tags:
         - session
       summary: Remove member from session
-      consumes:
-        - application/json
-      produces:
-        - application/json
       parameters:
         - name: id
           in: path
           required: true
           type: integer
           format: int64
-          description: Id of the session to add the member to
+          description: Id of the session to remove the member from
         - name: mid
           in: path
           required: true
           type: integer
           format: int64
-          description: Id of the session to add the member to
-        - name: body
-          in: body
-          description: Member object with name of member
-          required: true
-          schema:
-            $ref: '#/definitions/Member'
+          description: Id of the member that shall be removed
       responses:
         '200':
-          description: Added member to session
-          schema:
-            $ref: '#/definitions/NumericResponse'
+          description: Member removed
   '/session/protected/{id}':
     get:
       tags:
@@ -235,8 +221,6 @@ paths:
       summary: Create a new session
       consumes:
         - application/json
-      produces:
-        - application/json
       parameters:
         - name: id
           in: path
@@ -269,6 +253,7 @@ paths:
       tags:
         - poll
       summary: 'Get the current poll, its topic and votes'
+      description: This endpoint is used by the Masterview to frequently update the UI
       produces:
         - application/json
       parameters:
@@ -323,8 +308,6 @@ paths:
         - poll
       summary: Set new topic and start poll
       consumes:
-        - application/json
-      produces:
         - application/json
       parameters:
         - name: id

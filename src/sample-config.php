@@ -24,7 +24,7 @@ $cardSets = [
     // Card set used to estimate hours as different fractions and multiples of a working day
     ['1', '2', '4', '8', '12', '16', '24', '32', '40'],
     // Demonstration of the coffee cup card
-    ['cup', '1', '2', '3', '5', '8', '13', '20', '?'],
+    ['&#9749;', '1', '2', '3', '5', '8', '13', '20', '?'],
     //Tshirt Size
     ['XS', 'S', 'M', 'L', 'XL', 'XXL', '?'],
 ];

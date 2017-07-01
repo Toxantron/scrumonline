@@ -52,7 +52,7 @@ include __DIR__ . "/../config.php";
     <h2>Invite members</h1>
     <p>Invite members to join your session. Session id: <strong ng-bind="master.id"></strong></p>
 <?php
-$joinUrl = "http://". $host . "/#/join/";
+$joinUrl = "https://". $host . "/join/";
 ?>
     <img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=<?= urlencode($joinUrl) . "{{ master.id }}" ?>&choe=UTF-8" title="Join {{ master.id }}" />
 <?php

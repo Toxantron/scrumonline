@@ -47,6 +47,16 @@ Without _.htaccess_:
         # Standard rule for controller and method - applies to most queries
         RewriteRule ^/api/(\w+)/(\w+) /api.php?c=$1&m=$2 [QSA]
 
+        # The angular HTML mode rewrite needs to be in the directory tag because of reasons...
+        # http://tltech.com/info/rewriterule-in-htaccess-vs-httpd-conf/
+        <Directory /var/www/scrumonline/src>
+          # Rewrite all other calls to index.php
+          RewriteCond %{REQUEST_FILENAME} !-f 
+          RewriteCond %{REQUEST_FILENAME} !-d 
+          RewriteCond %{REQUEST_FILENAME} !-l
+          RewriteRule . index.php [L]
+        </Directory>
+
         ErrorLog ${APACHE_LOG_DIR}/error.log
         CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>

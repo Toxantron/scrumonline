@@ -64,7 +64,10 @@ scrum.app = angular.module('scrum-online', ['ngRoute', 'angular-google-analytics
 // Configure routing
 // -----------------------------
 scrum.app.config(
-  function($routeProvider, AnalyticsProvider) {
+  function($locationProvider, $routeProvider, AnalyticsProvider) {
+    // Use HTML5 mode for prettier routes
+    $locationProvider.html5Mode(true);
+
     // Configure routing
     $routeProvider
       .when('/', {

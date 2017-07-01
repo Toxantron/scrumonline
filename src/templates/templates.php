@@ -25,7 +25,7 @@ class Template
     {
       $this->isNavigation = true;
       $this->navigationTag = $navigationTag;
-      $this->link = "#/" . lcfirst($navigationTag);
+      $this->link = "/" . lcfirst($navigationTag);
     }  
   }
   

@@ -33,7 +33,7 @@ include __DIR__ . "/../config.php";
               <div ng-if="vote.placed" class="inner"><span class="card-label">?</span></div>
             </div>
             <div class="card back" ng-class="{active: vote.active, confirmed: master.consensus}">
-              <div class="inner"><span class="card-label" ng-bind="vote.value"></span></div>
+              <div class="inner"><span class="card-label" ng-bind-html="vote.value"></span></div>
             </div>
           </div>
           <div class="delete-member remove selectable" ng-click="master.remove(vote.id)">

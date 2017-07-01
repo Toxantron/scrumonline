@@ -58,7 +58,7 @@ var scrum = {
 };
 
 // Define angular app
-scrum.app = angular.module('scrum-online', ['ngRoute', 'angular-google-analytics']);
+scrum.app = angular.module('scrum-online', ['ngRoute', 'ngSanitize', 'angular-google-analytics']);
 
 //------------------------------
 // Configure routing

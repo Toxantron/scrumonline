@@ -16,7 +16,7 @@ include __DIR__ . "/../config.php";
     <div class="card-container">
       <div class="card selectable" ng-class="{active: card.active, confirmed: card.confirmed}" ng-click="member.selectCard(card)">
         <div class="inner">
-          <span class="card-label" ng-bind="card.value"></span>
+          <span class="card-label" ng-bind-html="card.value"></span>
 	      </div>
       </div>
     </div>

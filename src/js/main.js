@@ -356,14 +356,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   // Poll all votes from the server 
   function pollVotes() {
     if (scrum.current !== self)
-      return;
-
-    // If document is hidden keep timer running but do
-    // not query server
-    if (document.hidden) {
-      setTimeout(pollVotes, 250); 
-      return;
-    }       
+      return;  
   	
     $http.get("/api/poll/current/" + self.id + "?last=" + self.timestamp).then(function(response){
       var result = response.data;
@@ -471,13 +464,6 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   function update() {
     if (scrum.current !== self) 
       return;
-
-    // If document is hidden keep timer running but do
-    // not query server
-    if (document.hidden) {
-      setTimeout(pollVotes, 250); 
-      return;
-    }  
   	
     // Update topic
     $http.get("/api/poll/topic/" + self.id + "?last=" + self.timestamp).then(function(response){

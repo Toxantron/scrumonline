@@ -10,8 +10,8 @@ class SessionController extends ControllerBase
   }
 
   // Get all sessions from db
-  // URL: /api/session/list
-  public function list()
+  // URL: /api/session/active
+  public function active()
   {
     // Create query finding all active sessions
     $query = $this->entityManager->createQuery('SELECT s.id, s.name, s.isPrivate, count(m.id) memberCount  FROM Session s LEFT JOIN s.members m WHERE s.lastAction > ?1 GROUP BY s.id');
@@ -121,8 +121,8 @@ class SessionController extends ControllerBase
   }
   
   // Check if session is protected by password
-  // URL: /api/session/protected/{id}
-  public function protected($id)
+  // URL: /api/session/haspassword/{id}
+  public function haspassword($id)
   {
     $session = $this->getSession($id);
     return new BoolResponse($session->getIsPrivate());

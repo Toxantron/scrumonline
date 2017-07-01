@@ -207,7 +207,7 @@ scrum.app.controller('ListController', function($http, $location) {
   // Update the list
   var self = this;
   this.update = function() {
-    $http.get('/api/session/list').then(function(response) {
+    $http.get('/api/session/active').then(function(response) {
       self.sessions = response.data;
     });
   };
@@ -274,7 +274,7 @@ scrum.app.controller('ListController', function($http, $location) {
 //------------------------------
 scrum.app.controller('MasterController', function ($http, $routeParams, $location) {
   // Validate keyring
-  $http.get("api/session/protected/" + $routeParams.id).then(function (response) {
+  $http.get("api/session/haspassword/" + $routeParams.id).then(function (response) {
     if(response.data.success) {
      var id = parseInt($routeParams.id);
      if(scrum.keyring.indexOf(id) == -1) {

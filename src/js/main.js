@@ -416,11 +416,10 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   
   // Reset the member UI
   this.reset = function () {
-    var card = this.currentCard;
-    if(!card) return;
-  	  
-    card.active = false;
-    card.confirmed = false;
+    for (var i=0; i < this.cards.length; i++) {
+      this.cards[i].active = false;
+      this.cards[i].confirmed = false;
+    }
   };  
   
   // Leave the session
@@ -444,14 +443,14 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
       return;
     }
 
-    this.reset();
+    // Otherwise figure out what to do
     this.currentCard = card;
     card.active = true;
     
     $http.post('/api/poll/vote/' + this.id + "/" + this.member, {
       vote: card.value
     }).then(function (response) {
-      card.active = false;
+      self.reset();
       card.confirmed = true;
     });
   }; 

@@ -435,6 +435,15 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   
   // Select a card and try to place a vote
   this.selectCard = function (card) {
+    // If the user tapped the confirmed card again, remove the vote
+    if (this.currentCard == card && this.currentCard.confirmed) {
+      $http.delete('/api/poll/vote/' + this.id + '/' + this.member).then(function() {
+        self.currentCard.confirmed = false;
+        self.currentCard = null;
+      });
+      return;
+    }
+
     this.reset();
     this.currentCard = card;
     card.active = true;
@@ -479,7 +488,6 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
 
       // Voting was closed, get our peers votes
       if(self.votable && !result.votable) {
-
       }
 
       // Topic changed or poll was opened for voting again

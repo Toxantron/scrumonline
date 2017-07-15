@@ -218,7 +218,7 @@ paths:
     post:
       tags:
         - poll
-      summary: Create a new session
+      summary: Place a vote in the current poll
       consumes:
         - application/json
       parameters:
@@ -248,6 +248,30 @@ paths:
           description: Vote was placed
         '500':
           description: Failed to place vote
+    delete:
+      tags:
+        - poll
+      summary: Take back a vote as long as the poll was not closed
+      consumes:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session
+        - name: mid
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the member
+      responses:
+        '200':
+          description: Vote was removed
+        '500':
+          description: Could not take back the vote anymore
   '/poll/current/{id}':
     get:
       tags:

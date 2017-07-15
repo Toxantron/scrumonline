@@ -26,24 +26,35 @@ class PollController extends ControllerBase
     return isset($_GET['last']) && $_GET['last'] >= $session->getLastAction()->getTimestamp();
   }
   
-  // Place a vote for the current poll
+  // Place or delete a vote for the current poll
   // URL: /api/poll/vote/{id}/{mid}
   public function vote($sessionId, $memberId)
+  {
+    // Fetch entities
+    $session = $this->getSession($sessionId);
+    $currentPoll = $session->getCurrentPoll();
+
+    // Reject votes if poll is completed
+    if($currentPoll == null || $currentPoll->getResult() > 0)
+      throw new Exception("Can not modify non-existing or completed poll!");
+
+    $method = $_SERVER['REQUEST_METHOD'];
+    if ($method == "POST")
+      $this->placeVote($session, $currentPoll, $memberId);
+    else if ($method == "DELETE")
+      $this->deleteVote($session, $currentPoll, $memberId);
+  }
+
+  // Place a new vote
+  private function placeVote($session, $currentPoll, $memberId)
   {
     $voteValue = $data = $this->jsonInput()["vote"];
 
     include __DIR__ .  "/session-evaluation.php";
 
-    // Fetch entities
-    $session = $this->getSession($sessionId);
-    $session->setLastAction(new DateTime());
-    $currentPoll = $session->getCurrentPoll();
+    // Fetch member
     $member = $this->getMember($memberId);
-    
-    // Reject votes if poll is completed
-    if($currentPoll == null || $currentPoll->getResult() > 0)
-      throw new Exception("Can not vote without poll or on completed polls!");
-    
+
     // Find or create vote
     foreach($currentPoll->getVotes() as $vote)
     {
@@ -74,8 +85,32 @@ class PollController extends ControllerBase
     }
         
     // Save all to db
+    $session->setLastAction(new DateTime());
     $this->saveAll([$session, $match, $currentPoll]);
     $this->saveAll($currentPoll->getVotes()->toArray());
+  }
+
+  // Delete an already placed vote
+  private function deleteVote($session, $currentPoll, $memberId)
+  {
+    // Find the vote of this member
+    foreach($currentPoll->getVotes() as $vote)
+    {
+      if ($vote->getMember()->getId() !== $memberId)
+      {
+        $match = $vote;
+        break;
+      }
+    }
+
+    if (!isset($match))
+      return;
+
+    // Remove vote and update timestamp
+    $this->entityManager->remove($match);
+    $session->setLastAction(new DateTime());
+    $this->save($session);
+    $this->entityManager->flush();
   }
   
   // Wrap up current poll in reponse object

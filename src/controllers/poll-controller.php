@@ -96,7 +96,7 @@ class PollController extends ControllerBase
     // Find the vote of this member
     foreach($currentPoll->getVotes() as $vote)
     {
-      if ($vote->getMember()->getId() !== $memberId)
+      if ($vote->getMember()->getId() == $memberId)
       {
         $match = $vote;
         break;

@@ -23,7 +23,7 @@ include __DIR__ . "/../config.php";
 </div>
   
 <!-- Live poll view and statistics -->
-<div class="row">
+<div class="row" ng-if="master.teamComplete">
   <div class="card-overview">
     <div ng-repeat="vote in master.votes track by vote.id" class="col-lg-2 col-sm-3 col-xs-4">        
       <div class="card-container">
@@ -49,7 +49,7 @@ include __DIR__ . "/../config.php";
 <!-- Invite and statistics -->            
 <div class="row">
   <div class="col-xs-12 col-md-5">
-    <h2>Invite members</h1>
+    <h2>Invite members</h2>
     <p>Invite members to join your session. Session id: <strong ng-bind="master.id"></strong></p>
 <?php
 $joinUrl = "https://". $host . "/join/";
@@ -59,10 +59,20 @@ $joinUrl = "https://". $host . "/join/";
 $joinUrl = $joinUrl . "{{ master.id }}";
 ?>
     <p>Or send them this link: <a href="<?= $joinUrl ?>"><?= $joinUrl ?></a>
-  </div>  
+  </div>
+
+  <!-- Team list and complete button -->
+  <div class="col-xs-12 col-md-5" ng-if="!master.teamComplete">
+    <h2>Team</h2>
+    <ul class="list-group">
+      <!-- Iterate over votes as they represent members as well -->
+      <li class="list-group-item" ng-repeat="member in master.votes track by member.id" ng-bind="member.name"></li>
+    </ul>
+    <button class="btn btn-default" ng-click="master.teamComplete = true">Team complete</button>
+  </div>   
     
   <!-- Statistics column -->
-  <div class="col-xs-12 col-md-7">
+  <div class="col-xs-12 col-md-7" ng-if="master.teamComplete">
     <div class="panel panel-default">
       <div class="panel-heading">Statistics</div>
       <div class="panel-body">

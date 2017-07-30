@@ -288,6 +288,9 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   
   // Save reference to $http for plugins
   this.$http = $http;
+
+  // Flag for initialization
+  this.teamComplete = false;
   
   // Init the properties
   this.id = $routeParams.id;

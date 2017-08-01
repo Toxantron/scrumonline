@@ -68,7 +68,7 @@ $joinUrl = $joinUrl . "{{ master.id }}";
       <!-- Iterate over votes as they represent members as well -->
       <li class="list-group-item" ng-repeat="member in master.votes track by member.id" ng-bind="member.name"></li>
     </ul>
-    <button class="btn btn-default" ng-click="master.teamComplete = true">Team complete</button>
+    <button class="btn btn-success" ng-click="master.teamComplete = true">Team complete</button>
   </div>   
     
   <!-- Statistics column -->

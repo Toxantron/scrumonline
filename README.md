@@ -1,6 +1,6 @@
 # ScrumOnline
 
-**WARNING: Because of a conflict in the Google assertion of duplicate content the [original page](https://www.scrumpoker.online) was replaced by a non-functional version [5k.lt](http://5k.lt). I already contacted Google trying to resolve the issue.**
+**WARNING: Because of a conflict in the Google assertion of duplicate content the [original page](https://www.scrumpoker.online) was replaced by a non-functional version [5k.lt](http://5k.lt). I already contacted Google trying to resolve the issue. Feel free to report it was "WebSpam" as well to remove it from the index again!**
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/scrumonline/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 

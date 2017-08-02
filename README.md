@@ -1,5 +1,7 @@
 # ScrumOnline
 
+**WARNING: Because of a conflict in the Google assertion of duplicate content the [original page](www.scrumpoker.online) was replaced by a non-functional version [5k.lt](www.5k.lt). I already contacted Google trying to resolve the issue.**
+
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/scrumonline/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 PHP web app for planning poker. It includes a master view for the ScrumMaster and a simple responsive card view for the team. A deployed demo is available at http://www.scrumpoker.online

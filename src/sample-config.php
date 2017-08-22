@@ -26,7 +26,7 @@ $cardSets = [
     // Demonstration of the coffee cup card
     ['&#9749;', '1', '2', '3', '5', '8', '13', '20', '?'],
     //Tshirt Size
-    ['XS', 'S', 'M', 'L', 'XL', 'XXL', '?'],
+    ['XXS','XS', 'S', 'M', 'L', 'XL', 'XXL', '?'],
 ];
 
 // Src tree for documentation linking from page

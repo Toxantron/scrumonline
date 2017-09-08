@@ -64,9 +64,9 @@ $joinUrl = $joinUrl . "{{ master.id }}";
   <!-- Team list and complete button -->
   <div class="col-xs-12 col-md-5" ng-if="!master.teamComplete">
     <h2>Team</h2>
-    <ul class="list-group">
+    <il class="list-group">
       <!-- Iterate over votes as they represent members as well -->
-      <li class="list-group-item" ng-repeat="member in master.votes track by member.id" ng-bind="member.name"></li>
+      <li class="list-group-item" ng-repeat="member in master.votes track by member.id">{{$index + 1}}. {{member.name}}</li>
     </ul>
     <button class="btn btn-success" ng-click="master.teamComplete = true">Team complete</button>
   </div>   

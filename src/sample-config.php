@@ -27,6 +27,8 @@ $cardSets = [
     ['&#9749;', '1', '2', '3', '5', '8', '13', '20', '?'],
     //Tshirt Size
     ['XS', 'S', 'M', 'L', 'XL', 'XXL', '?'],
+    //Fibonacci number
+    ['1', '2', '3', '5', '8', '13', '21', '34', '55', '89', '144', '&#9749;', '?'],
 ];
 
 // Src tree for documentation linking from page

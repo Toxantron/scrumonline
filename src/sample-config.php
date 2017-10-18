@@ -15,7 +15,7 @@ $host = "scrumonline.local";
 $ga = 'GOOGLE-ANALYTICS';
   
 $cardSets = [
-    // Standard fibonaci like series of values 
+    // Standard fibonaci like series of values
     ['1', '2', '3', '5', '8', '13', '20', '40', '100'],
     // Special card set with '?' for unclear stories
     ['1', '2', '3', '5', '8', '13', '20', '40', '?'],
@@ -26,9 +26,9 @@ $cardSets = [
     // Demonstration of the coffee cup card
     ['&#9749;', '1', '2', '3', '5', '8', '13', '20', '?'],
     //Tshirt Size
-    ['XS', 'S', 'M', 'L', 'XL', 'XXL', '?'],
+    ['XXS','XS', 'S', 'M', 'L', 'XL', 'XXL', '?'],
     //Fibonacci number
-    ['1', '2', '3', '5', '8', '13', '21', '34', '55', '89', '144', '&#9749;', '?'],
+    ['1', '2', '3', '5', '8', '13', '21', '34', '55', '89', '144', '&#9749;', '?']
 ];
 
 // Src tree for documentation linking from page

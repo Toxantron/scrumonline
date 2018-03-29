@@ -31,7 +31,7 @@ include "config.php";
             </div>
           </div>
           <div class="form-group">
-            <label>Cards: <a target="_blank" href="<?= $src ?>src/sample-config.php#L17">?</a></label>
+            <label>Cards: <a target="_blank" href="<?= $src ?>/src/sample-config.php#L17">?</a></label>
             <div class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                 <span ng-bind-html="create.selectedSet.value"></span>

@@ -14,7 +14,9 @@ class JiraController extends ControllerBase
             $jiraUrl .= ' and ' . $parameters['jql'];
         }
 
-        $jiraUrl .= ' order by priority';
+        if (substr_count(strtolower($parameters['jql']), "order by") == 0 && substr_count(strtolower($parameters['jql']), "order%20by") == 0) {
+            $jiraUrl .= ' order by priority';
+        }
 
         $client = new GuzzleHttp\Client();
         $res = $client->request('GET', $jiraUrl, [

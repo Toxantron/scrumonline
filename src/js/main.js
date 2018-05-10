@@ -381,6 +381,10 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       self.votes = result.votes;
       self.flipped = result.flipped;
       self.consensus = result.consensus;
+
+      // If the result has a topic, the team has started estimating
+      if(result.topic !== '')
+        self.teamComplete = true;
       
       // Forward result to ticketing system
       if (self.current.feedback && self.flipped && self.consensus) {

@@ -34,10 +34,17 @@ class SessionController extends ControllerBase
     $session->setIsPrivate($private);
     if ($private)
       $session->setPassword($this->createHash($data["password"]));
+
+    // Generate the access token and assign it to the session
+    $token = bin2hex(random_bytes(16));
+    $session->setToken($token);
       
     $session->setLastAction(new DateTime());
 
     $this->save($session);
+    
+    $tokenKey = $this->tokenKey($session->getId());
+    setcookie($tokenKey, $token, time()+60*60*24*30);
     
     return new NumericResponse($session->getId());
   }

@@ -58,7 +58,7 @@ var scrum = {
 };
 
 // Define angular app
-scrum.app = angular.module('scrum-online', ['ngRoute', 'ngSanitize', 'angular-google-analytics']);
+scrum.app = angular.module('scrum-online', ['ngRoute', 'ngSanitize', 'ngCookies', 'angular-google-analytics']);
 
 //------------------------------
 // Configure routing
@@ -164,7 +164,7 @@ scrum.app.controller('CreateController', function CreateController($http, $locat
 //------------------------------
 // Join controller
 //------------------------------
-scrum.app.controller('JoinController', function JoinController($http, $location, $routeParams) {
+scrum.app.controller('JoinController', function JoinController($http, $location, $routeParams, $cookies) {
   // Save reference to current
   scrum.current = this;
   
@@ -173,6 +173,12 @@ scrum.app.controller('JoinController', function JoinController($http, $location,
   this.idError = false;
   this.name = '';
   this.nameError = false;
+
+  // If the route contains the token, append it to the API call
+  var cookieQuery = '';
+  var cookieValue = $location.search().token;
+  if(cookieValue)
+    cookieQuery = '?token=' + cookieValue;
   
   // Join function
   var self = this;
@@ -187,7 +193,7 @@ scrum.app.controller('JoinController', function JoinController($http, $location,
       return;
     }
     	
-    $http.put('/api/session/member/' + self.id, { name: self.name })
+    $http.put('/api/session/member/' + self.id + cookieQuery, { name: self.name })
       .then(function (response) {
         var result = response.data;
         $location.url('/member/' + result.sessionId + '/' + result.memberId);
@@ -272,7 +278,7 @@ scrum.app.controller('ListController', function($http, $location) {
 //------------------------------
 // Master controller
 //------------------------------
-scrum.app.controller('MasterController', function ($http, $routeParams, $location) {
+scrum.app.controller('MasterController', function ($http, $routeParams, $location, $cookies) {
   // Validate keyring
   $http.get("api/session/haspassword/" + $routeParams.id).then(function (response) {
     if(response.data.success) {
@@ -300,6 +306,10 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   this.consensus = false;
   this.sources = scrum.sources;
   this.current = this.sources[0];
+
+  // Fragment for the join url
+  var token = $cookies.get('session-token-' + this.id);
+  this.joinFragment = this.id + '?token=' + token;
   
   // Starting a new poll
   var self = this;

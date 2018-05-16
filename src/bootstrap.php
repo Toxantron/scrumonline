@@ -84,12 +84,18 @@ class ControllerBase
     $this->entityManager->flush();
   }
 
+  // Create a crypto hash for a secret using the name as salt
+  protected function createHash($name, $password)
+  {
+    return crypt($password, $name);
+  }
+
   // The cookie name of the token for a given session
   protected function tokenKey($id)
   {
     return 'session-token-' . $id;
   }
-  
+
   // Make sure the caller has the necesarry token for the operation
   // $memberName indicates that a member token is sufficient for the operation
   // $privateOnly indicates that the token is only required for private sessions
@@ -106,7 +112,7 @@ class ControllerBase
   // Return true if it was and otherwise false
   protected function tokenProvided($session, $memberName = null, $privateOnly = false)
   {
-      // Token only required for private sessions and this is a public one
+    // Token only required for private sessions and this is a public one
     if ($privateOnly && $session->getIsPrivate() == false)
       return true;
 

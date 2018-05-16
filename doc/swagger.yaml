@@ -105,11 +105,11 @@ paths:
       responses:
         '200':
           description: Member removed
-  '/session/haspassword/{id}':
+  '/session/requiresPassword/{id}':
     get:
       tags:
         - session
-      summary: Check if session is protected by password
+      summary: Check if session is protected by password and if it is necessary
       produces:
         - application/json
       parameters:
@@ -121,7 +121,7 @@ paths:
           description: Id of the session that is checked for password protection
       responses:
         '200':
-          description: Boolean if session has a password
+          description: Boolean if session has a password and user does not have a sufficient token
           schema:
             $ref: '#/definitions/BoolResponse'
   '/session/membercheck/{id}/{mid}':

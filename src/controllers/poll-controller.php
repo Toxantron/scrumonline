@@ -145,12 +145,16 @@ class PollController extends ControllerBase
     if ($currentPoll == null)
     {
       $response->topic = "";
+      $response->description = "";
+      $response->url = "";
       $response->flipped = false;
       $response->consensus = false;
     }
     else
     {
       $response->topic = $currentPoll->getTopic();
+      $response->description = $currentPoll->getDescription();
+      $response->url = $currentPoll->getUrl();
       $response->flipped = $currentPoll->getResult() >= 0;
       $response->consensus = $currentPoll->getConsensus();
 
@@ -183,8 +187,8 @@ class PollController extends ControllerBase
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == "POST")
     {
-      $data = $this->jsonInput();        
-      $this->startPoll($session, $data["topic"]);
+      $data = $this->jsonInput();
+      $this->startPoll($session, $data["topic"], $data["description"], $data["url"]);
       return null;
     }
 
@@ -207,11 +211,15 @@ class PollController extends ControllerBase
     if ($currentPoll == null)
     {
         $result->topic = "No topic";
+        $result->description = "";
+        $result->url = "";
         $result->votable = false;
     }
     else
     {
         $result->topic = $currentPoll->getTopic();
+        $result->description = $currentPoll->getDescription();
+        $result->url = $currentPoll->getUrl();
         $result->votable = $currentPoll->getResult() < 0;
     }
 
@@ -219,7 +227,7 @@ class PollController extends ControllerBase
   }
 
   // Start a new poll in the session
-  private function startPoll($session, $topic)
+  private function startPoll($session, $topic, $description, $url)
   {
     // Only the sessions main token holder can start a poll
     if (!$this->verifyToken($session))
@@ -228,6 +236,8 @@ class PollController extends ControllerBase
     // Start new poll
     $poll = new Poll();
     $poll->setTopic($topic);
+    $poll->setDescription($description);
+    $poll->setUrl($url);
     $poll->setSession($session);   
     $poll->setResult(-1);   
     

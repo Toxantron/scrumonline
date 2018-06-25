@@ -16,6 +16,12 @@ class Poll
   
     /** @Column(type="string") **/
     protected $topic;
+
+    /** @Column(type="text") **/
+    protected $description;
+
+    /** @Column(type="string") **/
+    protected $url;
   
     /** @Column(type="datetime") **/
     protected $startTime;
@@ -48,6 +54,26 @@ class Poll
     public function setTopic($topic)
     {
         $this->topic = $topic;
+    }
+
+    // Getter and setter for url field
+    public function getUrl()
+    {
+        return $this->url;
+    }
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    // Getter and setter for description field
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
     // Getter and setter for start time

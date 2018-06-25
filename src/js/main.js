@@ -9,9 +9,10 @@ var scrum = {
       position: 1, 
       feedback: false,
       topic: '',
+      description: '',
       event: ['poll', 'start', 'Default'],
-      view: 'default_source.html'  
-    }, 
+      view: 'default_source.html'
+    },
     { 
       name: '+', 
       position: 99, 
@@ -315,8 +316,8 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   
   // Starting a new poll
   var self = this;
-  this.startPoll = function (topic) {
-    $http.post('/api/poll/topic/' + self.id, { topic: topic }).then(function(response) {
+  this.startPoll = function (topic, description, url) {
+    $http.post('/api/poll/topic/' + self.id, { topic: topic, description:description || '', url:url || '' }).then(function(response) {
       // Reset our GUI
       for(var index=0; index < self.votes.length; index++)
       {
@@ -426,6 +427,8 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   this.votable = false;
   this.leaving = false;
   this.topic = '';
+  this.description = '';
+  this.topicUrl = '';
   this.cards = [];
 
   // Self reference for callbacks
@@ -510,6 +513,8 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
       if(self.topic !== result.topic || (!self.votable && result.votable)) {
         self.reset();
         self.topic = result.topic;
+        self.description = result.description || '';
+        self.topicUrl = result.url || '#';
       }
       
       self.votable = result.votable;

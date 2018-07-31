@@ -20,6 +20,10 @@ class StatisticsController extends ControllerBase
     {
       // Id and session entity
       $session = $this->getSession($id);
+
+      // Reading a private sessions statistic requires the token
+      if (!$this->verifyToken($session, null, true))
+        return;
       
       // Evaluation
       $statistics = [];

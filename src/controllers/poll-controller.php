@@ -32,7 +32,12 @@ class PollController extends ControllerBase
   {
     // Fetch entities
     $session = $this->getSession($sessionId);
+    $member = $this->getMember($memberId);
     $currentPoll = $session->getCurrentPoll();
+
+    // Validate token before performing action
+    if (!$this->verifyToken($session, $member->getName()))
+      return;
 
     // Reject votes if poll is completed
     if($currentPoll == null || $currentPoll->getResult() > 0)
@@ -40,20 +45,15 @@ class PollController extends ControllerBase
 
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == "POST")
-      $this->placeVote($session, $currentPoll, $memberId);
+      $this->placeVote($session, $currentPoll, $member);
     else if ($method == "DELETE")
-      $this->deleteVote($session, $currentPoll, $memberId);
+      $this->deleteVote($session, $currentPoll, $member);
   }
 
   // Place a new vote
-  private function placeVote($session, $currentPoll, $memberId)
+  private function placeVote($session, $currentPoll, $member)
   {
-    $voteValue = $data = $this->jsonInput()["vote"];
-
     include __DIR__ .  "/session-evaluation.php";
-
-    // Fetch member
-    $member = $this->getMember($memberId);
 
     // Find or create vote
     foreach($currentPoll->getVotes() as $vote)
@@ -74,6 +74,7 @@ class PollController extends ControllerBase
     }
 
     // Set value
+    $voteValue = $data = $this->jsonInput()["vote"];
     $voteIndex = $this->getIndex($session, $voteValue);
     $match->setValue($voteIndex);
     
@@ -91,12 +92,12 @@ class PollController extends ControllerBase
   }
 
   // Delete an already placed vote
-  private function deleteVote($session, $currentPoll, $memberId)
+  private function deleteVote($session, $currentPoll, $member)
   {
     // Find the vote of this member
     foreach($currentPoll->getVotes() as $vote)
     {
-      if ($vote->getMember()->getId() == $memberId)
+      if ($vote->getMember() == $member)
       {
         $match = $vote;
         break;
@@ -130,6 +131,10 @@ class PollController extends ControllerBase
       $response->unchanged = true;
       return $response;
     }
+
+    // Validate token only to access the topic of private sessions
+    if (!$this->verifyToken($session, null, true))
+      return;
     
     // Fill response object
     $response->name = $session->getName();
@@ -161,7 +166,11 @@ class PollController extends ControllerBase
       ->setParameter(2, $session);
     $result = $query->getArrayResult();
     foreach($result as $vote)
-      $response->votes[] = UserVote::fromQuery($cardSet, $vote);
+    {
+      $userVote = UserVote::fromQuery($cardSet, $vote);
+      $userVote->canDelete = $this->tokenProvided($session, $userVote->name);
+      $response->votes[] = $userVote;
+    }
     
     return $response;
   }
@@ -172,6 +181,10 @@ class PollController extends ControllerBase
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == "POST")
     {
+      // Only the sessions owner can start a topic
+      if (!$this->verifyToken($session))
+        return;
+
       $data = $this->jsonInput();        
       $this->startPoll($sessionId, $data["topic"]);
       return null;
@@ -186,6 +199,10 @@ class PollController extends ControllerBase
       $result->unchanged = true;
       return $result;
     }
+
+    // Reading a sessions topic is only protected for private sessions
+    if (!$this->verifyToken($session, null, true))
+      return;
 
     $currentPoll = $session->getCurrentPoll();
 
@@ -209,6 +226,10 @@ class PollController extends ControllerBase
   private function startPoll($sessionId, $topic)
   {
     $session = $this->getSession($sessionId);
+
+    // Only the sessions main token holder can start a poll
+    if (!$this->verifyToken($session))
+      return;
       
     // Start new poll
     $poll = new Poll();

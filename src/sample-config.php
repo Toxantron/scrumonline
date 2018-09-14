@@ -9,7 +9,7 @@ $conn = array(
 );
 
 // This is used to create the join link
-$host = "scrumonline.local";
+$host = "https://scrumonline.local";
 
 // Google analytics id
 $ga = 'GOOGLE-ANALYTICS';

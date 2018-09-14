@@ -178,21 +178,17 @@ class PollController extends ControllerBase
   // Get or set topic of the current poll
   public function topic($sessionId)
   {
+    $session = $this->getSession($sessionId);
+
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == "POST")
     {
-      // Only the sessions owner can start a topic
-      if (!$this->verifyToken($session))
-        return;
-
       $data = $this->jsonInput();        
-      $this->startPoll($sessionId, $data["topic"]);
+      $this->startPoll($session, $data["topic"]);
       return null;
     }
 
     $result = new stdClass();
-    $session = $this->getSession($sessionId);
-
     // Check if anything changed since the last polling call
     if($this->sessionUnchanged($session))
     {
@@ -223,10 +219,8 @@ class PollController extends ControllerBase
   }
 
   // Start a new poll in the session
-  private function startPoll($sessionId, $topic)
+  private function startPoll($session, $topic)
   {
-    $session = $this->getSession($sessionId);
-
     // Only the sessions main token holder can start a poll
     if (!$this->verifyToken($session))
       return;
@@ -243,8 +237,6 @@ class PollController extends ControllerBase
     
     // Save changes
     $this->saveAll([$session, $poll]);
-    
-    return $poll;
   }
 }
 

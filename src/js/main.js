@@ -281,7 +281,7 @@ scrum.app.controller('ListController', function($http, $location) {
 //------------------------------
 // Master controller
 //------------------------------
-scrum.app.controller('MasterController', function ($http, $routeParams, $location, $cookies) {
+scrum.app.controller('MasterController', function ($http, $routeParams, $location, $cookies, $timeout) {
   // Validate keyring
   $http.get("api/session/requiresPassword/" + $routeParams.id).then(function (response) {
     if(response.data.success) {
@@ -290,8 +290,8 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
     }
   });
   
-  // Set current controller
-  scrum.current = this;
+  // Set current controller and self reference
+  var self = scrum.current = this;
   
   // Save reference to $http for plugins
   this.$http = $http;
@@ -307,15 +307,32 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   this.consensus = false;
   this.sources = scrum.sources;
   this.current = this.sources[0];
-
+  
   // Fragment for the join url
   this.joinFragment = this.id;
   var token = $cookies.get('session-token-' + this.id);
   if (token)
     this.joinFragment += '?token=' + token;
+
+  // Stopwatch
+  var interval = 1000;
+  var stopwatchMs = 0;
+  this.stopwatchElapsed = '00:00';
+  this.stopwatch = function() {
+    // Break recursive timer after completion
+    if(self.flipped)
+      return;
+
+    $timeout(function() {
+      stopwatchMs += interval; // Increase timer
+      // Format nicely -> thanks to https://stackoverflow.com/a/35890816/6082960
+      self.stopwatchElapsed = new Date(stopwatchMs).toISOString().slice(14, 19);
+      // Start next cycle
+      self.stopwatch();    
+    }, interval);
+  };
   
   // Starting a new poll
-  var self = this;
   this.startPoll = function (topic, description, url) {
     $http.post('/api/poll/topic/' + self.id, { topic: topic, description:description || '', url:url || '' }).then(function(response) {
       // Reset our GUI
@@ -326,6 +343,11 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
         vote.active = false;
       }
       self.flipped = false;
+      // Reset stopwatch
+      stopwatchMs = 0;
+      self.stopwatchElapsed = '00:00';
+      // Start the stopwatch
+      self.stopwatch();
     });
   };
   

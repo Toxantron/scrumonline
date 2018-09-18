@@ -4,8 +4,11 @@ include __DIR__ . "/../config.php";
 ?>
 <!-- Headline -->
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-sm-10 col-md-11">
     <h1>{{ master.id }} - {{ master.name }}</h1>
+  </div>
+  <div class="hidden-xs col-sm-2 col-md-1">
+    <h1>{{ master.stopwatchElapsed }}</h1>
   </div>
 </div>
       

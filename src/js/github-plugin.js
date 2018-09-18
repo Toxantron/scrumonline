@@ -36,6 +36,11 @@ scrum.sources.push({
     this.parent.$http
       .get('https://api.github.com/repos/' + this.repo + '/issues', { headers: headers })
       .then(function (response) {
+        // Convert markdown to HTML
+        var converter = new showdown.Converter();
+        response.data.forEach(function(issue) {
+          issue.body = converter.makeHtml(issue.body);
+        });
         self.issues = response.data;
         self.issue = self.issues[0];
         self.loaded = true;

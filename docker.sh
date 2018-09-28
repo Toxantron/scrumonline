@@ -13,7 +13,7 @@ case $command in
      echo '$host = "http://localhost:8080";' >> src/config.php
      ;;
   "start")
-     running=$(docker ps -a -q)
+     running=$(docker ps -a -q | grep $container_name)
      if [ -n "$running" ]; then
         echo "Stopping running containers"
         docker stop $running

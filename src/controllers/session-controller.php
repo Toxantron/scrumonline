@@ -18,6 +18,8 @@ class SessionController extends ControllerBase
       $tokenKey = $this->tokenKey($session["id"]);
       $session["requiresPassword"] = $session["isPrivate"] 
         && (!isset($_COOKIE[$tokenKey]) || $_COOKIE[$tokenKey] !== $session["token"]);
+      // Remove token from the response again
+      unset($session["token"]);
     }
 
     return $sessions;

@@ -79,7 +79,7 @@ foreach($templates as $index=>$template)
 <footer class="page-footer font-small">
   <!-- Cookie warning -->
   <div class="footer-copyright text-center py-3">This application uses cookies. For more information take a look at the 
-    <a href="https://github.com/Toxantron/scrumonline/blob/dev/doc/Cookies.md"> documentation</a>.
+    <a href="<?= $src ?>doc/Cookies.md"> documentation</a>.
   </div>
 </footer>
 

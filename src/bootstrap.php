@@ -87,7 +87,11 @@ class ControllerBase
   // Create a crypto hash for a secret using the name as salt
   protected function createHash($name, $password)
   {
-    return crypt($password, $name);
+    // Create a safe token from name, password and salt
+    $token = crypt($name . $password, '$1$ScrumSalt');
+    $fragments = explode('$', $token);
+    $hash = $fragments[sizeof($fragments) - 1];
+    return $hash;
   }
 
   // The cookie name of the token for a given session

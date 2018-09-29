@@ -51,7 +51,7 @@ include __DIR__ . "/../config.php";
             
 <!-- Invite and statistics -->            
 <div class="row">
-  <div class="col-xs-12 col-md-5">
+  <div class="hidden-xs hidden-sm col-md-5">
     <h2>Invite members</h2>
     <p>Invite members to join your session. Session id: <strong ng-bind="master.id"></strong></p>
 <?php

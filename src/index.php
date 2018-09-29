@@ -76,6 +76,13 @@ foreach($templates as $index=>$template)
   <?php $indexPage->render(false) ?>
 </div>
 
+<footer class="page-footer font-small">
+  <!-- Cookie warning -->
+  <div class="footer-copyright text-center py-3">This application uses cookies. For more information take a look at the 
+    <a href="https://github.com/Toxantron/scrumonline/blob/dev/doc/Cookies.md"> documentation</a>.
+  </div>
+</footer>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>

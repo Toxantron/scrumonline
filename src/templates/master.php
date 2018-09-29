@@ -4,8 +4,11 @@ include __DIR__ . "/../config.php";
 ?>
 <!-- Headline -->
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-sm-10 col-md-11">
     <h1>{{ master.id }} - {{ master.name }}</h1>
+  </div>
+  <div class="hidden-xs col-sm-2 col-md-1">
+    <h1>{{ master.stopwatchElapsed }}</h1>
   </div>
 </div>
       
@@ -36,7 +39,7 @@ include __DIR__ . "/../config.php";
               <div class="inner"><span class="card-label" ng-bind-html="vote.value"></span></div>
             </div>
           </div>
-          <div class="delete-member remove selectable" ng-click="master.remove(vote.id)">
+          <div ng-if="vote.canDelete" class="delete-member remove selectable" ng-click="master.remove(vote.id)">
             <span class="glyphicon glyphicon-remove"></span>
           </div>
         </div>
@@ -52,11 +55,11 @@ include __DIR__ . "/../config.php";
     <h2>Invite members</h2>
     <p>Invite members to join your session. Session id: <strong ng-bind="master.id"></strong></p>
 <?php
-$joinUrl = "https://". $host . "/join/";
+$joinUrl = $host . "/join/";
 ?>
-    <img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=<?= urlencode($joinUrl) . "{{ master.id }}" ?>&choe=UTF-8" title="Join {{ master.id }}" />
+    <img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=<?= urlencode($joinUrl) . "{{ master.joinFragment }}" ?>&choe=UTF-8" title="Join {{ master.id }}" />
 <?php
-$joinUrl = $joinUrl . "{{ master.id }}";
+$joinUrl = $joinUrl . "{{ master.joinFragment }}";
 ?>
     <p>Or send them this link: <a href="<?= $joinUrl ?>"><?= $joinUrl ?></a>
   </div>

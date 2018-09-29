@@ -83,4 +83,54 @@ class ControllerBase
     }
     $this->entityManager->flush();
   }
+
+  // Create a crypto hash for a secret using the name as salt
+  protected function createHash($name, $password)
+  {
+    return crypt($password, $name);
+  }
+
+  // The cookie name of the token for a given session
+  protected function tokenKey($id)
+  {
+    return 'session-token-' . $id;
+  }
+
+  // Make sure the caller has the necesarry token for the operation
+  // $memberName indicates that a member token is sufficient for the operation
+  // $privateOnly indicates that the token is only required for private sessions
+  protected function verifyToken($session, $memberName = null, $privateOnly = false)
+  {
+    if ($this->tokenProvided($session, $memberName, $privateOnly))
+      return true;
+
+    http_response_code(403); // Return HTTP 403 FORBIDDEN
+    return false;
+  }
+
+  // Check if the token for this session was present in the request
+  // Return true if it was and otherwise false
+  protected function tokenProvided($session, $memberName = null, $privateOnly = false)
+  {
+    // Token only required for private sessions and this is a public one
+    if ($privateOnly && $session->getIsPrivate() == false)
+      return true;
+
+    // Everything else requires a token
+    $tokenKey = $this->tokenKey($session->getId());
+    if (!isset($_COOKIE[$tokenKey]))
+      return false;
+    
+    // Verify token
+    $token = $_COOKIE[$tokenKey];
+    if ($token == $session->getToken())
+      return true;
+
+    // Alternatively compare membertoken if sufficient
+    if ($memberName != null && $token == $this->createHash($memberName, $session->getToken()))
+      return true;
+
+    // Token required but not provided
+    return false;
+  }
 }

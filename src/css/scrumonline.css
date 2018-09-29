@@ -264,7 +264,7 @@ div.removal {
  * Plugin styles
  */
 div.issue-list {
-  height: 250px;
+  max-height: 800px;
   overflow-y: scroll;
 }
 

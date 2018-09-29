@@ -76,12 +76,22 @@ foreach($templates as $index=>$template)
   <?php $indexPage->render(false) ?>
 </div>
 
+<footer class="page-footer font-small">
+  <!-- Cookie warning -->
+  <div class="footer-copyright text-center py-3">This application uses cookies. For more information take a look at the 
+    <a href="https://github.com/Toxantron/scrumonline/blob/dev/doc/Cookies.md"> documentation</a>.
+  </div>
+</footer>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.min.js"></script>
+<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>  
 <script src="/js/angular-google-analytics.js"></script>
 <script src="/js//bootstrap.min.js"></script>
+<script src="/js/J2M.js"></script>
 <script type="text/javascript">
   var ga_id = '<?= $ga ?>';
 

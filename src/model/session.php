@@ -13,9 +13,9 @@ class Session
   
     /** @Column(type="boolean") **/
     protected $isPrivate;
-  
-    /** @Column(type="string", nullable=true) **/
-    protected $password;
+
+    /** @Column(type="string") **/
+    protected $token;
 
     /** @Column(type="integer") **/ 
     protected $cardSet;
@@ -56,15 +56,15 @@ class Session
     {
         $this->isPrivate = $isPrivate;
     }
-  
-    // Getter and setter for password field
-    public function getPassword()
+
+    // Getter and setter for the token field
+    public function getToken()
     {
-    	  return $this->password;
+        return $this->token;
     }
-    public function setPassword($password)
+    public function setToken($token)
     {
-        $this->password = $password;
+        $this->token = $token;
     }
 
     // Getter and setter for cardSet field

@@ -41,6 +41,12 @@ scrum.sources.push({
         if (!data || !data.issues) {
           self.error = 'Can\'t load Jira issues, check configuration';
         } else {
+          var converter = new showdown.Converter();
+          // Convert JIRA format to Markdown and then to HTML
+          response.data.issues.forEach(function(issue) {
+            var markdown = J2M.toM(issue.fields.description || '');
+            issue.fields.description = converter.makeHtml(markdown);
+          });
           self.issues = response.data.issues;
           self.issue = self.issues[0];
           self.loaded = true;

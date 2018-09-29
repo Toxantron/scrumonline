@@ -7,13 +7,11 @@ image=scrum-lamp
 case $command in 
   "prepare")
      echo "Preparing repository for usage with docker"
-     php bin/composer install
-     cp src/sample-config.php src/config.php
-     # Overwrite host
-     echo '$host = "localhost:8080";' >> src/config.php
+     # run container with entrypoint which prepares container
+     docker run --rm --name scrumonline -v $(pwd):/var/www/scrumonline --entrypoint /var/www/scrumonline/build.sh scrum-lamp
      ;;
   "start")
-     running=$(docker ps -a -q)
+     running=$(docker ps -a -q | grep $container_name)
      if [ -n "$running" ]; then
         echo "Stopping running containers"
         docker stop $running

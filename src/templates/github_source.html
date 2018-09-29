@@ -59,12 +59,10 @@
           <div class="panel-heading">
             {{ master.current.issue.user.login }} created issue on {{ master.current.issue.created_at | date : "medium" }}
           </div>
-          <div class="panel-body">
-            {{ master.current.issue.body }}
-          </div>
+          <div class="panel-body" style="white-space: pre-line" ng-bind-html="master.current.issue.body"></div>
         </div>
         
-        <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.title)" ga-track-event="master.current.event">Start</button>
+        <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.title, master.current.issue.body, master.current.issue.html_url)" ga-track-event="master.current.event">Start</button>
       </div>
   </div>
 </div>

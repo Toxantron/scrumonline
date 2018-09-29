@@ -69,7 +69,7 @@ include "config.php";
           <div class="form-group" ng-class="{'has-error': join.idError}">
             <label>Session id:</label>
             <div class="has-feedback">
-              <input type="text" class="form-control" ng-model="join.id" placeholder="4711">
+              <input type="text" class="form-control" ng-model="join.id" ng-change="join.passwordCheck()" placeholder="4711">
               <span ng-if="join.idError" class="glyphicon glyphicon-remove form-control-feedback"></span>
             </div>
           </div>
@@ -78,6 +78,13 @@ include "config.php";
             <div class="has-feedback" ng-init="join.name = '<?= isset($_COOKIE['scrum_member_name']) ? $_COOKIE['scrum_member_name'] : "" ?>'">
               <input type="text" class="form-control"  ng-model="join.name" placeholder="John">
               <span ng-if="join.nameError" class="glyphicon glyphicon-remove form-control-feedback"></span>
+            </div>
+          </div>
+          <div class="form-group" ng-if="join.requiresPassword">
+            <label>Password:</label>
+            <div class="has-feedback">
+              <input type="password" class="form-control"  ng-model="join.password">
+              <span ng-if="join.passwordError" class="glyphicon glyphicon-remove form-control-feedback"></span>
             </div>
           </div>
           <input type="button" class="btn btn-default" value="Join" ng-click="join.joinSession()">

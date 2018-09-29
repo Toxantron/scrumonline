@@ -3,5 +3,9 @@
     <label for="topic">Story:</label>
     <input type="text" class="form-control" ng-model="master.current.topic" placeholder="#4711 Create foo">
   </div>
-  <button class="btn btn-default" ng-click="master.startPoll(master.current.topic)" ga-track-event="master.current.event">Start</button>
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <input type="text" class="form-control" ng-model="master.current.description" placeholder="The user can create an awesome foo">
+  </div>
+  <button class="btn btn-default" ng-click="master.startPoll(master.current.topic, master.current.description)" ga-track-event="master.current.event">Start</button>
 </form>

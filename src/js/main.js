@@ -9,19 +9,16 @@ var scrum = {
       position: 1, 
       feedback: false,
       topic: '',
+      description: '',
       event: ['poll', 'start', 'Default'],
-      view: 'default_source.html'  
-    }, 
+      view: 'default_source.html'
+    },
     { 
       name: '+', 
       position: 99, 
       view: 'add_source.html', 
       feedback: false 
     },
-  ],
-  
-  // Store of unlocked sessions
-  keyring: [
   ],
 
   // At peak times the number of polling clients exceeds the servers capacity.
@@ -58,7 +55,7 @@ var scrum = {
 };
 
 // Define angular app
-scrum.app = angular.module('scrum-online', ['ngRoute', 'ngSanitize', 'angular-google-analytics']);
+scrum.app = angular.module('scrum-online', ['ngRoute', 'ngSanitize', 'ngCookies', 'angular-google-analytics']);
 
 //------------------------------
 // Configure routing
@@ -154,8 +151,6 @@ scrum.app.controller('CreateController', function CreateController($http, $locat
       isPrivate: self.isPrivate,
       password: self.password
     }).then(function (response) {
-      // Add this id to keyring and switch view
-      scrum.keyring.push(response.data.value);
       $location.url('/session/' + response.data.value);
     });
   };
@@ -164,7 +159,7 @@ scrum.app.controller('CreateController', function CreateController($http, $locat
 //------------------------------
 // Join controller
 //------------------------------
-scrum.app.controller('JoinController', function JoinController($http, $location, $routeParams) {
+scrum.app.controller('JoinController', function JoinController($http, $location, $routeParams, $cookies) {
   // Save reference to current
   scrum.current = this;
   
@@ -173,6 +168,14 @@ scrum.app.controller('JoinController', function JoinController($http, $location,
   this.idError = false;
   this.name = '';
   this.nameError = false;
+  this.password = '';
+  this.requiresPassword = false;
+
+  // If the route contains the token, append it to the API call
+  var cookieQuery = '';
+  var cookieValue = $location.search().token;
+  if(cookieValue)
+    cookieQuery = '?token=' + cookieValue;
   
   // Join function
   var self = this;
@@ -187,13 +190,22 @@ scrum.app.controller('JoinController', function JoinController($http, $location,
       return;
     }
     	
-    $http.put('/api/session/member/' + self.id, { name: self.name })
+    $http.put('/api/session/member/' + self.id + cookieQuery, { name: self.name, password: self.password })
       .then(function (response) {
         var result = response.data;
         $location.url('/member/' + result.sessionId + '/' + result.memberId);
       }, function () {
         self.idError = true;
       });
+  };
+
+  this.passwordCheck = function() {
+    $http.get("api/session/requiresPassword/" + self.id).then(function (response) {
+      self.idError = false;
+      self.requiresPassword = response.data.success;
+    }, function () {
+      self.idError = true;
+    });
   };
 });
 
@@ -217,9 +229,6 @@ scrum.app.controller('ListController', function($http, $location) {
     $http.post('api/session/check/' + session.id, {password: session.password}).then(function (response){
       var data = response.data;
       if (data.success === true) {
-        // Add to keyring if not set
-        if (scrum.keyring.indexOf(session.id) === -1)
-          scrum.keyring.push(session.id);
         $location.url(url + '/' + session.id);
       } else {
         session.pwdError = true;
@@ -240,7 +249,7 @@ scrum.app.controller('ListController', function($http, $location) {
   // Open session
   this.open = function (session) {
     // Public session
-    if (!session.isPrivate) {
+    if (!session.requiresPassword) {
       $location.url('/session/' + session.id);	
     } else if (session.expanded) {
       this.continue = continueOpen;
@@ -254,7 +263,7 @@ scrum.app.controller('ListController', function($http, $location) {
   // Join the session
   this.join = function(session) {
     // Public session
-    if (!session.isPrivate) {
+    if (!session.requiresPassword) {
       $location.url('/join/' + session.id);
     } else if (session.expanded) {
       this.continue = continueJoin;
@@ -272,19 +281,17 @@ scrum.app.controller('ListController', function($http, $location) {
 //------------------------------
 // Master controller
 //------------------------------
-scrum.app.controller('MasterController', function ($http, $routeParams, $location) {
+scrum.app.controller('MasterController', function ($http, $routeParams, $location, $cookies, $timeout) {
   // Validate keyring
-  $http.get("api/session/haspassword/" + $routeParams.id).then(function (response) {
+  $http.get("api/session/requiresPassword/" + $routeParams.id).then(function (response) {
     if(response.data.success) {
-     var id = parseInt($routeParams.id);
-     if(scrum.keyring.indexOf(id) == -1) {
-       $location.url("/404.html");
-     } 
+      // Redirect to 404 if the session requires password
+      $location.url("/404.html"); 
     }
   });
   
-  // Set current controller
-  scrum.current = this;
+  // Set current controller and self reference
+  var self = scrum.current = this;
   
   // Save reference to $http for plugins
   this.$http = $http;
@@ -301,12 +308,33 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   this.sources = scrum.sources;
   this.current = this.sources[0];
   
-  // Starting a new poll
-  var self = this;
-  this.startPoll = function (topic) {
-    $http.post('/api/poll/topic/' + self.id, { topic: topic }).then(function(response) {
-      var data = response.data;
+  // Fragment for the join url
+  this.joinFragment = this.id;
+  var token = $cookies.get('session-token-' + this.id);
+  if (token)
+    this.joinFragment += '?token=' + token;
 
+  // Stopwatch
+  var interval = 1000;
+  var stopwatchMs = 0;
+  this.stopwatchElapsed = '00:00';
+  this.stopwatch = function() {
+    // Break recursive timer after completion
+    if(self.flipped)
+      return;
+
+    $timeout(function() {
+      stopwatchMs += interval; // Increase timer
+      // Format nicely -> thanks to https://stackoverflow.com/a/35890816/6082960
+      self.stopwatchElapsed = new Date(stopwatchMs).toISOString().slice(14, 19);
+      // Start next cycle
+      self.stopwatch();    
+    }, interval);
+  };
+  
+  // Starting a new poll
+  this.startPoll = function (topic, description, url) {
+    $http.post('/api/poll/topic/' + self.id, { topic: topic, description:description || '', url:url || '' }).then(function(response) {
       // Reset our GUI
       for(var index=0; index < self.votes.length; index++)
       {
@@ -315,6 +343,11 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
         vote.active = false;
       }
       self.flipped = false;
+      // Reset stopwatch
+      stopwatchMs = 0;
+      self.stopwatchElapsed = '00:00';
+      // Start the stopwatch
+      self.stopwatch();
     });
   };
   
@@ -416,6 +449,8 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   this.votable = false;
   this.leaving = false;
   this.topic = '';
+  this.description = '';
+  this.topicUrl = '';
   this.cards = [];
 
   // Self reference for callbacks
@@ -500,6 +535,8 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
       if(self.topic !== result.topic || (!self.votable && result.votable)) {
         self.reset();
         self.topic = result.topic;
+        self.description = result.description || '';
+        self.topicUrl = result.url || '#';
       }
       
       self.votable = result.votable;

@@ -38,4 +38,7 @@ class UserVote
   
   // Member must explain his vote
   public $active;
+
+  // Flag if the requesting user has the rights to delete this user (and its vote)
+  public $canDelete;
 }

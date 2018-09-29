@@ -105,11 +105,11 @@ paths:
       responses:
         '200':
           description: Member removed
-  '/session/haspassword/{id}':
+  '/session/requiresPassword/{id}':
     get:
       tags:
         - session
-      summary: Check if session is protected by password
+      summary: Check if session is protected by password and if it is necessary
       produces:
         - application/json
       parameters:
@@ -121,7 +121,7 @@ paths:
           description: Id of the session that is checked for password protection
       responses:
         '200':
-          description: Boolean if session has a password
+          description: Boolean if session has a password and user does not have a sufficient token
           schema:
             $ref: '#/definitions/BoolResponse'
   '/session/membercheck/{id}/{mid}':
@@ -432,6 +432,11 @@ definitions:
         type: string
       isPrivate:
         type: boolean
+      requiresPassword:
+        type: boolean
+        description: >-
+          Indicator if the requesting user needs a password to access this session.
+          This is the case for private sessions if the user does not have the necessary token yet.
       password:
         type: string
       membercount:
@@ -517,6 +522,9 @@ definitions:
         description: >-
           Flag that the vote shall be highlighted because it is either the
           highest or lowest value
+      canDelete:
+        type: boolean
+        description: Indicator if the master can remove this vote and its user
   TopicResponse:
     type: object
     properties:

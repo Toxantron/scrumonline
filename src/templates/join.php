@@ -18,6 +18,13 @@
               <span ng-if="join.nameError" class="glyphicon glyphicon-remove form-control-feedback"></span>
             </div>
           </div>
+          <div class="form-group" ng-if="join.requiresPassword">
+            <label>Password:</label>
+            <div class="has-feedback">
+              <input type="password" class="form-control"  ng-model="join.password">
+              <span ng-if="join.passwordError" class="glyphicon glyphicon-remove form-control-feedback"></span>
+            </div>
+          </div>
           <input type="button" class="btn btn-default" value="Join" ng-click="join.joinSession()">
        </form>
       </div>

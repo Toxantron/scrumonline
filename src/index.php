@@ -1,6 +1,7 @@
 <?php
 include "config.php";
 include "templates/templates.php";
+include "sponsors.php";
 
 $templates = Template::getAll();
 
@@ -78,6 +79,12 @@ foreach($templates as $index=>$template)
   <!-- Render index page in here for instand display -->
   <?php $indexPage->render(false) ?>
 </div>
+
+<!-- Footer contains sponsors -->
+<footer class="page-footer font-small">
+  <h3>Sponsored by</h3>
+  <?= Sponsor::renderFooter() ?>
+</footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>

@@ -41,7 +41,7 @@ class SessionController extends ControllerBase
     if ($private)
       $token = $this->createHash($data["name"], $data["password"]);
     else
-      $token = $this->createHash($data["name"], bin2hex(random_bytes(8)));   
+      $token = $this->createHash($data["name"], $this->randomKey());   
     $session->setToken($token);
       
     $session->setLastAction(new DateTime());
@@ -51,6 +51,16 @@ class SessionController extends ControllerBase
     $this->setCookie($session);
     
     return new NumericResponse($session->getId());
+  }
+
+  // Generate a random key for the public session token
+  private function randomKey()
+  {
+    if (PHP_MAJOR_VERSION >= 7)
+      $bytes = random_bytes(8);
+    else
+      $bytes = openssl_random_pseudo_bytes(8);
+    return bin2hex($bytes);
   }
 
   // Add or remove member

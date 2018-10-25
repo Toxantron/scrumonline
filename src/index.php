@@ -35,6 +35,9 @@ foreach($templates as $index=>$template)
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/normalize.css">
   <link rel="stylesheet" href="/css/scrumonline.css">
+
+  <!-- Pretty cookie consent and styling -->
+  <?php include("templates/cookie_notice.php") ?>
 </head>
 <body ng-app="scrum-online">
 <!--[if lt IE 8]>
@@ -75,13 +78,6 @@ foreach($templates as $index=>$template)
   <!-- Render index page in here for instand display -->
   <?php $indexPage->render(false) ?>
 </div>
-
-<footer class="page-footer font-small">
-  <!-- Cookie warning -->
-  <div class="footer-copyright text-center py-3">This application uses cookies. For more information take a look at the 
-    <a href="<?= $src ?>doc/Cookies.md"> documentation</a>.
-  </div>
-</footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>

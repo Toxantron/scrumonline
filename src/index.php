@@ -1,6 +1,7 @@
 <?php
 include "config.php";
 include "templates/templates.php";
+include "sponsors.php";
 
 $templates = Template::getAll();
 
@@ -35,6 +36,9 @@ foreach($templates as $index=>$template)
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/normalize.css">
   <link rel="stylesheet" href="/css/scrumonline.css">
+
+  <!-- Pretty cookie consent and styling -->
+  <?php include("templates/cookie_notice.php") ?>
 </head>
 <body ng-app="scrum-online">
 <!--[if lt IE 8]>
@@ -76,11 +80,10 @@ foreach($templates as $index=>$template)
   <?php $indexPage->render(false) ?>
 </div>
 
+<!-- Footer contains sponsors -->
 <footer class="page-footer font-small">
-  <!-- Cookie warning -->
-  <div class="footer-copyright text-center py-3">This application uses cookies. For more information take a look at the 
-    <a href="<?= $src ?>doc/Cookies.md"> documentation</a>.
-  </div>
+  <h3>Sponsored by</h3>
+  <?= Sponsor::renderFooter() ?>
 </footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>

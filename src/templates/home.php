@@ -11,6 +11,20 @@ include "config.php";
       (TV or projector) and let everyone else join via smartphone. To join a session just enter the id displayed in the 
       heading of the scrum master view.
     </p>
+
+    <p>
+      Developing, maintaining and hosting this application costs personal time and money. Almost 20.000 users access the application
+      each month to perform over 28.000 polls. This increase in traffic will exceed the current hosting soon and requires additional
+      funding. I would also like to setup mirrors around the world for comparable loading times. To keep the page ad-free, I am asking
+      for your help. If you would like to support my efforts and help keep the lights on, you can either donate trough the button below 
+      or <a target="_blank" href="https://github.com/Toxantron/scrumonline#sponsoring">become an official sponsor</a>.
+    </p>
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+      <input type="hidden" name="cmd" value="_s-xclick">
+      <input type="hidden" name="hosted_button_id" value="ULK4XY7UZRZL8">
+      <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+      <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+    </form>
   </article>
 </div>
             

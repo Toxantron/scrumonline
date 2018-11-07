@@ -13,11 +13,9 @@ include "config.php";
     </p>
 
     <p>
-      Developing, maintaining and hosting this application costs personal time and money. Almost 20.000 users access the application
-      each month to perform over 28.000 polls. This increase in traffic will exceed the current hosting soon and requires additional
-      funding. I would also like to setup mirrors around the world for comparable loading times. To keep the page ad-free, I am asking
+      Developing, maintaining and hosting this application costs personal time and money. To keep the page ad-free, I am asking
       for your help. If you would like to support my efforts and help keep the lights on, you can either donate through the button below 
-      or <a href="/sponsors">become an official sponsor</a>.
+      or <a href="https://scrumpoker.online/sponsors">become an official sponsor</a>.
     </p>
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
       <input type="hidden" name="cmd" value="_s-xclick">

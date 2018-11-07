@@ -94,12 +94,6 @@ scrum.app.config(
         controllerAs: 'member',
       	pageTrack: '/member'
       })
-      .when('/sponsors', {
-        templateUrl: 'sponsors.html',        
-      })
-      .when('/impressum', {
-        templateUrl: 'impressum.html',        
-      })
       .when('/removal', {
         templateUrl: 'removal.html',        
       })

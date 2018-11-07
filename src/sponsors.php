@@ -21,6 +21,12 @@ class Sponsor
     return "<a href=\"" . $this->linkURL . "\"><img src=\"" . $this->logoURL . "\"></a>";
   }
 
+  public static $prices = [
+    20,  // Basic 
+    100, // Footer
+    150  // README
+  ];
+
   public static function renderFooter()
   {
     $sponsors = [

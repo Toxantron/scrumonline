@@ -2,7 +2,7 @@
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/scrumonline/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-PHP web app for planning poker. It includes a master view for the ScrumMaster and a simple responsive card view for the team. A deployed demo is available at http://www.scrumpoker.online
+PHP web app for planning poker. It includes a master view for the ScrumMaster and a simple responsive card view for the team. This is the deployed version available at http://www.scrumpoker.online
 
 ## Sponsors
 The project is supported by the following sponsors. If you would like to become a sponsor yourself, please take a look [at the section below](#sponsoring).

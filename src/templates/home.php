@@ -5,18 +5,28 @@ include "config.php";
 <div class="row">
   <article class="col-xs-12">
     <p>
-      <h2>Scrum Online</h2>
+      <h2>Scrumpoker Online</h2>
       Welcome to my open source Planning Poker&reg; web app. Use of this app is free of charge for everyone. As a scrum master just start 
       a named session and invite your team to join you. It is recommended to display the scrum master view on the big screen 
       (TV or projector) and let everyone else join via smartphone. To join a session just enter the id displayed in the 
-      heading of the scrum master view.
+      heading of the scrum master view or use the QR-Code.
     </p>
 
     <p>
-      Developing, maintaining and hosting this application costs personal time and money. Almost 20.000 users access the application
-      each month to perform over 28.000 polls. This increase in traffic will exceed the current hosting soon and requires additional
-      funding. I would also like to setup mirrors around the world for comparable loading times. To keep the page ad-free, I am asking
-      for your help. If you would like to support my efforts and help keep the lights on, you can either donate through the button below 
+      <h4>What is Scrumpoker Online</h4>
+      Scrum poker or planning poker is a consensus based, gamified technique to estimate the complexity and effort of a software feature. After
+      presenting the feature, each member of the team picks a vote from different ranges of card sets. The vote remains hidden until all members 
+      have voted to avoid influence from other team members. After everyone has voted the highest and lowest estimates explain their choice and the 
+      process is repeated until the team agrees on a value. <br>
+      Scrumpoker Online is a web implementation of this technique for remote teams or simply to get rid of the paper cards. Its mobile friendly UI 
+      for the member view makes it ideal to participate in the session on a smartphone. Its plugins for ticketing systems like JIRA also enables teams
+      to directly access their next tasks.
+    </p>
+
+    <p>
+      <h4>Support the project</h4>
+      Developing, maintaining and hosting this application costs personal time and money. I would also like to setup mirrors around the world 
+      for improved loading times. If you would like to support my efforts and help keep the lights on, you can either donate through the button below 
       or <a href="/sponsors">become an official sponsor</a>.
     </p>
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">

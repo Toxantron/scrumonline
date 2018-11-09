@@ -22,7 +22,7 @@ foreach($templates as $index=>$template)
   <meta charset="utf-8">
   <base href="/">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Online planning poker</title>
+  <title>Scrumpoker Online</title>
   <meta name="description" content="Scrumpoker online is an open source web implementation of planning poker for scrum teams to determine the complexity of stories. It aims to integrate ticketing systems like Redmine or Github.">  
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -39,6 +39,15 @@ foreach($templates as $index=>$template)
 
   <!-- Pretty cookie consent and styling -->
   <?php include("templates/cookie_notice.php") ?>
+
+  <!-- AdSense code -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-2180802234513324",
+      enable_page_level_ads: true
+     });
+  </script>
 </head>
 <body ng-app="scrum-online">
 <!--[if lt IE 8]>

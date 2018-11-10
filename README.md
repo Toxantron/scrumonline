@@ -32,13 +32,3 @@ For every story the Scrum Master will than start a poll and each member of the s
 If you want to contribute you can just clone the repository and follow the deployment instructions. We also offer support for [Vagrant](doc/Vagrant.md) and [Docker](doc/Docker.md). Any changes must be commited to a fork and then merged by issuing a pull request. For information on the REST API or ticketing plugins please have a look at the [wiki documentation](https://github.com/Toxantron/scrumonline/blob/master/doc/).
 
 You can also use the [REST API](https://github.com/Toxantron/scrumonline/blob/master/doc/Developer-Documentation.md) to build a mobile for iOS or Android. In that case I am happy to link your app in the README and on the page.
-
-## Sponsoring
-If you want to support the project, you can become an official sponsor. There are three different levels of sponsoring and each is rewarded with your logo and link in different places. The price for the next level always includes the previous levels privileges. Prices only show the current price for each type and may
-change over time based on demand. To become an official sponsor please contact sponsoring@scrumpoker.online with the [necessary information](https://github.com/Toxantron/scrumonline/blob/master/src/sponsors.php) and your desired sponsoring level. You will recieve an official invoice for your sponsorship, which makes it tax deductible for companies. Within 7 days after payment the page will be updated with your logo. Alternatively if you contribute developer time or server resources, you can also be listed as a sponsor.
-
-| Level | Price annually | Logo placement |
-|---|---:|---|
-| Basic | 20€ | Sponsors tab |
-| Footer | 100€ | Footer |
-| Repo | 150€ | README on GitHub | 

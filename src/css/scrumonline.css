@@ -312,31 +312,3 @@ div.issue-list {
   border-style: dotted;
   border-color: rgba(255, 255, 255, 0.7);
 }
-
-/* Styling of sponsors */
-footer div.sponsors {
-  margin-left: 10%;
-  max-width: 80%;
-}
-div.sponsors a, span {
-  margin: 5px;
-}
-div.sponsors a img {
-  height: 40px;
-}
-/* Donors */
-div.donors>div {
-  margin: 10px;
-  display: inline-block;
-  vertical-align: top;
-}
-div.message {
-  font-style: italic;
-  max-width: 200px;
-  margin-bottom: 5px;
-}
-div.donor {
-  width: 100;
-  text-align: center;
-  font-weight: bold;
-}

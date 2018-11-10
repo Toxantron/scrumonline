@@ -3,7 +3,7 @@ include "config.php";
 ?>
 <!-- Introduction -->
 <div class="row">
-  <article class="col-xs-12">
+  <article class="col-xs-12 col-lg-10 col-lg-offset-1">
     <p>
       <h2>Scrumpoker Online</h2>
       Welcome to my open source Planning Poker&reg; web app. Use of this app is free of charge for everyone. As a scrum master just start 
@@ -15,10 +15,10 @@ include "config.php";
 </div>
             
 <div class="row">
-  <h2 class="col-xs-12">Create or join a session</h2>
+  <h2 class="col-xs-12 col-lg-10 col-lg-offset-1">Create or join a session</h2>
       
   <!-- Create session panel -->
-  <div class="col-sm-6 col-xs-12" ng-controller="CreateController as create">
+  <div class="col-xs-12 col-sm-6 col-lg-5 col-lg-offset-1" ng-controller="CreateController as create">
     <div class="panel panel-default">
       <div class="panel-heading">Create session</div>
       <div class="panel-body">  
@@ -61,7 +61,7 @@ include "config.php";
   </div>
             
   <!-- Join session panel -->
-  <div class="col-sm-6 col-xs-12" ng-controller="JoinController as join">
+  <div class="col-xs-12 col-sm-6 col-lg-5" ng-controller="JoinController as join">
     <div class="panel panel-default">
       <div class="panel-heading">Join session</div>
       <div class="panel-body">
@@ -97,7 +97,7 @@ include "config.php";
 
 <!-- Explaination -->
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-xs-12 col-lg-10 col-lg-offset-1">
     <p>
       <h4>What is Scrumpoker Online</h4>
       Scrum poker or planning poker is a consensus based, gamified technique to estimate the complexity and effort of a software feature. After

@@ -318,7 +318,7 @@ footer div.sponsors {
   margin-left: 10%;
   max-width: 80%;
 }
-div.sponsors a, span {
+div.sponsors a, div.sponsors span {
   margin: 5px;
 }
 div.sponsors a img {

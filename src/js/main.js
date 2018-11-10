@@ -97,8 +97,11 @@ scrum.app.config(
       .when('/sponsors', {
         templateUrl: 'sponsors.html',        
       })
+      .when('/instructions', {
+        templateUrl: 'templates/instructions.html',        
+      })
       .when('/impressum', {
-        templateUrl: 'impressum.html',        
+        templateUrl: 'templates/impressum.html',        
       })
       .when('/removal', {
         templateUrl: 'removal.html',        

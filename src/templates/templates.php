@@ -15,11 +15,15 @@ class Template
   private $name;
   
   private $path;
+
+  private $skipRendering;
   
-  function __construct($name, $path, $navigationTag = null)
+  function __construct($name, $path, $navigationTag = null, $skipRendering = false)
   {
     $this->name = $name;
     $this->path = $path;
+
+    $this->skipRendering = $skipRendering;
     
     if($navigationTag != null)
     {
@@ -37,6 +41,9 @@ class Template
   
   public function render($inTag)
   {
+    if ($this->skipRendering)
+      return;
+
     if (!$inTag)
     {
       include $this->path;   
@@ -61,8 +68,9 @@ class Template
       new Template("default_source.html", "templates/default_source.html"),
       new Template("add_source.html", "templates/add_source.html"),
       new Template("member.html", "templates/member.php"),
-      new Template("sponsors.html", "templates/sponsors_view.php", "Sponsors"),      
-      new Template("impressum.html", "templates/impressum.html", "Impressum"),
+      new Template("instructions.html", "templates/instructions.html", "Instructions", true), 
+      new Template("sponsors.html", "templates/sponsors_view.php", "Sponsors"),     
+      new Template("impressum.html", "templates/impressum.html", "Impressum", true),
       new Template("removal.html", "templates/removal.html"),
       new Template("404.html", "templates/404.html")
     ];

@@ -11,30 +11,6 @@ include "config.php";
       (TV or projector) and let everyone else join via smartphone. To join a session just enter the id displayed in the 
       heading of the scrum master view or use the QR-Code.
     </p>
-
-    <p>
-      <h4>What is Scrumpoker Online</h4>
-      Scrum poker or planning poker is a consensus based, gamified technique to estimate the complexity and effort of a software feature. After
-      presenting the feature, each member of the team picks a vote from different ranges of card sets. The vote remains hidden until all members 
-      have voted to avoid influence from other team members. After everyone has voted the highest and lowest estimates explain their choice and the 
-      process is repeated until the team agrees on a value. <br>
-      Scrumpoker Online is a web implementation of this technique for remote teams or simply to get rid of the paper cards. Its mobile friendly UI 
-      for the member view makes it ideal to participate in the session on a smartphone. Its plugins for ticketing systems like JIRA also enables teams
-      to directly access their next tasks.
-    </p>
-
-    <p>
-      <h4>Support the project</h4>
-      Developing, maintaining and hosting this application costs personal time and money. I would also like to setup mirrors around the world 
-      for improved loading times. If you would like to support my efforts and help keep the lights on, you can either donate through the button below 
-      or <a href="/sponsors">become an official sponsor</a>.
-    </p>
-    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-      <input type="hidden" name="cmd" value="_s-xclick">
-      <input type="hidden" name="hosted_button_id" value="ULK4XY7UZRZL8">
-      <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-      <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
-    </form>
   </article>
 </div>
             
@@ -117,4 +93,33 @@ include "config.php";
     </div>        
   </div>
   
+</div>
+
+<!-- Explaination -->
+<div class="row">
+  <div class="col-xs-12">
+    <p>
+      <h4>What is Scrumpoker Online</h4>
+      Scrum poker or planning poker is a consensus based, gamified technique to estimate the complexity and effort of a software feature. After
+      presenting the feature, each member of the team picks a vote from different ranges of card sets. The vote remains hidden until all members 
+      have voted to avoid influence from other team members. After everyone has voted the highest and lowest estimates explain their choice and the 
+      process is repeated until the team agrees on a value. <br>
+      Scrumpoker Online is a web implementation of this technique for remote teams or simply to get rid of the paper cards. Its mobile friendly UI 
+      for the member view makes it ideal to participate in the session on a smartphone. Its plugins for ticketing systems like JIRA also enables teams
+      to directly access their next tasks.
+    </p>
+
+    <p>
+      <h4>Support the project</h4>
+      Developing, maintaining and hosting this application costs personal time and money. I would also like to setup mirrors around the world 
+      for improved loading times. If you would like to support my efforts and help keep the lights on, you can either donate through the button below 
+      or <a href="/sponsors">become an official sponsor</a>.
+    </p>
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+      <input type="hidden" name="cmd" value="_s-xclick">
+      <input type="hidden" name="hosted_button_id" value="ULK4XY7UZRZL8">
+      <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+      <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+    </form>
+  </div>
 </div>

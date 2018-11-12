@@ -85,13 +85,10 @@ foreach($templates as $index=>$template)
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.min.js"></script>
-<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>  
-<script src="/js/angular-google-analytics.js"></script>
+<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>
 <script src="/js//bootstrap.min.js"></script>
 <script src="/js/J2M.js"></script>
 <script type="text/javascript">
-  var ga_id = '<?= $ga ?>';
-
   var cardSets = [
 <?php foreach($cardSets as $key=>$cardSet) { ?>
     { set: <?= $key ?>, cards: <?= json_encode($cardSet) ?>  },

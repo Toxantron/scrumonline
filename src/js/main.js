@@ -1,5 +1,5 @@
 /*eslint-env browser, jquery*/
-/*globals angular*/
+/*globals angular ga_id*/
 
 var scrum = {  
   // Ticketing sources
@@ -10,6 +10,7 @@ var scrum = {
       feedback: false,
       topic: '',
       description: '',
+      event: ['poll', 'start', 'Default'],
       view: 'default_source.html'
     },
     { 
@@ -54,13 +55,13 @@ var scrum = {
 };
 
 // Define angular app
-scrum.app = angular.module('scrum-online', ['ngRoute', 'ngSanitize', 'ngCookies']);
+scrum.app = angular.module('scrum-online', ['ngRoute', 'ngSanitize', 'ngCookies', 'angular-google-analytics']);
 
 //------------------------------
 // Configure routing
 // -----------------------------
 scrum.app.config(
-  function($locationProvider, $routeProvider) {
+  function($locationProvider, $routeProvider, AnalyticsProvider) {
     // Use HTML5 mode for prettier routes
     $locationProvider.html5Mode(true);
 
@@ -77,18 +78,21 @@ scrum.app.config(
       .when('/session/:id',{
       	templateUrl : 'master.html',
       	controller: 'MasterController',
-        controllerAs: 'master'
+        controllerAs: 'master',
+      	pageTrack: '/session'
       })
       .when('/join', { redirectTo: '/join/0' })
       .when('/join/:id', {
       	templateUrl : 'join.html',
       	controller: 'JoinController',
-        controllerAs: 'join'
+        controllerAs: 'join',
+      	pageTrack: '/join'
       })
       .when('/member/:sessionId/:memberId', {
       	templateUrl : 'member.html',
       	controller: 'MemberController',
-        controllerAs: 'member'
+        controllerAs: 'member',
+      	pageTrack: '/member'
       })
       .when('/sponsors', {
         templateUrl: 'sponsors.html',        
@@ -103,10 +107,25 @@ scrum.app.config(
         templateUrl: 'removal.html',        
       })
       .otherwise({
-      	templateUrl: '404.html'
+      	templateUrl: '404.html',
+      	dontTrack: true
       })
     ;
+    
+  // Set analytics id and remove ids from routes
+  AnalyticsProvider
+          .setAccount({
+            tracker: ga_id,
+            trackEvent: true,
+            set: {
+              anonymizeIp: true
+            }
+          })
+  		   .readFromRoute(true)
+  		   .ignoreFirstPageLoad(true);
 });
+// Run once to activate tracking
+scrum.app.run(function(Analytics) {});
 
 //------------------------------
 // Create controller

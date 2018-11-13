@@ -100,10 +100,22 @@ foreach($templates as $index=>$template)
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.min.js"></script>
-<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>
+<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>  
+<script src="/js/angular-google-analytics.js"></script>
 <script src="/js//bootstrap.min.js"></script>
 <script src="/js/J2M.js"></script>
 <script type="text/javascript">
+  var ga_id = '<?= $ga ?>';
+  var disableStr = 'ga-disable-' + ga_id; 
+  if (document.cookie.indexOf(disableStr + '=true') > -1) { 
+      window[disableStr] = true;
+  } 
+  function gaOptout() { 
+      document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/'; 
+      window[disableStr] = true; 
+      alert('Tracking disabled'); 
+  }
+
   var cardSets = [
 <?php foreach($cardSets as $key=>$cardSet) { ?>
     { set: <?= $key ?>, cards: <?= json_encode($cardSet) ?>  },

@@ -16,7 +16,6 @@ scrum.sources.push({
   loaded: false,
   issues: [],
   issue: {},
-  event: ['poll', 'start', 'JIRA'],
 
   load: function() {
     var self = this;

@@ -1,5 +1,5 @@
 /*eslint-env browser, jquery*/
-/*globals angular ga_id*/
+/*globals angular*/
 
 var scrum = {  
   // Ticketing sources
@@ -10,7 +10,6 @@ var scrum = {
       feedback: false,
       topic: '',
       description: '',
-      event: ['poll', 'start', 'Default'],
       view: 'default_source.html'
     },
     { 
@@ -55,13 +54,13 @@ var scrum = {
 };
 
 // Define angular app
-scrum.app = angular.module('scrum-online', ['ngRoute', 'ngSanitize', 'ngCookies', 'angular-google-analytics']);
+scrum.app = angular.module('scrum-online', ['ngRoute', 'ngSanitize', 'ngCookies']);
 
 //------------------------------
 // Configure routing
 // -----------------------------
 scrum.app.config(
-  function($locationProvider, $routeProvider, AnalyticsProvider) {
+  function($locationProvider, $routeProvider) {
     // Use HTML5 mode for prettier routes
     $locationProvider.html5Mode(true);
 
@@ -78,21 +77,18 @@ scrum.app.config(
       .when('/session/:id',{
       	templateUrl : 'master.html',
       	controller: 'MasterController',
-        controllerAs: 'master',
-      	pageTrack: '/session'
+        controllerAs: 'master'
       })
       .when('/join', { redirectTo: '/join/0' })
       .when('/join/:id', {
       	templateUrl : 'join.html',
       	controller: 'JoinController',
-        controllerAs: 'join',
-      	pageTrack: '/join'
+        controllerAs: 'join'
       })
       .when('/member/:sessionId/:memberId', {
       	templateUrl : 'member.html',
       	controller: 'MemberController',
-        controllerAs: 'member',
-      	pageTrack: '/member'
+        controllerAs: 'member'
       })
       .when('/sponsors', {
         templateUrl: 'sponsors.html',        
@@ -107,18 +103,10 @@ scrum.app.config(
         templateUrl: 'removal.html',        
       })
       .otherwise({
-      	templateUrl: '404.html',
-      	dontTrack: true
+      	templateUrl: '404.html'
       })
     ;
-    
-  // Set analytics id and remove ids from routes
-  AnalyticsProvider.setAccount(ga_id)
-  		   .readFromRoute(true)
-  		   .ignoreFirstPageLoad(true);
 });
-// Run once to activate tracking
-scrum.app.run(function(Analytics) {});
 
 //------------------------------
 // Create controller

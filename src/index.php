@@ -39,12 +39,6 @@ foreach($templates as $index=>$template)
 
   <!-- AdSense code -->
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({
-      google_ad_client: "ca-pub-2180802234513324",
-      enable_page_level_ads: true
-     });
-  </script>
 </head>
 <body ng-app="scrum-online">
 <!--[if lt IE 8]>
@@ -82,12 +76,6 @@ foreach($templates as $index=>$template)
 
 <!-- Add your site or application content here -->
 <div class="container-fluid main" ng-view></div>
-
-<!-- Footer contains sponsors -->
-<footer class="page-footer font-small">
-  <h3>Sponsored by</h3>
-  <?= Sponsor::renderFooter() ?>
-</footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>

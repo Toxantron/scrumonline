@@ -51,6 +51,25 @@ var scrum = {
         setTimeout(callback, interval);
       }
     };
+  })(),
+
+  // Adsense methods
+  adsense: (function() {
+    var initialized = false;
+
+    return {
+      init: function() {
+        if (initialized)
+          return;
+  
+        (window.adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2180802234513324",
+            enable_page_level_ads: true,
+            overlays: {bottom: true}
+           });
+        initialized = true;
+      }
+    };
   })()
 };
 
@@ -164,9 +183,12 @@ scrum.app.controller('CreateController', function CreateController($http, $locat
       isPrivate: self.isPrivate,
       password: self.password
     }).then(function (response) {
-      $location.url('/session/' + response.data.value);
+      window.location = '/session/' + response.data.value;
     });
   };
+
+  // Init adsense
+  scrum.adsense.init();
 });
 
 //------------------------------
@@ -206,7 +228,7 @@ scrum.app.controller('JoinController', function JoinController($http, $location,
     $http.put('/api/session/member/' + self.id + cookieQuery, { name: self.name, password: self.password })
       .then(function (response) {
         var result = response.data;
-        $location.url('/member/' + result.sessionId + '/' + result.memberId);
+        window.location = '/member/' + result.sessionId + '/' + result.memberId;
       }, function () {
         self.idError = true;
       });
@@ -263,7 +285,7 @@ scrum.app.controller('ListController', function($http, $location) {
   this.open = function (session) {
     // Public session
     if (!session.requiresPassword) {
-      $location.url('/session/' + session.id);	
+      window.location = '/session/' + session.id;	
     } else if (session.expanded) {
       this.continue = continueOpen;
     } else {
@@ -428,6 +450,9 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       self.flipped = result.flipped;
       self.consensus = result.consensus;
 
+      // Init adsense after first load
+      scrum.adsense.init();
+
       // If the result has a topic, the team has started estimating
       if(result.topic !== '')
         self.teamComplete = true;
@@ -588,6 +613,8 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
     if (present) {
       // Fetch cards
       getCardSet();
+      // Init adsense
+      scrum.adsense.init();     
     } else {
       $location.url("/join/" + self.id);
     }

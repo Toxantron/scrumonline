@@ -112,8 +112,7 @@ include "config.php";
     <p>
       <h4>Support the project</h4>
       Developing, maintaining and hosting this application costs personal time and money. I would also like to setup mirrors around the world 
-      for improved loading times. If you would like to support my efforts and help keep the lights on, you can either donate through the button below 
-      or <a href="/sponsors">become an official sponsor</a>.
+      for improved loading times. If you would like to support my efforts and help keep the lights on, you can donate through the button below.
     </p>
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
       <input type="hidden" name="cmd" value="_s-xclick">

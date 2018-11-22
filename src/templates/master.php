@@ -113,3 +113,75 @@ $joinUrl = $joinUrl . "{{ master.joinFragment }}";
     </div>
   </div>
 </div>
+
+<!-- Instructions -->
+<div class="row">
+  <article class="col-xs-12 col-lg-10 col-lg-offset-1">
+    <h3>Invite Members</h3>
+    <p>
+      Welcome to your planning poker session, it is time to invite members and start estimating stories and features. Your team members have three 
+      options to join the session: 
+      <ol>
+        <li>
+          <strong>Session Id:</strong> Members can join your session by entering the session id, displayed in the top left corner of the page. 
+          If you chose a private session you must also tell joining members the password for this joining process.
+        </li>
+        <li>
+          <strong>Join URL:</strong> In the bottom left of the session view, below the QR code is the URL to join the session. If you created the session 
+          the URL also contains the session token, which is necessary for authorization and access control. You can send this link to your team members to
+          join the session.
+        </li>
+        <li><strong>QR-Code:</strong> The QR-Code equals the previously mentioned join ULR. It is only a convenience feature for teams who sit in the 
+          same room. Instead of typing the session id or copy&pasting the link your team members can use any QR-Code reader on their smartphones to 
+          quickly join the session.
+        </li>
+      </ol>
+    </p>
+    <p>
+      Independent from the method your team members pick, they all go through the <i>Join Session</i> form. After selecting a member name, and in some cases
+      the session password, they are redirected to the member view of this session. They can pick anything the want as a member name, it must however be 
+      unique within this session, otherwise it would not be possible to identify their votes later. In fact, it is not possible to have two members with 
+      the same name. Instead both members would then simly share the same view and overwrite each others estimates in the process.
+    </p>
+    
+    <h3>Load Stories (optional)</h3>
+    <p>
+      Scrumpoker Online offers integrations for GitHub and JIRA, with more plugins under development. If you would like to use either one of those, select 
+      it from the tab control at the top and enter the necessary information to fetch issues from the server. Your credentials are not stored anywhere and 
+      only transmitted through an encrypted connection. If you are worried you can check for yourself on GitHub or follow the instructions to deploy the 
+      app on-premise.
+    </p>
+
+    <h3>First Estimation</h3>
+    <p>
+      To start the first estimation, enter topic and description of your feature or select an issue from the list, if you chose one of the plugins in the 
+      previous step. As soon as you click <i>Start</i>, the poll begins and the stopwatch in the top right corner starts. Members of your team now see 
+      title and description of the current story on their devices and can start voting.
+    </p>
+    <p>
+      Members of your team place estimates by selecting one of the cards from their screen. After they placed a vote you will now see a card with a 
+      question mark (<b>?</b>) above that members name this view. Until the poll is completed and everyone has voted, members can still change their mind. 
+      They can retract their vote by pressing on the selected card again or simply select a different card. 
+    </p>
+
+    <h3>Poll Completed</h3>
+    <p>
+      Once every member placed his vote, the poll is closed and the cards are flipped. At this time the stopwatch also stops and shows the overall 
+      estimation time for this feature. If the team directly reached a consensus, all cards are highlighted green to indicate a successful estimation. 
+      Otherwise the highest and lowest estimations are highlighted in red. The team members with the highlighted cards should now explain their decision. 
+      After all arguments were heared, you can simply restart the poll by clicking <i>Start</i>. This process is usually repeated until the team agres on 
+      a value.
+    </p>
+    <p>
+      After you completed the first poll, the statistics are enabled. Statistics are shown in the table on the bottom left of the session view and are
+      updated with every completed poll. You can enable and disable individual values depending on your interests.
+    </p>
+
+    <h3>Wrapping up</h3>
+    <p>
+      Once you are finished with the tasks for your next sprint or when the meeting is over, there is no need to close the session or "sign out". Simply close
+      the window and go along with the rest of your day. If you estimate reguarly in the same team constilation you can bookmark your session as well as each
+      member login and return anytime.
+    </p>
+  </article>
+</div>

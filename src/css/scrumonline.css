@@ -313,6 +313,24 @@ div.issue-list {
   border-color: rgba(255, 255, 255, 0.7);
 }
 
+/* Styling of side banners */
+.side-banner {
+  position: fixed;
+  top: 130px;
+  display: none;
+}
+#banner_left {
+  left: 20px;
+}
+#banner_right {
+  right: 20px;
+}
+@media(min-width: 1500px){
+  .side-banner {
+    display: block;
+  }
+}
+
 /* Styling of sponsors */
 footer div.sponsors {
   margin-left: 10%;

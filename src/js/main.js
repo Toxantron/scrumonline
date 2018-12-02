@@ -70,6 +70,26 @@ var scrum = {
         initialized = true;
       }
     };
+  })(),
+
+  // Amazon methods
+  amazon: (function() {
+    // Load a panel
+    function loadBanner(id, url) {
+      $.ajax(url).done(function(data){
+        $(id).html(data);
+      });
+    };
+
+    return {
+      init: function() {
+        if ($(window).width() < 1500)
+          return;
+
+        loadBanner('#banner_left', '/amazon/side');
+        loadBanner('#banner_right', '/amazon/side');
+      }
+    };
   })()
 };
 
@@ -150,7 +170,9 @@ scrum.app.config(
   		   .ignoreFirstPageLoad(true);
 });
 // Run once to activate tracking
-scrum.app.run(function(Analytics) {});
+scrum.app.run(function(Analytics) {
+  scrum.amazon.init();
+});
 
 //------------------------------
 // Create controller

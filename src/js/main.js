@@ -113,6 +113,12 @@ scrum.app.config(
         controllerAs: 'member',
       	pageTrack: '/member'
       })
+      .when('/member/:sessionId/:memberId/:timestamp', {
+      	templateUrl : 'member.html',
+      	controller: 'MemberController',
+        controllerAs: 'member',
+      	pageTrack: '/member'
+      })
       .when('/sponsors', {
         templateUrl: 'sponsors.html',        
       })
@@ -369,7 +375,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   
   // Starting a new poll
   this.startPoll = function (topic, description, url) {
-    $http.post('/api/poll/topic/' + self.id, { topic: topic, description:description || '', url:url || '' }).then(function(response) {
+    $http.post('/api/poll/topic/' + self.id, { topic: topic || 'No Topic', description:description || '', url:url || '' }).then(function(response) {
       // Reset our GUI
       for(var index=0; index < self.votes.length; index++)
       {
@@ -456,7 +462,7 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       // If the result has a topic, the team has started estimating
       if(result.topic !== '')
         self.teamComplete = true;
-      
+
       // Forward result to ticketing system
       if (self.current.feedback && self.flipped && self.consensus) {
         self.current.completed(self.votes[0].value);
@@ -567,6 +573,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
 
       // Voting was closed, get our peers votes
       if(self.votable && !result.votable) {
+        window.location = '/member/' + self.id + '/' + self.member + '/' + result.timestamp;
       }
 
       // Topic changed or poll was opened for voting again

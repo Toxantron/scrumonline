@@ -17,7 +17,6 @@ scrum.sources.push({
   repo: '',
   issues: [],
   issue: {},
-  event: ['poll', 'start', 'Github'],
 
   // Private repo
   isPrivate: false,

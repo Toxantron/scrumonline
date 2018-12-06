@@ -7,13 +7,10 @@ $templates = Template::getAll();
 
 // Find all templates with their own navigation item
 $navItems = [];
-$indexPage;
 foreach($templates as $index=>$template)
 {
   if ($template->isNavigation)
     $navItems[$index] = $template;
-  if ($template->isIndex)
-    $indexPage = $template;
 }
 ?>
 <!doctype html>
@@ -75,23 +72,17 @@ foreach($templates as $index=>$template)
 </nav>
 
 <!-- Add your site or application content here -->
-<div class="container-fluid main" ng-view>
-  <!-- Render index page in here for instand display -->
-  <?php $indexPage->render(false) ?>
-</div>
+<div class="container-fluid main" ng-view></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.min.js"></script>
-<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>  
-<script src="/js/angular-google-analytics.js"></script>
+<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>
 <script src="/js//bootstrap.min.js"></script>
 <script src="/js/J2M.js"></script>
 <script type="text/javascript">
-  var ga_id = '<?= $ga ?>';
-
   var cardSets = [
 <?php foreach($cardSets as $key=>$cardSet) { ?>
     { set: <?= $key ?>, cards: <?= json_encode($cardSet) ?>  },
@@ -107,7 +98,7 @@ foreach($templates as $index=>$template)
 <?php
   foreach($templates as $template)
   {
-     $template->render(true);
+     $template->render();
   }
 ?>
 </body>

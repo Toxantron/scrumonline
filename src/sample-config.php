@@ -11,9 +11,6 @@ $conn = array(
 // This is used to create the join link
 $host = "https://scrumonline.local";
 
-// Google analytics id
-$ga = 'GOOGLE-ANALYTICS';
-  
 $cardSets = [
     // Standard fibonaci like series of values
     ['1', '2', '3', '5', '8', '13', '20', '40', '100'],

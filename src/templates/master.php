@@ -28,7 +28,7 @@ include __DIR__ . "/../config.php";
 <!-- Live poll view and statistics -->
 <div class="row" ng-if="master.teamComplete">
   <div class="card-overview">
-    <div ng-repeat="vote in master.votes track by vote.id" class="col-lg-2 col-sm-3 col-xs-4">        
+    <div ng-repeat="vote in master.votes track by vote.id">        
       <div class="card-container">
         <div class="deletable-card">
           <div class="card-flip" ng-class="{flipped: master.flipped}">

@@ -127,7 +127,23 @@ div.card, div.card-flip {
 
 /* Card flip */
 div.card-overview {
-  perspective: 1000;
+  perspective: 1000px;
+  margin-right: -40px;
+}
+div.card-overview:first-child {
+  margin-left: 15px;
+}
+div.card-overview div.card-container {
+  float: left;  
+  width: 175px;
+}
+@media(min-width: 992px) {
+  div.card-overview {
+    margin-right: -60px;
+  }
+  div.card-overview div.card-container {
+    width: 210px;
+  }
 }
 div.card.front, div.card.back {
   -webkit-backface-visibility: hidden;

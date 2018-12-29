@@ -120,6 +120,12 @@ scrum.app.config(
         controllerAs: 'master',
       	pageTrack: '/session'
       })
+      .when('/session/:id/:timestamp',{
+      	templateUrl : 'master.html',
+      	controller: 'MasterController',
+        controllerAs: 'master',
+      	pageTrack: '/session'
+      })
       .when('/join', { redirectTo: '/join/0' })
       .when('/join/:id', {
       	templateUrl : 'join.html',
@@ -394,6 +400,12 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       self.stopwatch();    
     }, interval);
   };
+
+  // Start stopwatch if we were called with timestamp
+  if ($routeParams.timestamp) {
+    // Start the stopwatch
+    self.stopwatch();
+  }
   
   // Starting a new poll
   this.startPoll = function (topic, description, url) {
@@ -411,6 +423,9 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       self.stopwatchElapsed = '00:00';
       // Start the stopwatch
       self.stopwatch();
+      // Only reload window for default mode. All others do not support proper reload
+      if (self.current === self.sources[0])
+        window.location = '/session/' + self.id + '/' + self.timestamp;
     });
   };
   
@@ -482,8 +497,11 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       scrum.adsense.init();
 
       // If the result has a topic, the team has started estimating
-      if(result.topic !== '')
+      if(result.topic !== '') {
+        self.current.topic = result.topic;
+        self.current.description = result.description;
         self.teamComplete = true;
+      }
 
       // Forward result to ticketing system
       if (self.current.feedback && self.flipped && self.consensus) {

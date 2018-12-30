@@ -501,8 +501,8 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
         self.current.topic = result.topic;
         self.current.description = result.description;
         self.teamComplete = true;
-      }
-
+      }        
+      
       // Forward result to ticketing system
       if (self.current.feedback && self.flipped && self.consensus) {
         self.current.completed(self.votes[0].value);

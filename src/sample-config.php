@@ -43,7 +43,9 @@ $plugins = [
     // Plugin to load issues from github
     'GitHub',
     // Plugin to load issues from JIRA
-    'JIRA'
+    'JIRA',
+    // Plugin to load issues from Gitlab
+    'Gitlab'
 ];
 
 // Configuration for the server side JIRA controller

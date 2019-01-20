@@ -1,0 +1,68 @@
+<!-- Initial screen till static information was put in -->
+<div ng-if="!master.current.loaded">
+  <form role="form">
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label>Server:</label>
+          <input type="text" class="form-control" placeholder="{{master.current.server}}" ng-model="master.current.server">
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label>Repo:</label>
+          <input type="text" class="form-control" placeholder="user/repo" ng-model="master.current.repo">
+        </div>
+      </div>
+    </div>  
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label><input type="checkbox" ng-model="master.current.isPrivate"> is private</label> 
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6" ng-if="master.current.isPrivate">
+        <div class="form-group">
+          <label>Token: <a target="_blank" href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html">?</a></label>
+          <input type="text" class="form-control" ng-model="master.current.token">
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-default" ng-click="master.current.load()">Load issues</button>
+  </form>  
+</div>
+
+<!-- Screen after static process was completed -->
+<div ng-if="master.current.loaded">
+  <div class="row">
+    <div class="col-xs-4">
+        <div class="list-group issue-list">
+          <a  ng-repeat="issue in master.current.issues track by issue.id" class="selectable list-group-item" ng-class="{active: master.current.issue == issue}" ng-click="master.current.issue = issue">
+            #{{ issue.iid }}: {{ issue.title }}
+          </a>
+        </div>
+      </div>
+      <div class="col-xs-8">
+        <div class="row">
+          <div class="col-xs-1">
+            <img src="{{ master.current.issue.author.avatar_url }}" alt="{{ master.current.issue.author.name }}" style="width: 100%" />
+          </div>
+          <div class="col-xs-11">
+            <h2><a href="{{ master.current.issue.web_url }}" target="_blank">#{{ master.current.issue.iid }}</a>: {{ master.current.issue.title }}</h2>
+          </div>
+        </div>
+        <div ng-if="master.current.issue.labels.length > 0">
+          <p><span ng-repeat="label in master.current.issue.labels" class="label label-default">{{ label.name }}</span></p>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            {{ master.current.issue.author.name }} created issue on {{ master.current.issue.created_at | date : "medium" }}
+          </div>
+          <div class="panel-body" style="white-space: pre-line" ng-bind-html="master.current.issue.description"></div>
+        </div>
+        
+        <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.title, master.current.issue.description, master.current.issue.web_url)">Start</button>
+      </div>
+  </div>
+</div>

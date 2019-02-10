@@ -224,6 +224,19 @@ class SessionController extends ControllerBase
     return $this->cardSets;
   }
 
+  // Wipe all data from the session
+  // URL: /api/session/wipe/{id}
+  public function wipe($id)
+  {
+    // Fetch session and verify token
+    $session = $this->getSession($id);
+    if (!$this->verifyToken($session))
+      return;
+    // Remove session and wipe 
+    $this->entityManager->remove($session);
+    $this->entityManager->flush();
+  }
+
   // Set the token cookie for this session 
   // with additional parameters for expiration and path
   private function setCookie($session, $token = null)

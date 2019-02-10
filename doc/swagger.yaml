@@ -214,6 +214,23 @@ paths:
             type: array
             items:
               type: string
+  '/session/wipe/{id}':
+    get:
+      tags:
+        - session
+      summary: Wipe the session and all associated data
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: Id of the session
+      responses:
+        '200':
+          description: Session was wiped
   '/poll/vote/{id}/{mid}':
     post:
       tags:

@@ -43,6 +43,9 @@ footer {
 div.row.topic {
   margin-bottom: 20px;
 }
+button.wipe {
+  margin-top: 10.75px;
+}
 div.topic .form-control {
    width: 280px;
 }

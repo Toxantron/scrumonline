@@ -433,6 +433,17 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   this.remove = function (id) {
     $http.delete("/api/session/member/" + self.id + "/" + id);  
   };
+
+  // Wipe the session and redirect
+  this.wipe = function () {
+    var confirmed = confirm("Do you want to delete the session and wipe all associated data?");
+    if (!confirmed)
+      return;
+      
+    $http.delete('/api/session/wipe/' + self.id).then(function (response){
+      $location.url("/404.html"); // Redirect to 404 when we wiped the session
+    });
+  }
   
   // Select a ticketing system
   this.selectSource = function(source) {

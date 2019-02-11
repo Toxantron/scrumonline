@@ -185,7 +185,12 @@ class SessionController extends ControllerBase
   // URL: /api/session/membercheck/{id}/{mid}
   public function membercheck($sid, $mid)
   {
-    $session = $this->getSession($sid);
+    try{
+      $session = $this->getSession($sid);
+    }
+    catch(Exception $e){
+      return new BoolResponse();
+    }
     foreach($session->getMembers() as $member) {
       if($member->getId() == $mid) {
         return new BoolResponse(true);
@@ -232,7 +237,15 @@ class SessionController extends ControllerBase
     $session = $this->getSession($id);
     if (!$this->verifyToken($session))
       return;
-    // Remove session and wipe 
+    // Clear and wipe polls
+    $session->setCurrentPoll(null);
+    foreach($session->getPolls() as $poll)
+      $this->entityManager->remove($poll);
+    // Wipe all members
+    foreach($session->getMembers() as $member)
+      $this->entityManager->remove($member);
+    $this->entityManager->flush();
+    // Remove session object
     $this->entityManager->remove($session);
     $this->entityManager->flush();
   }

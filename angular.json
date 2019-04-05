@@ -45,7 +45,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/css/bootstrap.min.css",
+              "src/css/scrumonline.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true

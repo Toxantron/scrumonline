@@ -6,6 +6,13 @@
       "type": "php",
       "request": "launch",
       "port": 9000
+    },
+    {
+      "name": "Chrome debugger",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}"
     }
   ]
 }

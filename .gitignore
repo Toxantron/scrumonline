@@ -1,5 +1,7 @@
 vendor/
+node_modules/
 src/config.php
+*.lock
 proxies/
 .vagrant/
 mysql_db

@@ -48,7 +48,9 @@
               "src/css/bootstrap.min.css",
               "src/css/scrumonline.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/js/bootstrap.min.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

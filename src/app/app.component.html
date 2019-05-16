@@ -1,1 +1,27 @@
-<router-outlet></router-outlet>
+<github-fork></github-fork>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" routerLink="/home">Scrum Poker</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li data-toggle="collapse" data-target=".navbar-collapse.in">
+          <a routerLink="/sessions">Sessions</a>
+        </li>     
+      </ul>
+    </div> <!--/.nav-collapse -->
+  </div>
+</nav>
+
+<!-- Add your site or application content here -->
+<div class="container-fluid main" ng-view>
+  <router-outlet></router-outlet>
+</div>

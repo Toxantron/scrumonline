@@ -30,8 +30,8 @@ $cardSets = [
     ['0.5', '1', '2', '3', '5', '8', '13', '20', '40', '100'],
     // Canadian Cash format
     ['1', '2', '5', '10', '20', '50', '100'],
-     // Standard fibonacci with shrug
-    ['1', '2', '3', '5', '8', '13', '¯\_(ツ)_/¯']
+    // Standard fibonacci with shrug
+   ['1', '2', '3', '5', '8', '13', '&#F937;']
 ];
 
 // Src tree for documentation linking from page

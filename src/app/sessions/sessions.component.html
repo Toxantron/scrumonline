@@ -1,3 +1,32 @@
-<p>
-  sessions works!
-</p>
+<div class="row">
+  <div class="col-xs-12 col-md-8 col-md-offset-2">
+    <span class="session-private"><strong class="hidden-xs">Private</strong></span>
+    <span class="session-list left"><strong>Name</strong></span>
+    <span class="session-list center"><strong>Members</strong></span>
+    <span class="session-list right"><strong>Options</strong></span>
+    <div class="list-group">
+      <div class="list-group-item slim" *ngFor="let session of sessions">
+        <div>
+          <span class="session-private"><span *ngIf="session.isPrivate" class="glyphicon glyphicon-lock"></span></span>
+          <span class="session-list left"><strong>{{ session.name }}</strong></span>
+          <span class="session-list center"><strong>{{ session.memberCount }}</strong></span>
+          <span class="session-list right">
+            <button type="button" class="btn btn-default" (click)="openSession(session)">Open</button>
+            <button type="button" class="btn btn-default" (click)="joinSession(session)">Join</button>
+          </span>
+        </div>
+        <div *ngIf="session.expanded">
+          <form role="form" class="form-inline">
+            <div class="form-group has-feedback" [class.has-error]="session.pwdError">
+              <label for="topic">Password:</label>
+              <input type="password" class="form-control" [ngModel]="session.password">
+              <span *ngIf="session.pwdError" class="glyphicon glyphicon-remove form-control-feedback"></span>
+            </div>
+            <button type="button" class="btn btn-default" (click)="continueOperation(session)">Continue</button>
+            <button type="button" class="btn btn-default" (click)="cancelOperation(session)">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Session } from '../session';
-import { CardSet } from '../cardset';
 
 @Component({
   selector: 'join-session',

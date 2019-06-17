@@ -2,44 +2,6 @@
    Scrum poker style
    ========================================================================== */
    
-/* Container */
-.container-fluid.main, .container-fluid.navigation {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.container-fluid.main {
-  min-height: 800px;
-  padding-top: 55px;
-}
-
-footer {
-  font-size: 14px;
-  text-align: center;
-}
-@media (min-width: 992px) {
-  .container-fluid.main, .container-fluid.navigation {
-    padding-left: 50px;
-    padding-right: 50px;
-  }
-  
-  .container-fluid.main {
-    padding-top: 80px;
-  }
-}
-@media (min-width: 1200px) {
-  .container-fluid.main, .container-fluid.navigation {
-    padding-left: 150px;
-    padding-right: 150px;
-  }
-}
-@media (min-width: 1500px) {
-  .container-fluid.main, .container-fluid.navigation {
-    padding-left: 220px;
-    padding-right: 220px;
-  }
-}
-
 div.row.topic {
   margin-bottom: 20px;
 }
@@ -243,50 +205,6 @@ div.delete-member:hover {
 @media (min-width: 992px) {
   div.delete-member {
     left: 115px;
-  }
-}
-
-/*
- * Session style
- */
-span.session-private {
-  width: 10%;
-  text-align: left;
-  display: inline-block;
-}
-span.session-list {
-  width: 27%;
-  display: inline-block;
-}
-span.session-list.left {
-  text-align: left;
-}
-span.session-list.center {
-  text-align: center;
-}
-span.session-list.right {
-  text-align: right;
-}
-
-/*
- * Optimize space usage on mobile with smaller member column
- */
-@media (max-width: 425px) {
-  span.session-private {
-  width: 16px;
-}
-  span.session-list.left {
-    width: 30%;
-  }
-  span.session-list.right {
-    width: 42%;
-  }
-  .list-group-item.slim {
-    padding: 5px;
-  }
-  span.session-list.center {
-   text-align: left;
-   width: 15%;
   }
 }
 

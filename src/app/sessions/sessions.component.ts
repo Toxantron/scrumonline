@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Session } from '../session';
-
-class SessionListItem extends Session {
-  expanded : boolean = false;
-  pwdError : boolean = false;
-
-  constructor() {
-    super();
-  }
-}
+import { Observable, of } from 'rxjs';
+import { Session, SessionListItem } from '../session';
+import { SessionService } from '../session.service';
 
 @Component({
   selector: 'app-sessions',
@@ -17,14 +10,15 @@ class SessionListItem extends Session {
 })
 export class SessionsComponent implements OnInit {
 
-  sessions : SessionListItem[] = [
-    { id: 1, name: 'Test', password: '', isPrivate: false, expanded: false, cardSet: [], pwdError: false, },
-    { id: 1, name: 'Test2', password: '', isPrivate: true, expanded: false, cardSet: [],pwdError: false },
-  ]
+  sessions : SessionListItem[];
 
-  constructor() { }
+  constructor(private sessionService : SessionService) { 
+
+  }
 
   ngOnInit() {
+    this.sessionService.getSessions()
+      .subscribe(sessions => this.sessions = sessions);
   }
 
   openSession(session : SessionListItem) {

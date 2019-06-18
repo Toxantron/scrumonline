@@ -1,5 +1,7 @@
 export class Member {
-  id: number;
-  sessionId: number;
-  name: string;
+  id: number = 0;
+
+  sessionId: number = 0;
+
+  name: string = '';
 }

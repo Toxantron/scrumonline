@@ -1,7 +1,7 @@
 export class CardSet {
-  values : string[];
+  values: string[];
 
-  visual : string;
+  visual: string;
 
   constructor(values : string[]) {
     this.values = values;

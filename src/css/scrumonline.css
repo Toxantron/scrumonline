@@ -2,73 +2,8 @@
    Scrum poker style
    ========================================================================== */
    
-div.row.topic {
-  margin-bottom: 20px;
-}
-button.wipe {
-  margin-top: 10.75px;
-}
-div.topic .form-control {
-   width: 280px;
-}
-@media(min-width: 1200px)
-{
-  div.topic .form-control {
-    width: 500px;
- }
-}
-
 .selectable {
   cursor: pointer;
-}
-
-/*
- * Story style
- */
-form.storysetter {
-  margin-top: 10px;
-}
-
-/*
- * Ticketing
- */
-div.ticketing {
-  padding: 10px;
-  border-width: 0px, 1px, 1px, 1px;
-}
-
-
-/* Card flip */
-div.card-overview {
-  perspective: 1000px;
-}
-div.card-overview:first-child {
-  margin-left: 15px;
-}
-div.card-overview div.card-container {
-  float: left;  
-  width: 33%;
-}
-@media(min-width: 768px) {
-  div.card-overview {
-    margin-right: -40px;
-  }
-  div.card-overview div.card-container {
-    width: 160px;
-  }
-}
-@media(min-width: 992px) {
-  div.card-overview {
-    margin-right: -60px;
-  }
-  div.card-overview div.card-container {
-    width: 195px;
-  }
-}
-@media(min-width: 1200px) {
-  div.card-overview div.card-container {
-    width: 210px;
-  }
 }
 
 div.leave {
@@ -87,12 +22,4 @@ div.delete-member:hover {
  */
 div.removal {
   margin-top: 150px;
-}
-
-/*
- * Plugin styles
- */
-div.issue-list {
-  max-height: 800px;
-  overflow-y: scroll;
 }

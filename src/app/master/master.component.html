@@ -1,3 +1,98 @@
-<p>
-  master works!
-</p>
+<!-- Headline -->
+<div class="row">
+  <div class="col-xs-12 col-sm-1">
+    <button class="btn btn-lg btn-danger wipe" (click)="wipe()">Wipe</button>
+  </div>
+  <div class="col-xs-10 col-sm-8 col-md-10">
+    <h1>{{ session.id }} - {{ session.name }}</h1>
+  </div>
+  <div class="hidden-xs col-sm-2 col-md-1">
+    <h1>{{ stopwatchElapsed }}</h1>
+  </div>
+</div>
+      
+<!-- Poll control -->
+<div class="row topic" *ngIf="session.name">
+  <div class="col-xs-12">
+    <ul class="nav nav-tabs">
+      <li [class.active]="source.active" *ngFor="let source of issueSources">
+        <a class="selectable" (click)="selectSource(source)">{{ source.name }}</a>
+      </li>
+    </ul>
+    <div class="ticketing">
+      <default-source></default-source>
+    </div>
+  </div>
+</div>
+  
+<!-- Live poll view and statistics -->
+<div class="row" *ngIf="teamComplete">
+  <div class="card-overview">
+    <div *ngFor="let vote of votes">        
+      <app-card [card]="vote" [backfaceVisible]="vote.placed" [canDelete]="vote.canDelete"
+                [flipped]="flipped" [canSelect]="false"
+                (delete)="removeMember($event)"></app-card>         
+    </div>
+  </div> 
+</div>
+            
+<!-- Invite and statistics -->            
+<div class="row">
+  <div class="hidden-xs hidden-sm col-md-5">
+    <h2>Invite members</h2>
+    <p>Invite members to join your session. Session id: <strong>{{ session.id }}</strong></p>
+    <img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={{ joinUrl(true) }}&choe=UTF-8" title="Join {{ session.id }}" />
+    <p>Or send them this link: <a href="{{ joinUrl(false) }}">{{ joinUrl(false) }}</a>
+  </div>
+
+  <!-- Team list and complete button -->
+  <div class="col-xs-12 col-md-5" [hidden]="teamComplete">
+    <h2>Team</h2>
+    <ul class="list-group">
+      <!-- Iterate over votes as they represent members as well -->
+      <li class="list-group-item" *ngFor="let vote of votes; let i=index">{{ i + 1 }}. {{ vote.name }}</li>
+    </ul>
+    <button class="btn btn-success" (click)="teamComplete = true">Team complete</button>
+  </div>   
+    
+  <!-- Statistics column -->
+  <div class="col-xs-12 col-md-7" *ngIf="teamComplete">
+    <div class="panel panel-default">
+      <div class="panel-heading">Statistics</div>
+      <div class="panel-body">
+        <table class="table table-striped" *ngIf="statistics; else awaitStatistic">
+          <thead>
+            <tr>
+              <th>Enabled</th>
+              <th>Name</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let statistic of statistics">
+              <td><input type="checkbox" [(ngModel)]="statistic.enabled"></td>
+              <td>
+                <a target="_blank" href="https://github.com/Toxantron/scrumonline/blob/master/src/controllers/statistics/{{statistic.name}}.php">
+                  {{ statistic.name }}
+                </a>
+              </td>
+              <td><span *ngIf="statistic.enabled">{{ statistic.value }}</span></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <a target="_blank" href="https://github.com/Toxantron/scrumonline/blob/master/src/controllers/statistics">
+                  Want more?
+                </a>
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #awaitStatistic>
+          <p>Statistics will appear as soon as the first poll is concluded!</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+/*
+ * Story style
+ */
+ form.storysetter {
+  margin-top: 10px;
+}
+
+.form-control {
+  width: 280px;
+}
+@media(min-width: 1200px)
+{
+ .form-control {
+   width: 500px;
+}
+}

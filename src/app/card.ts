@@ -10,3 +10,16 @@ export class Card {
   constructor() {   
   }
 }
+
+// Cards on the master view actually represent members votes
+export class MemberVote extends Card {
+  id: number;
+
+  placed: boolean;
+
+  canDelete: boolean;
+
+  constructor() {
+    super();    
+  }
+}

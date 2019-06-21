@@ -13,6 +13,7 @@ import { GithubForkComponent } from './github-fork/github-fork.component';
 import { HomeComponent } from './home/home.component';
 import { SessionsComponent } from './sessions/sessions.component';
 import { CardComponent } from './card/card.component';
+import { DefaultSourceComponent } from './master/default-source/default-source.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CardComponent } from './card/card.component';
     GithubForkComponent,
     HomeComponent,
     SessionsComponent,
-    CardComponent
+    CardComponent,
+    DefaultSourceComponent
   ],
   imports: [
     BrowserModule,

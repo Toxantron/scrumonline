@@ -12,6 +12,7 @@ import { MemberComponent } from './member/member.component';
 import { GithubForkComponent } from './github-fork/github-fork.component';
 import { HomeComponent } from './home/home.component';
 import { SessionsComponent } from './sessions/sessions.component';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SessionsComponent } from './sessions/sessions.component';
     MemberComponent,
     GithubForkComponent,
     HomeComponent,
-    SessionsComponent
+    SessionsComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

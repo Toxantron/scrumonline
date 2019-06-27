@@ -6,6 +6,7 @@ import { IssueSource } from './issue-source';
 import { DefaultSourceComponent } from './default-source/default-source.component';
 import { Statistic } from '../statistic';
 import { Topic } from '../topic';
+import { PollService } from '../poll.service';
 
 @Component({
   selector: 'app-master',
@@ -29,22 +30,21 @@ export class MasterComponent implements OnInit, AfterViewInit {
   flipped: boolean;
 
   constructor(
-    private route: ActivatedRoute) { 
+    private route: ActivatedRoute,
+    private pollService: PollService) { 
 
     }
 
   ngOnInit() {
-    // TODO: Read from service
-    var session = new Session();
-    session.id = +this.route.snapshot.paramMap.get('id');
-    session.name = "Hi";
-    this.session = session;
-    
-    this.flipped = true;
-    this.votes = [
-      {id: 1, value: '1', active: false,name: 'Thomas',confirmed: true,placed: true, canDelete: true},
-      {id: 1, value: '3', active: false,name: 'Sandra',confirmed: true,placed: true, canDelete: true},
-    ];
+    this.session.id = +this.route.snapshot.paramMap.get('id');
+    this.pollService.currentPoll(this.session).subscribe(pr => {
+      this.session.name = pr.name;
+      this.flipped = pr.flipped;
+      this.votes = pr.votes;
+      if (pr.topic === '')
+        return;
+      this.teamComplete = true;
+    });
     this.statistics = [
       { name: "Test", value: "123", enabled: true}
     ]

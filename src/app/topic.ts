@@ -1,11 +1,13 @@
 export class Topic {
   id: number;
 
-  name: string;
+  topic: string;
 
   description: string;
 
   url: string;
+
+  votable: boolean;
 
   constructor() {
     

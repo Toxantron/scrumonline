@@ -6,7 +6,7 @@ based on [tutum/lamp](https://github.com/tutumcloud/lamp). It was specialized fo
 The image creates a basic container of debian jessie and the standard LAMP stack.
 
 * Apache2
-* PHP5.6
+* PHP7.1
 * MySQL 5
 
 ## Build

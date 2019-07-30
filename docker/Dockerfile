@@ -1,18 +1,30 @@
-FROM debian:jessie
+FROM debian:stretch
+ENV DEBIAN_FRONTEND noninteractive
+
+# Install tools
+RUN apt-get update && \
+    apt-get -y install curl wget vim \
+    lsb-release gnupg \
+    ca-certificates apt-transport-https 
+
+# Download and register MySQL and PHP package source
+RUN mkdir /download
+RUN wget -P /download https://dev.mysql.com/get/mysql-apt-config_0.8.10-1_all.deb
+RUN dpkg -i /download/mysql-apt-config*
+RUN wget -q https://packages.sury.org/php/apt.gpg -O- | apt-key add -
+RUN echo "deb https://packages.sury.org/php/ stretch main" | tee /etc/apt/sources.list.d/php.list
 
 # Install packages
-ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
-    apt-get -y install supervisor \
-    apache2 libapache2-mod-php5 \
-    mysql-server mysql-client php5-mysql \
-    php5-xdebug php5-curl php5-imagick \
-    curl wget vim
+    apt-get -y --allow-unauthenticated install supervisor \
+    apache2 libapache2-mod-php7.3 \
+    mysql-server mysql-client php7.3-mysql \
+    php7.3-xdebug php7.3-curl php7.3-imagick
 
 # Prepare apache/php config and directory
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-ADD php_config /etc/php5/apache2/php.ini
-ADD php_config /etc/php5/cli/php.ini
+ADD php_config /etc/php/7.3/apache2/php.ini
+ADD php_config /etc/php/7.3/cli/php.ini
 
 # Utils folder
 RUN mkdir /utils
@@ -35,7 +47,7 @@ ADD start-mysqld.sh /utils/start-mysqld.sh
 
 # Config with mod_rewrite
 ADD apache_default /etc/apache2/sites-available/000-default.conf
-ADD xdebug.ini /etc/php5/mods-available/xdebug.ini
+ADD xdebug.ini /etc/php/7.3/mods-available/xdebug.ini
 RUN a2enmod rewrite
 # Allow modification of http headers (needed for CORS)
 RUN a2enmod headers

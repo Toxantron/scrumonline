@@ -3,7 +3,7 @@
 VOLUME_HOME="/var/lib/mysql"
 
 sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}/" \
-        -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" /etc/php5/apache2/php.ini
+        -e "s/^post_max_size.*/post_max_size = ${PHP_POST_MAX_SIZE}/" /etc/php/7.3/apache2/php.ini
     
 # Make sure mysql is installed in directory
 if [[ ! -d $VOLUME_HOME/mysql ]]; then

@@ -31,7 +31,9 @@ $cardSets = [
     // Canadian Cash format
     ['1', '2', '5', '10', '20', '50', '100'],
     // Standard fibonacci with shrug
-   ['1', '2', '3', '5', '8', '13', '&#F937;']
+   ['1', '2', '3', '5', '8', '13', '&#F937;'],
+    // Shtorm Cash format
+    ['1', '2', '3', '4', '6', '8', '12', '16', '20', '24', '32', '40', '80']
 ];
 
 // Src tree for documentation linking from page

@@ -4,10 +4,6 @@ FROM fauria/lamp
 #ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
     apt-get -y install supervisor 
-#    apache2 libapache2-mod-php7 \
-#    mysql-server mysql-client php7-mysql \
-#    php7-xdebug php7-curl php7-imagick \
-#    curl wget vim
 
 # Prepare apache/php config and directory
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf

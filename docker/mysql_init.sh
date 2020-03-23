@@ -15,11 +15,11 @@ mysql -uroot -e "CREATE USER 'myadmin'@'%' IDENTIFIED BY 'myadmin'"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'myadmin'@'%'"
 # Create database and set root password to match config
 mysql -uroot -e "CREATE DATABASE scrum_online"
-mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'"
-mysql -uroot -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('passwd');"
+mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY 'passwd';"
 
 # Create database schema
 pushd /var/www/scrumonline
 ./vendor/bin/doctrine orm:schema-tool:create
 ./vendor/bin/doctrine orm:generate-proxies
 popd
+

@@ -1,18 +1,18 @@
-FROM debian:jessie
+FROM fauria/lamp
 
 # Install packages
-ENV DEBIAN_FRONTEND noninteractive
+#ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
-    apt-get -y install supervisor \
-    apache2 libapache2-mod-php5 \
-    mysql-server mysql-client php5-mysql \
-    php5-xdebug php5-curl php5-imagick \
-    curl wget vim
+    apt-get -y install supervisor 
+#    apache2 libapache2-mod-php7 \
+#    mysql-server mysql-client php7-mysql \
+#    php7-xdebug php7-curl php7-imagick \
+#    curl wget vim
 
 # Prepare apache/php config and directory
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-ADD php_config /etc/php5/apache2/php.ini
-ADD php_config /etc/php5/cli/php.ini
+ADD php_config /etc/php7/apache2/php.ini
+ADD php_config /etc/php7/cli/php.ini
 
 # Utils folder
 RUN mkdir /utils
@@ -35,7 +35,7 @@ ADD start-mysqld.sh /utils/start-mysqld.sh
 
 # Config with mod_rewrite
 ADD apache_default /etc/apache2/sites-available/000-default.conf
-ADD xdebug.ini /etc/php5/mods-available/xdebug.ini
+ADD xdebug.ini /etc/php7/mods-available/xdebug.ini
 RUN a2enmod rewrite
 # Allow modification of http headers (needed for CORS)
 RUN a2enmod headers

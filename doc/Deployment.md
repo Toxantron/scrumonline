@@ -9,7 +9,7 @@ The app requires a couple of packages you need to install on your system. Those 
 - PHP >= 5.6
 - MySQL, MySQL-PDO
 
-or alternatively you can use [Vagrant](Vagrant.md) or [Docker](Docker.md).
+or alternatively you can use [Docker](https://github.com/chrisns/scrumonline) provided and maintained by @chrisns.
 
 # Webservers
 - [Nginx Deployment](Deployment-Nginx.md)

@@ -9,7 +9,7 @@ $conn = array(
 );
 
 // This is used to create the join link
-$host = "https://scrumonline.local";
+$host = "https://localhost";
 
 $cardSets = [
     // Standard fibonaci like series of values

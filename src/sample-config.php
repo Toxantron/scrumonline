@@ -36,6 +36,8 @@ $cardSets = [
    ['1', '2', '3', '5', '8', '13', '&#F937;']
     //Salesforce Estimates 
     ['0.5','1','3','5','8']
+    // Values for Delegation Poker as described at https://management30.com/practice/delegation-poker/ 
+    ['1', '2', '3', '4', '5', '6', '7']
 ];
 
 // Src tree for documentation linking from page

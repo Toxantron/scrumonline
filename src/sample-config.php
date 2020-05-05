@@ -9,7 +9,7 @@ $conn = array(
 );
 
 // This is used to create the join link
-$host = "https://scrumonline.local";
+$host = "https://localhost";
 
 $cardSets = [
     // 1, 3, 5, 8

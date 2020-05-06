@@ -36,11 +36,29 @@ foreach($templates as $index=>$template)
 
   <!-- Pretty cookie consent and styling -->
   <?php include("templates/cookie_notice.php") ?>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-W59VHQV');</script>
 </head>
 <body ng-app="scrum-online">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W59VHQV"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!--[if lt IE 8]>
    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
+
+<!--new ribbon
+<div class="fork-ribbon-wrapper green">
+  <div class="fork-ribbon-border"></div>
+  <div class="fork-ribbon-container">
+    <div class="fork-ribbon">
+      <div class="fork-ribbon-content"><a href="#"><i class="fa fa-github"></i><br/>Fork me on GitHub</a></div>
+    </div>
+  </div>
+</div>
+-->
 
 <!--Github Fork Badge -->
 <div class="github-fork-ribbon-wrapper hidden-xs">

@@ -56,6 +56,9 @@
       <div class="list-group issue-list">
         <a  ng-repeat="issue in master.current.issues track by issue.id" class="selectable list-group-item" ng-class="{active: master.current.issue == issue}" ng-click="master.current.issue = issue">
           {{ issue.key }}: {{ issue.fields.summary }}
+          <span class="badge badge-primary">
+            {{ issue.fields.customfield_10152} }}
+          </span>          
         </a>
       </div>
     </div>

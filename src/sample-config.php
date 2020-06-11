@@ -36,6 +36,8 @@ $cardSets = [
    ['1', '2', '3', '5', '8', '13', '&#F937;']
     //Salesforce Estimates 
     ['0.5','1','3','5','8']
+    //Agile Evaluation scores
+    ['0','1','2','3','4']
 ];
 
 // Src tree for documentation linking from page

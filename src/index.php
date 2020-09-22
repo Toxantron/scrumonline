@@ -1,7 +1,7 @@
 <?php
 include "config.php";
 include "templates/templates.php";
-include "sponsors.php";
+
 
 $templates = Template::getAll();
 

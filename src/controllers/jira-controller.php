@@ -24,7 +24,7 @@ class JiraController extends ControllerBase
             )
         ));
 
-        if ($parameters['project'] !== null and $parameters['jql'] !== null) {
+        if (!$parameters['disable_jira_fields']) {
             $jql = 'project = ' . $parameters['project'] . ' ' . $parameters['jql'];
         }
 

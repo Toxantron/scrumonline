@@ -5,10 +5,9 @@ scrum.sources.push({
   // Fixed properties and methods
   name: "JIRA",
   position: 3,
-  view: "templates/jira_source.html",
+  view: "templates/jira_source.php",
   feedback: false,
   jql: 'AND issuetype in ("User Story", "Offener Punkt") ORDER BY Rank ASC',
-  disable_jira_fields: false,
   // Feedback call for completed poll
   completed: function (result) {
   },

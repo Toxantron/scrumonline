@@ -53,6 +53,7 @@ $plugins = [
 $jiraConfiguration = [
     'base_url' => null,
     'issue-limit' => 15,
+    'disable_jira_fields' => false,
     'username' => null,
     'password' => null,
     'project' => null,

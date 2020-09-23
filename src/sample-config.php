@@ -51,11 +51,12 @@ $plugins = [
 
 // Configuration for the server side JIRA controller
 $jiraConfiguration = [
-    'base_url' => '',
-    'username' => '',
-    'password' => '',
-    'project' => '',
-    'jql' => '',
+    'base_url' => null,
+    'issue-limit' => 15,
+    'username' => null,
+    'password' => null,
+    'project' => null,
+    'jql' => null
 ];
 
 //Configuration for Enable/Disable style elements

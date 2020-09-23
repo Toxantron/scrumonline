@@ -73,7 +73,8 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          {{ master.current.issue.fields.creator.displayName }} created issue on {{ master.current.issue.fields.created | date : "medium" }}
+          {{ master.current.issue.fields.creator.displayName }} created issue on {{
+          master.current.issue.fields.created.date}}
         </div>
         <div class="panel-body" style="white-space: pre-line" ng-bind-html="master.current.issue.fields.description"></div>
       </div>

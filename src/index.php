@@ -42,13 +42,14 @@ foreach($templates as $index=>$template)
    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<!--Github Fork Badge -->
-<div class="github-fork-ribbon-wrapper hidden-xs">
-  <div class="github-fork-ribbon">
-    <a target="_blank" href="https://github.com/Toxantron/scrumonline">Fork me on GitHub</a>
-  </div>
-</div>
-
+<?php if(!$layout_switch['disable_fork_banner']){?>
+    <!--Github Fork Badge -->
+    <div class="github-fork-ribbon-wrapper hidden-xs">
+      <div class="github-fork-ribbon">
+        <a target="_blank" href="https://github.com/Toxantron/scrumonline">Fork me on GitHub</a>
+      </div>
+    </div>
+<?php }?>
 <!-- Top navigation bar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid navigation">

@@ -57,3 +57,9 @@ $jiraConfiguration = [
     'project' => '',
     'jql' => '',
 ];
+
+//Configuration for Enable/Disable style elements
+$layout_switch = [
+    'disable_donate_infos' => true,
+    'disable_fork_banner' => true
+];

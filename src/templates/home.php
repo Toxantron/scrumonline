@@ -10,18 +10,6 @@ include "config.php";
       and invite your team to join you. It is recommended to display the scrum master view on the big screen (TV or projector) and let everyone else 
       join via smartphone. To join a session just enter the id displayed in the heading of the scrum master view or use the QR-Code.
     </p>
-    <?php if(!$layout_switch['disable_donate_infos']){?>
-        <p>
-          Developing, maintaining and hosting this application costs personal time and money. If you would like to support my efforts and help keep the
-          lights on, you can either donate through the button below or <a href="https://scrumpoker.online/sponsors">become an official sponsor</a>.
-        </p>
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-          <input type="hidden" name="cmd" value="_s-xclick">
-          <input type="hidden" name="hosted_button_id" value="ULK4XY7UZRZL8">
-          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-          <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
-        </form>
-    <?php }?>
   </article>
 </div>
             

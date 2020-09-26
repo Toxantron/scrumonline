@@ -160,12 +160,12 @@ class PollController extends ControllerBase
 
       $diff = $currentPoll->getEndTime()->diff($currentPoll->getStartTime());
       $response->duration = $diff;
-    } 
+    }
 
     // Members votes
     $cardSet = $this->getCardSet($session);
     $query = $this->entityManager
-      ->createQuery('SELECT m.id, m.name, v.value, v.highlighted FROM member m LEFT JOIN m.votes v WITH (v.member = m AND v.poll = ?1) WHERE m.session = ?2')
+      ->createQuery('SELECT m.id, m.name, v.value, v.highlighted FROM \Member m LEFT JOIN m.votes v WITH (v.member = m AND v.poll = ?1) WHERE m.session = ?2')
       ->setParameter(1, $currentPoll)
       ->setParameter(2, $session);
     $result = $query->getArrayResult();

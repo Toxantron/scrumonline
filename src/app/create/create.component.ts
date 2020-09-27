@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Session } from '../session';
 import { CardSet } from '../cardset';
 import { SessionService } from '../session.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'create-session',
@@ -19,7 +20,9 @@ export class CreateComponent implements OnInit {
   cardSets: CardSet[] = [];
   selectedSet: CardSet = new CardSet([]);
 
-  constructor(private sessionService : SessionService) {
+  constructor(
+    private sessionService : SessionService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -40,7 +43,7 @@ export class CreateComponent implements OnInit {
       this.nameError = true;
 
     this.sessionService.createSession(this.session).subscribe(id => {
-      // TODO: Navigate to master view
+      this.router.navigate(['/session', id])
     });
   }
 }

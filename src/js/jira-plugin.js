@@ -8,6 +8,7 @@ scrum.sources.push({
   view: "templates/jira_source.html",
   feedback: false,
   jql: 'issuetype=story and status=backlog',
+  disable_jira_fields : false,
   // Feedback call for completed poll
   completed: function(result) {
   },

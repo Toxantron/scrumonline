@@ -4,7 +4,8 @@
     <div class="row" ng-if="master.current.error">
       <div class="alert alert-danger">{{master.current.error}}</div>
     </div>
-    <div class="row">
+
+    <div class="row" ng-if="!master.current.disable_jira_fields">
       <div class="col-xs-12 col-md-6">
         <div class="form-group">
           <label>JIRA base url:</label>
@@ -18,6 +19,7 @@
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="form-group">
@@ -77,6 +79,7 @@
       </div>
 
       <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.key + ' ' + master.current.issue.fields.summary, master.current.issue.fields.description, master.current.base_url + '/browse/' + master.current.issue.key)">Start</button>
+      <button class="btn btn-default" ng-click="master.stopPoll()">Stop</button> 
     </div>
   </div>
 </div>

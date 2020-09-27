@@ -160,12 +160,12 @@ class PollController extends ControllerBase
 
       $diff = $currentPoll->getEndTime()->diff($currentPoll->getStartTime());
       $response->duration = $diff;
-    } 
+    }
 
     // Members votes
     $cardSet = $this->getCardSet($session);
     $query = $this->entityManager
-      ->createQuery('SELECT m.id, m.name, v.value, v.highlighted FROM member m LEFT JOIN m.votes v WITH (v.member = m AND v.poll = ?1) WHERE m.session = ?2')
+      ->createQuery('SELECT m.id, m.name, v.value, v.highlighted FROM \Member m LEFT JOIN m.votes v WITH (v.member = m AND v.poll = ?1) WHERE m.session = ?2')
       ->setParameter(1, $currentPoll)
       ->setParameter(2, $session);
     $result = $query->getArrayResult();
@@ -247,6 +247,32 @@ class PollController extends ControllerBase
     
     // Save changes
     $this->saveAll([$session, $poll]);
+  }
+
+  // Close current poll and ignore missing votes
+  // URL: /api/poll/close/{id}
+  public function close($sessionId)
+  {
+    $session = $this->getSession($sessionId);
+    $currentPoll = $session->getCurrentPoll();
+    // No poll or already closed, nothing to do
+    if ($currentPoll == null || $currentPoll->getResult() >= 0)
+      return;
+
+    // Load the SessionEvaluation required for this    
+    include __DIR__ .  "/session-evaluation.php";
+
+    // Force poll evaluation
+    if(SessionEvaluation::evaluatePoll($session, $currentPoll, true))
+    {
+      $cardSet = $this->getCardSet($session);
+      SessionEvaluation::highlightVotes($session, $currentPoll, $cardSet);
+    }
+
+    // Save all to db
+    $session->setLastAction(new DateTime());
+    $this->saveAll([$session, $currentPoll]);
+    $this->saveAll($currentPoll->getVotes()->toArray());
   }
 }
 

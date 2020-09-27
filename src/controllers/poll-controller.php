@@ -248,6 +248,32 @@ class PollController extends ControllerBase
     // Save changes
     $this->saveAll([$session, $poll]);
   }
+
+  // Close current poll and ignore missing votes
+  // URL: /api/poll/close/{id}
+  public function close($sessionId)
+  {
+    $session = $this->getSession($sessionId);
+    $currentPoll = $session->getCurrentPoll();
+    // No poll or already closed, nothing to do
+    if ($currentPoll == null || $currentPoll->getResult() >= 0)
+      return;
+
+    // Load the SessionEvaluation required for this    
+    include __DIR__ .  "/session-evaluation.php";
+
+    // Force poll evaluation
+    if(SessionEvaluation::evaluatePoll($session, $currentPoll, true))
+    {
+      $cardSet = $this->getCardSet($session);
+      SessionEvaluation::highlightVotes($session, $currentPoll, $cardSet);
+    }
+
+    // Save all to db
+    $session->setLastAction(new DateTime());
+    $this->saveAll([$session, $currentPoll]);
+    $this->saveAll($currentPoll->getVotes()->toArray());
+  }
 }
 
 return new PollController($entityManager, $cardSets);

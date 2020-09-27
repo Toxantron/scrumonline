@@ -4,7 +4,7 @@ class UserVote
   private function __construct()
   {
     $this->placed = false;
-    $this->value = 0;
+    $this->value = 'N/A';
     $this->active = false;
   }
   

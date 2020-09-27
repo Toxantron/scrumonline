@@ -428,6 +428,11 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
         window.location = '/session/' + self.id + '/' + self.timestamp;
     });
   };
+
+  // Force stop a poll
+  this.stopPoll = function () {
+    $http.post('/api/poll/close/' + self.id);
+  };
   
   // Remove a member from the session
   this.remove = function (id) {

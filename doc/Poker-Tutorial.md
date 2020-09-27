@@ -31,4 +31,4 @@ Once every member placed his vote, the poll is closed and the cards are flipped.
 After you completed the first poll, the statistics are enabled. Statistics are shown in the table on the bottom left of the session view and are updated with every completed poll. You can enable and disable individual values depending on your interests.
 
 ## Wrapping up
-Once you are finished with the tasks for your next sprint or when the meeting is over, there is no need to close the session or "sign out". Simply close the window and go along with the rest of your day. If you estimate reguarly in the same team constilation you can bookmark your session as well as each member login and return anytime.
+Once you are finished with the tasks for your next sprint or when the meeting is over, there is no need to close the session or "sign out". Simply close the window and go along with the rest of your day. If you estimate regularly in the same team constellation you can bookmark your session as well as each member login and return anytime.

@@ -91,6 +91,8 @@ class ControllerBase
     $token = crypt($name . $password, '$1$ScrumSalt');
     $fragments = explode('$', $token);
     $hash = $fragments[sizeof($fragments) - 1];
+    // Bas64 contains weird characters, so use HEX instead
+    $hash = bin2hex(base64_decode($hash));
     return $hash;
   }
 

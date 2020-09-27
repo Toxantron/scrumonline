@@ -1,6 +1,6 @@
 {
     "require": {
-        "doctrine/orm": "2.4.*",
+        "doctrine/orm": "^2.7.3",
         "symfony/yaml": "2.*",
         "guzzlehttp/guzzle": "^6.2"
     },

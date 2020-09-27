@@ -3,7 +3,7 @@
 ## Requirements
 The app requires a couple of packages you need to install on your system. Those are:
 - Nginx >=1.6
-- PHP >= 5.6
+- PHP >= 7.1
 - MySQL, MySQL-PDO
 
 ## PHP Configuration

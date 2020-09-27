@@ -4,7 +4,7 @@
 The app requires a couple of packages you need to install on your system. Those are:
 * Apache >= 2.2
   * mod_rewrite
-* PHP >= 5.6
+* PHP >= 7.1
 * MySQL, MySQL-PDO
 
 You need to install and enable `mod_rewrite`. You can do this by following [this SO answer](http://stackoverflow.com/a/5758551/6082960) or simply run the commands (as root):

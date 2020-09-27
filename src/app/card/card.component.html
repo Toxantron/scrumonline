@@ -1,0 +1,18 @@
+<div class="card-container">
+  <div class="deletable-card">
+    <div class="card-flip" [class.flipped]="flipped">
+      <div class="card front">
+        <div *ngIf="backfaceVisible" class="inner"><span class="card-label">?</span></div>
+      </div>
+      <div class="card back" 
+        [class.selectable]="canSelect" [class.active]="card.active" [class.confirmed]="card.confirmed" 
+        (click)="select()">
+        <div class="inner"><span class="card-label" [innerHtml]="card.value"></span></div>
+      </div>
+    </div>
+    <div *ngIf="canDelete" class="delete-member remove selectable" (click)="delete()">
+      <span class="glyphicon glyphicon-remove"></span>
+    </div>
+  </div>
+  <h2 *ngIf="card.name">{{ card.name }}</h2>
+</div>

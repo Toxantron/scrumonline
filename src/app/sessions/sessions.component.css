@@ -1,0 +1,44 @@
+
+/*
+ * Session style
+ */
+ span.session-private {
+  width: 10%;
+  text-align: left;
+  display: inline-block;
+}
+span.session-list {
+  width: 27%;
+  display: inline-block;
+}
+span.session-list.left {
+  text-align: left;
+}
+span.session-list.center {
+  text-align: center;
+}
+span.session-list.right {
+  text-align: right;
+}
+
+/*
+ * Optimize space usage on mobile with smaller member column
+ */
+@media (max-width: 425px) {
+  span.session-private {
+  width: 16px;
+}
+  span.session-list.left {
+    width: 30%;
+  }
+  span.session-list.right {
+    width: 42%;
+  }
+  .list-group-item.slim {
+    padding: 5px;
+  }
+  span.session-list.center {
+   text-align: left;
+   width: 15%;
+  }
+}

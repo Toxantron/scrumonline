@@ -1,0 +1,11 @@
+<form role="form" class="form-inline storysetter" *ngIf="active">
+  <div class="form-group">
+    <label for="topic">Story:</label>
+    <input type="text" name="name" class="form-control" [(ngModel)]="current.name" placeholder="#4711 Create foo">
+  </div>
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <input type="text" name="description" class="form-control" [(ngModel)]="current.description" placeholder="The user can create an awesome foo">
+  </div>
+  <button class="btn btn-default" (click)="newPoll(current)">Start</button>
+</form>

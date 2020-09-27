@@ -10,7 +10,7 @@ class SessionEvaluation
     $sum = 0;
     $count = $currentPoll->getVotes()->count();
     
-    if (!$force && ($count <= 0 || $count != $session->getMembers()->count()))
+    if ($count <= 0 || $count != $session->getMembers()->count() && !$force)
       return false;
     
     foreach($currentPoll->getVotes() as $vote)

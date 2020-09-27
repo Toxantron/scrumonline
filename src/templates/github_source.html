@@ -62,7 +62,8 @@
           <div class="panel-body" style="white-space: pre-line" ng-bind-html="master.current.issue.body"></div>
         </div>
         
-        <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.title, master.current.issue.body, master.current.issue.html_url">Start</button>
+        <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.title, master.current.issue.body, master.current.issue.html_url)">Start</button>
+        <button class="btn btn-default" ng-click="master.stopPoll()">Stop</button>
       </div>
   </div>
 </div>

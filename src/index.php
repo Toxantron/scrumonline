@@ -42,7 +42,7 @@ foreach($templates as $index=>$template)
    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<?php if(!$layout_switch['disable_fork_banner']){?>
+<?php if($layout_switch['enable_fork_banner']){?>
     <!--Github Fork Badge -->
     <div class="github-fork-ribbon-wrapper hidden-xs">
       <div class="github-fork-ribbon">

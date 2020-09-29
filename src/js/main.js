@@ -335,6 +335,11 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
       self.stopwatch();
     });
   };
+
+  // Force stop a poll
+  this.stopPoll = function () {
+    $http.post('/api/poll/close/' + self.id);
+  };
   
   // Remove a member from the session
   this.remove = function (id) {

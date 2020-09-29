@@ -2,6 +2,7 @@ vendor/
 node_modules/
 src/config.php
 *.lock
+!composer.lock
 proxies/
 .vagrant/
 mysql_db

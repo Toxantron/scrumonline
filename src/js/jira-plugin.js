@@ -5,29 +5,38 @@ scrum.sources.push({
   // Fixed properties and methods
   name: "JIRA",
   position: 3,
-  view: "templates/jira_source.html",
+  view: "templates/jira_source.php",
   feedback: false,
-  jql: 'issuetype=story and status=backlog',
-  disable_jira_fields : false,
+  jql: 'AND issuetype in ("User Story", "Offener Punkt") ORDER BY Rank ASC',
   // Feedback call for completed poll
-  completed: function(result) {
+  completed: function (result) {
   },
-  
+
   // Custom properties and methods
   loaded: false,
   issues: [],
   issue: {},
 
-  load: function() {
+  load: function () {
     var self = this;
+    var queryParameters = null;
 
-    var queryParameters = $.param({
-      base_url: this.base_url,
-      username: this.username,
-      password: this.password,
-      project: this.project,
-      jql: this.jql
-    });
+    if (this.base_url == null) {
+      queryParameters = $.param({
+        username: this.username,
+        password: this.password,
+        jql: this.jql
+      });
+    } else {
+      queryParameters = $.param({
+        base_url: this.base_url,
+        username: this.username,
+        password: this.password,
+        project: this.project,
+        jql: this.jql
+      });
+    }
+
 
     this.parent.$http({
       url: '/api/jira/getIssues',
@@ -35,19 +44,20 @@ scrum.sources.push({
       data: queryParameters,
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     })
-      .then(function (response) {
-        var data = response.data;
+        .then(function (response) {
+          var data = response.data;
 
-        if (!data || !data.issues) {
-          self.error = 'Can\'t load Jira issues, check configuration';
-        } else {
-          var converter = new showdown.Converter();
-          // Convert JIRA format to Markdown and then to HTML
-          response.data.issues.forEach(function(issue) {
-            var markdown = J2M.toM(issue.fields.description || '');
-            issue.fields.description = converter.makeHtml(markdown);
-          });
-          self.issues = response.data.issues;
+          if (!data || !data.issues) {
+            self.error = 'Can\'t load Jira issues, check configuration';
+          } else {
+            var converter = new showdown.Converter();
+            // Convert JIRA format to Markdown and then to HTML
+            response.data.issues.forEach(function (issue) {
+              var markdown = J2M.toM(issue.fields.description || '');
+              issue.fields.description = converter.makeHtml(markdown);
+            });
+            self.base_url = response.data.base_url;
+            self.issues = response.data.issues;
           self.issue = self.issues[0];
           self.loaded = true;
         }

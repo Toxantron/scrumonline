@@ -7,6 +7,7 @@ use Doctrine\Common\Proxy\AbstractProxyFactory;
 require_once __DIR__ . "/../vendor/autoload.php";
 require_once __DIR__ . "/config.php";
 
+
 // Create a simple "default" Doctrine ORM configuration for Annotations
 $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/model"));
 $config->setAutoGenerateProxyClasses(AbstractProxyFactory::AUTOGENERATE_NEVER);
@@ -24,30 +25,35 @@ require_once __DIR__ . "/model/vote.php";
 /*
  * Base class for all controllers
  */
+
 class ControllerBase
 {
-  protected $entityManager;
+    protected $entityManager;
 
-  // Configured cards sets
-  public $cardSets;
-  
-  function __construct($entityManager, $cardSets = [])
-  {
-    $this->entityManager = $entityManager;
-    $this->cardSets = $cardSets;
-  }
-  
-  // Get session by id
-  protected function getSession($id)
-  {
-    $session = $this->entityManager->find("Session", $id);
-    if($session == null)
-      throw new Exception("Unknown session id!");
-    return $session;
-  }
-  
-  // Get member by id
-  protected function getMember($id)
+    // Configured cards sets
+    public $cardSets;
+    // Configured Jira
+    public $jiraConfiguration;
+
+    function __construct($entityManager, $cardSets = [])
+    {
+        global $jiraConfiguration;
+        $this->entityManager = $entityManager;
+        $this->cardSets = $cardSets;
+        $this->jiraConfiguration = $jiraConfiguration;
+    }
+
+    // Get session by id
+    protected function getSession($id)
+    {
+        $session = $this->entityManager->find("Session", $id);
+        if ($session == null)
+            throw new Exception("Unknown session id!");
+        return $session;
+    }
+
+    // Get member by id
+    protected function getMember($id)
   {
     $member = $this->entityManager->find("Member", $id);
     return $member;

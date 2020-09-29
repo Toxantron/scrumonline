@@ -1,29 +1,41 @@
 <?php
 
+use JiraRestApi\Configuration\ArrayConfiguration;
+use JiraRestApi\Issue\IssueService;
+use JiraRestApi\JiraException;
+
 /*
  * Jira controller class to handle all Jira operations
  */
+
 class JiraController extends ControllerBase
 {
+
     public function getIssues()
     {
-        $parameters = array_merge((array) $jiraConfiguration, $_POST);
+        $parameters = array_replace_recursive($this->jiraConfiguration, $_POST);
+        $jql = $parameters['jql'];
 
-        $jiraUrl = $parameters['base_url'] . '/rest/api/2/search?jql=project=' . $parameters['project'];
-        if ($parameters['jql']) {
-            $jiraUrl .= ' and ' . $parameters['jql'];
+        $CurrentIssueService = new IssueService(new ArrayConfiguration(
+            array(
+                'jiraHost' => $parameters['base_url'],
+                'jiraUser' => $parameters['username'],
+                'jiraPassword' => $parameters['password']
+            )
+        ));
+
+        if (!$parameters['disable_jira_fields']) {
+            $jql = 'project = ' . $parameters['project'] . ' ' . $parameters['jql'];
         }
 
-        if (substr_count(strtolower($parameters['jql']), "order by") == 0 && substr_count(strtolower($parameters['jql']), "order%20by") == 0) {
-            $jiraUrl .= ' order by priority';
+        try {
+            $ret = $CurrentIssueService->search($jql, 0, $parameters['issue-limit']);
+            $ret->base_url = $parameters['base_url'];
+        } catch (JiraException $e) {
+            $ret = "" . $e;
         }
 
-        $client = new GuzzleHttp\Client();
-        $res = $client->request('GET', $jiraUrl, [
-            'auth' => [$parameters['username'], $parameters['password']]
-        ]);
-        $response = json_decode($res->getBody()->getContents(), true);
-        return $response;
+        return $ret;
     }
 }
 

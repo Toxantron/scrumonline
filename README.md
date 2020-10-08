@@ -21,6 +21,18 @@ For every story the Scrum Master will than start a poll and each member of the s
 * Statistics tab in navigation bar
 * Mobile apps with watch support. Imagine voting on Android Wear or Apple Watch. Wouldn't that be cool? :D
 
+## Quick Installation (docker based)
+
+The quick installation can be done with the included Docker configurations. In the Docker configuration, three systems are initiated and booted: the HTTP service with the software Scrumonline, the required database service based on MySQL and optionally a pypmyadmin.
+
+In order to terminate, recreate and start any running containers of Scrumonline the following commands have to be called in the Scrumonline directory:
+
+``` bash
+docker-compose down && docker-compose build --no-cache && docker-compose up
+```
+
+Please wait until the console displays `Scrumonline is now accessible. Have a nice time!` appears. The Scrumonline provided by the container can now be reached by calling the address `http://localhost:8001` in your browser.
+
 ## Contribute
 If you want to contribute you can just clone the repository and follow the deployment instructions. Any changes must be commited to a fork and then merged by issuing a pull request. For information on the REST API or ticketing plugins please have a look at the [wiki documentation](https://github.com/Toxantron/scrumonline/blob/master/doc/).
 

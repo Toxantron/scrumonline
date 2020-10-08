@@ -1,0 +1,46 @@
+version: "3"
+services:
+    www:
+        build: .
+        ports:
+            - "8001:80"
+        environment:
+            # reading environment vars from .env file
+            MYSQL_HOST: ${MYSQL_HOST}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_CHECK_DATABASE: ${MYSQL_CHECK_DATABASE}
+            MYSQL_CHECK_TABLE: ${MYSQL_CHECK_TABLE}
+        links:
+            - db:db
+        network_mode: bridge
+        restart: unless-stopped
+
+    db:
+        image: mysql:8.0.16
+        command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-authentication-plugin=mysql_native_password']
+        ports:
+            - "3306:3306"
+        environment:
+            # reading environment vars from .env file
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        network_mode: bridge
+        restart: unless-stopped
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:4.8
+        links:
+            - db:db
+        ports:
+            - 8000:80
+        environment:
+            # reading environment vars from .env file
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        network_mode: bridge

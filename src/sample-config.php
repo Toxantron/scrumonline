@@ -46,7 +46,9 @@ $plugins = [
     // Plugin to load issues from JIRA
     'JIRA',
     // Plugin to load issues from Gitlab
-    'Gitlab'
+    'Gitlab',
+    // Plugin to load issues from Taiga
+    'Taiga'
 ];
 
 // Configuration for the server side JIRA controller
@@ -56,6 +58,15 @@ $jiraConfiguration = [
     'password' => '',
     'project' => '',
     'jql' => '',
+];
+
+// Configuration for the server side Taiga controller
+$taigaConfiguration = [
+    'base_url' => '',
+    'username' => '',
+    'password' => '',
+    'type' => 'normal',
+    'project' => '',
 ];
 
 //Configuration for Enable/Disable style elements

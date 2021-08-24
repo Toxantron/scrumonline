@@ -33,7 +33,9 @@ $cardSets = [
     // Standard fibonacci with shrug
     ['1', '2', '3', '5', '8', '13', '&#F937;'],
     // Standard fibonaci like series of values with 0, 1/2, infinity, and shrug
-    ['0', '1/2', '1', '2', '3', '5', '8', '13', '20', '40', '100', '&#8734;', '&#F937;']
+    ['0', '1/2', '1', '2', '3', '5', '8', '13', '20', '40', '100', '&#8734;', '&#F937;'],
+    // Decimal values representing number of dev weeks of effort
+    ['0.1', '0.2', '0.5', '1', '2', '?']
 ];
 
 // Src tree for documentation linking from page

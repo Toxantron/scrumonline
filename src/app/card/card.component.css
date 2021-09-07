@@ -1,0 +1,122 @@
+/*
+ * Cards style
+ */
+ div.card-container {
+  margin-bottom: 20px;
+}
+
+div.card-container h2 {
+  font-weight: bold;
+  width: 100px;
+  min-height: 70px;
+  text-align: center;
+}
+@media(min-width: 992px){
+  div.card-container h2 {
+    width: 130px;
+  }
+}
+
+div.card {
+  border: 2px solid #0F1593;
+  border-radius: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+div.card .inner {
+  margin: 3px 3px 0;
+  border-radius: 12px;
+  background-image: linear-gradient(to bottom, #0F1593, #161ec9);
+  background-image: -webkit-linear-gradient(top, #0F1593, #161ec9);
+  text-align: center;
+}
+
+span.card-label {
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+  padding: 50px 0 50px;
+  color: #FFFFFF;
+}
+@media (min-width: 992px) {
+  span.card-label {
+    padding: 75px 0 75px;
+  }
+}
+
+div.card, div.card-flip {
+    height: 150px;
+    width: 100px;
+}
+@media (min-width: 992px) {
+  div.card, div.card-flip {
+    height: 200px;
+    width: 130px;
+  }
+}
+
+
+div.card.front, div.card.back {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 15px;
+  left: 0;
+}
+div.deletable-card{
+  position: relative;
+  height: 212px;
+  width: 142px;
+}
+div.card.back {
+  transform: rotateY(180deg);
+}
+div.card-flip{
+  transition: 1s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+div.card-flip.flipped {
+  transform: rotateY(180deg);
+}
+
+div.card.active {
+  box-shadow: 0px 0px 20px 5px #c80020;
+}
+div.card.confirmed {
+  box-shadow: 0px 0px 20px 5px #7ec500;
+}
+
+div.delete-member {
+  top: 3px;
+  left: 85px;
+  height: 25px;
+  width: 25px;
+}
+@media (min-width: 992px) {
+  div.delete-member {
+    left: 115px;
+  }
+}
+
+div.remove {
+  display: block; 
+  position: absolute; 
+  color: white;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.25);
+  border: 1px solid;
+  border-radius: 3px;
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 1px rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 1px rgba(0, 0, 0, 0.08);
+  background: #fa623f;
+  border-color: #fa5a35;
+  background-image: linear-gradient(to bottom, #fc9f8a, #fa623f);
+  background-image: -webkit-linear-gradient(top, #fc9f8a, #fa623f);
+}
+
+div.remove span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

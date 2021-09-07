@@ -1,5 +1,6 @@
 vendor/
 node_modules/
+dist/
 src/config.php
 *.lock
 !composer.lock

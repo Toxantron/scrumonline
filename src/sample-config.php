@@ -15,7 +15,7 @@ $cardSets = [
     // 1, 3, 5, 8
     ['1', '2', '3', '5', '8'],
     // Standard fibonaci like series of values
-    ['1', '2', '3', '5', '8', '13', '20', '40', '100'],
+    ['1', '2', '3', '5', '8', '13', '21', '34', '55', '89', '144'],
     // Special card set with '?' for unclear stories
     ['1', '2', '3', '5', '8', '13', '20', '40', '?'],
     // Powers of two used by other teams

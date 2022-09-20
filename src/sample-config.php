@@ -14,6 +14,8 @@ $host = "https://localhost";
 $cardSets = [
     // 1, 3, 5, 8
     ['1', '2', '3', '5', '8'],
+    // 1, 2, 3, 5, 8, novote
+    ['1', '2', '3', '5', '8', 'novote'],
     // Standard fibonaci like series of values
     ['1', '2', '3', '5', '8', '13', '20', '40', '100'],
     // Special card set with '?' for unclear stories
@@ -68,3 +70,4 @@ $jiraConfiguration = [
 $layout_switch = [
     'enable_fork_banner' => true
 ];
+

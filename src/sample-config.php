@@ -39,7 +39,9 @@ $cardSets = [
     //Salesforce Estimates 
     ['0.5','1','3','5','8'],
     // Standard fibonaci like series of values with 0, 1/2, infinity, and shrug
-    ['0', '1/2', '1', '2', '3', '5', '8', '13', '20', '40', '100', '&#8734;', '&#F937;']
+    ['0', '1/2', '1', '2', '3', '5', '8', '13', '20', '40', '100', '&#8734;', '&#F937;'],
+    // 6-hour work day
+    ['1', '2', '3', '6', '9', '12', '18', '24', '30', '?']
 ];
 
 // Src tree for documentation linking from page
